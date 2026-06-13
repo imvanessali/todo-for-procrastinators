@@ -257,29 +257,36 @@
 
   // mooda 主题的「今日心情脸」：进度越高越开心；ratio<0 表示当天还没任务
   function moodFace(ratio, count) {
-    let fill, mouth, extra = '';
-    if (count === 0) {                       // 空白的一天，睡着了
-      fill = '#ced4da';
-      mouth = '<line x1="15" y1="22" x2="21" y2="22"/><line x1="27" y1="22" x2="33" y2="22"/>';
-    } else if (ratio === 0) {                // 一件没做，平静（淡蓝）
-      fill = '#74c0fc';
-      mouth = '<path d="M16 25 Q24 20 32 25" fill="none"/>';
+    // MOODA 风：手绘 blob 脸 + 黑色墨水五官；开心时加腮红
+    let fill, mouth, cheeks = '';
+    if (count === 0) {                       // 空白的一天，平淡
+      fill = '#c8c3b8';
+      mouth = '<path d="M25 40 H39"/>';
+    } else if (ratio === 0) {                // 一件没做，淡蓝丧脸
+      fill = '#7aa6d6';
+      mouth = '<path d="M25 41 Q32 36 39 41"/>';
     } else if (ratio < 0.67) {               // 做了一点，黄色微笑
-      fill = '#ffd43b';
-      mouth = '<path d="M16 22 Q24 26 32 22" fill="none"/>';
-    } else if (ratio < 1) {                  // 快做完，绿色开心
-      fill = '#51cf66';
-      mouth = '<path d="M16 21 Q24 29 32 21" fill="none"/>';
-    } else {                                 // 全清空，超开心 + 腮红（鲜亮珊瑚）
-      fill = '#ff6b6b';
-      mouth = '<path d="M15 20 Q24 31 33 20" fill="none"/>';
-      extra = '<circle cx="13" cy="23.5" r="2.6" fill="#fff" opacity="0.5"/><circle cx="35" cy="23.5" r="2.6" fill="#fff" opacity="0.5"/>';
+      fill = '#f5cf4f';
+      mouth = '<path d="M25 38 Q32 43 39 38"/>';
+    } else if (ratio < 1) {                  // 快做完，绿色开心 + 腮红
+      fill = '#5cb96a';
+      mouth = '<path d="M24 37 Q32 45 40 37"/>';
+      cheeks = cheekMarks(3.4);
+    } else {                                 // 全清空，橙色大笑 + 腮红
+      fill = '#f4a93c';
+      mouth = '<path d="M23 36 Q32 47 41 36"/>';
+      cheeks = cheekMarks(4);
     }
-    return `<svg viewBox="0 0 48 48" width="46" height="46">
-      <circle cx="24" cy="24" r="22" fill="${fill}"/>${extra}
-      <circle cx="17" cy="18" r="2.4" fill="#fff"/><circle cx="31" cy="18" r="2.4" fill="#fff"/>
-      <g stroke="#fff" stroke-width="2.4" stroke-linecap="round">${mouth}</g>
+    const blob = 'M33 5 C46 4 59 15 58 31 C57 47 47 59 31 58 C16 57 5 47 6 30 C7 15 19 6 33 5 Z';
+    return `<svg viewBox="0 0 64 64">
+      <path d="${blob}" fill="${fill}"/>${cheeks}
+      <g fill="#2e2a26"><circle cx="24" cy="27" r="2.4"/><circle cx="40" cy="27" r="2.4"/></g>
+      <g fill="none" stroke="#2e2a26" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">${mouth}</g>
     </svg>`;
+  }
+  function cheekMarks(r) {
+    return `<ellipse cx="17" cy="38" rx="${r}" ry="${r * 0.66}" fill="#ef7d7d" opacity="0.32"/>` +
+           `<ellipse cx="47" cy="38" rx="${r}" ry="${r * 0.66}" fill="#ef7d7d" opacity="0.32"/>`;
   }
 
   async function moveTodo(t, day) {

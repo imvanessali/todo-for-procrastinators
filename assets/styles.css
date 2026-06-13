@@ -317,39 +317,52 @@ a { color: inherit; }
 .mood-face { display: none; flex: none; }
 .mood-face svg { display: block; }
 
-/* ---------- MOODA 主题（心情）：白底 + 鲜艳色 ---------- */
+/* ---------- MOODA 主题（心情）：手绘心情日记，奶油底 + 圆点 + 黑框 + 鲜艳色 ---------- */
 [data-theme="mooda"] {
-  --paper: #ffffff;
-  --paper-2: #f1f3f5;
-  --desk: #f1f3f5;
-  --ink: #2b2d33;
-  --ink-light: rgba(43, 45, 51, 0.6);
-  --ink-faint: rgba(43, 45, 51, 0.4);
-  --edge: rgba(43, 45, 51, 0.12);
-  --edge-soft: rgba(43, 45, 51, 0.07);
-  --hover: rgba(43, 45, 51, 0.045);
+  --paper: #f4f2ea;
+  --paper-2: #eceae1;
+  --desk: #eceae1;
+  --ink: #2e2a26;
+  --ink-light: rgba(46, 42, 38, 0.62);
+  --ink-faint: rgba(46, 42, 38, 0.42);
+  --edge: rgba(46, 42, 38, 0.16);
+  --edge-soft: rgba(46, 42, 38, 0.08);
+  --hover: rgba(46, 42, 38, 0.05);
   --rule: transparent;
-  --blue: #ff6b6b;
-  --blue-soft: rgba(255, 107, 107, 0.14);
-  --green: #51cf66;
-  --green-soft: rgba(81, 207, 102, 0.18);
-  --serif: "Yuanti SC", "PingFang SC", ui-rounded, "Hiragino Maru Gothic ProN", sans-serif;
-  --shadow: rgba(15, 23, 42, 0.04) 0 0 0 1px, rgba(15, 23, 42, 0.08) 0 10px 28px -8px;
+  --blue: #6ca6e0;
+  --blue-soft: rgba(108, 166, 224, 0.18);
+  --green: #5cb96a;
+  --green-soft: rgba(92, 185, 106, 0.18);
+  --serif: "Yuanti SC", "PingFang SC", ui-rounded, sans-serif;
+  --shadow: rgba(46, 42, 38, 0.1) 0 8px 24px -12px;
 }
-[data-theme="mooda"] .topbar { background: var(--paper); }
-[data-theme="mooda"] .logo { font-family: var(--serif); }
-[data-theme="mooda"] .book { background: transparent; box-shadow: none; gap: 26px; max-width: 1000px; min-height: 0; }
+[data-theme="mooda"] .topbar { background: var(--desk); }
+[data-theme="mooda"] .book { background: transparent; box-shadow: none; gap: 22px; max-width: 1000px; min-height: 0; }
 [data-theme="mooda"] .book::before { display: none; }
 [data-theme="mooda"] .page,
 [data-theme="mooda"] .page.left,
-[data-theme="mooda"] .page.right { background: var(--paper); border-radius: 24px; padding: 28px 30px 36px; box-shadow: var(--shadow); }
+[data-theme="mooda"] .page.right {
+  background-color: var(--paper);
+  background-image: radial-gradient(circle, rgba(46, 42, 38, 0.13) 1.1px, transparent 1.1px);
+  background-size: 17px 17px;
+  border: 1.5px solid var(--ink);
+  border-radius: 9px;
+  box-shadow: var(--shadow);
+  padding: 26px 28px 34px;
+}
 [data-theme="mooda"] .page::before { display: none; }
 [data-theme="mooda"] .mood-face { display: block; }
+[data-theme="mooda"] .mood-face svg { width: 54px; height: 54px; }
+[data-theme="mooda"] .page-label {
+  font-family: "Gaegu", cursive; font-size: 15px; font-weight: 700; color: var(--ink);
+  letter-spacing: 0; display: inline-block; padding: 0 5px;
+  background: linear-gradient(transparent 58%, rgba(108, 166, 224, 0.5) 58%);
+}
 [data-theme="mooda"] .page-date { font-family: var(--serif); font-weight: 700; }
 [data-theme="mooda"] .todo-item, [data-theme="mooda"] .todo-add { border-bottom: none; }
-[data-theme="mooda"] .todo-item { border-radius: 13px; }
+[data-theme="mooda"] .todo-item { border-radius: 11px; }
 [data-theme="mooda"] .todo-check { border-color: var(--c); border-width: 2px; }
-[data-theme="mooda"] .todo-check:hover { border-color: var(--c); filter: brightness(0.92); }
+[data-theme="mooda"] .todo-check:hover { filter: brightness(0.93); }
 [data-theme="mooda"] .todo-item.done .todo-check { background: var(--c); border-color: var(--c); }
 [data-theme="mooda"] .gantt-bar { background: var(--c, var(--blue)); opacity: 0.9; }
 
