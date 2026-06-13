@@ -303,6 +303,56 @@ a { color: inherit; }
 }
 .landing-footer { border-top: 1px solid var(--edge-soft); padding: 30px 24px; text-align: center; font-size: 13px; color: var(--ink-faint); }
 
+/* ---------- theme toggle ---------- */
+.theme-toggle {
+  display: flex; align-items: center; gap: 6px;
+  padding: 5px 11px; border: 1px solid var(--edge); border-radius: 7px;
+  background: var(--paper-2); color: var(--ink-light); font-size: 13px;
+}
+.theme-toggle:hover { background: var(--paper); color: var(--ink); }
+.theme-toggle svg { display: block; }
+
+.page-header { display: flex; align-items: center; gap: 14px; }
+.ph-text { min-width: 0; }
+.mood-face { display: none; flex: none; }
+.mood-face svg { display: block; }
+
+/* ---------- MOODA 主题（心情）---------- */
+[data-theme="mooda"] {
+  --paper: #fffaf0;
+  --paper-2: #fbeedd;
+  --desk: #f3e9d6;
+  --ink: #4a3f35;
+  --ink-light: rgba(74, 63, 53, 0.62);
+  --ink-faint: rgba(74, 63, 53, 0.42);
+  --edge: rgba(74, 63, 53, 0.12);
+  --edge-soft: rgba(74, 63, 53, 0.07);
+  --hover: rgba(74, 63, 53, 0.05);
+  --rule: transparent;
+  --blue: #e0894f;
+  --blue-soft: rgba(224, 137, 79, 0.16);
+  --green: #7fa05a;
+  --green-soft: rgba(127, 160, 90, 0.2);
+  --serif: "Yuanti SC", "PingFang SC", ui-rounded, "Hiragino Maru Gothic ProN", sans-serif;
+  --shadow: rgba(74, 63, 53, 0.05) 0 0 0 1px, rgba(74, 63, 53, 0.1) 0 10px 26px -6px;
+}
+[data-theme="mooda"] .topbar { background: var(--paper); }
+[data-theme="mooda"] .logo { font-family: var(--serif); }
+[data-theme="mooda"] .book { background: transparent; box-shadow: none; gap: 26px; max-width: 1000px; min-height: 0; }
+[data-theme="mooda"] .book::before { display: none; }
+[data-theme="mooda"] .page,
+[data-theme="mooda"] .page.left,
+[data-theme="mooda"] .page.right { background: var(--paper); border-radius: 24px; padding: 28px 30px 36px; box-shadow: var(--shadow); }
+[data-theme="mooda"] .page::before { display: none; }
+[data-theme="mooda"] .mood-face { display: block; }
+[data-theme="mooda"] .page-date { font-family: var(--serif); font-weight: 700; }
+[data-theme="mooda"] .todo-item, [data-theme="mooda"] .todo-add { border-bottom: none; }
+[data-theme="mooda"] .todo-item { border-radius: 13px; }
+[data-theme="mooda"] .todo-check { border-color: var(--c); border-width: 2px; }
+[data-theme="mooda"] .todo-check:hover { border-color: var(--c); filter: brightness(0.92); }
+[data-theme="mooda"] .todo-item.done .todo-check { background: var(--c); border-color: var(--c); }
+[data-theme="mooda"] .gantt-bar { background: var(--c, var(--blue)); opacity: 0.9; }
+
 @media (max-width: 880px) {
   .book { flex-direction: column; min-height: 0; }
   .book::before { display: none; }

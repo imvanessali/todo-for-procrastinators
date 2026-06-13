@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Todo for Procrastinators – 今天与明天</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><rect x='2' y='3' width='9' height='18' rx='2' fill='%233a3122'/><rect x='13' y='3' width='9' height='18' rx='2' fill='%233a6ea5'/></svg>">
+  <script>try{document.documentElement.dataset.theme=localStorage.getItem('folio.theme')||'notebook'}catch(e){document.documentElement.dataset.theme='notebook'}</script>
   <link rel="stylesheet" href="assets/styles.css">
 </head>
 <body>
@@ -18,6 +19,7 @@
       <button data-view="gantt">甘特图</button>
     </nav>
     <div class="spacer"></div>
+    <button class="theme-toggle" id="theme-toggle" title="切换主题"></button>
     <div class="search-wrap" id="search-wrap">
       <svg class="search-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.5" y2="16.5"/></svg>
       <input id="search-input" type="text" placeholder="搜索任务…" autocomplete="off">
@@ -50,9 +52,12 @@
     <div class="book">
       <section class="page left">
         <header class="page-header">
-          <div class="page-label">Today · 今天</div>
-          <div class="page-date" id="today-date"></div>
-          <div class="page-count" id="today-count"></div>
+          <span class="mood-face" id="today-face"></span>
+          <div class="ph-text">
+            <div class="page-label">Today · 今天</div>
+            <div class="page-date" id="today-date"></div>
+            <div class="page-count" id="today-count"></div>
+          </div>
         </header>
         <ul class="todo-list" id="today-list"></ul>
         <div class="todo-add">
@@ -62,9 +67,12 @@
       </section>
       <section class="page right">
         <header class="page-header">
-          <div class="page-label">Tomorrow · 明天</div>
-          <div class="page-date" id="tomorrow-date"></div>
-          <div class="page-count" id="tomorrow-count"></div>
+          <span class="mood-face" id="tomorrow-face"></span>
+          <div class="ph-text">
+            <div class="page-label">Tomorrow · 明天</div>
+            <div class="page-date" id="tomorrow-date"></div>
+            <div class="page-count" id="tomorrow-count"></div>
+          </div>
         </header>
         <ul class="todo-list" id="tomorrow-list"></ul>
         <div class="todo-add">

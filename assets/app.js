@@ -32,6 +32,40 @@
     return n;
   };
 
+  let booted = false;
+
+  // ---------- 主题 ----------
+  const THEMES = ['notebook', 'mooda'];
+  const THEME_META = {
+    notebook: { label: '笔记本', next: 'mooda' },
+    mooda: { label: '心情', next: 'notebook' }
+  };
+  // mooda 主题里每个任务循环用到的心情色
+  const MOOD_COLORS = ['#e8896b', '#e8b04b', '#7fa05a', '#6b93a8', '#d98fa0', '#cd6a4f'];
+
+  function theme() { return document.documentElement.dataset.theme || 'notebook'; }
+  function setupTheme() {
+    const btn = $('theme-toggle');
+    if (!btn) return;
+    updateThemeButton();
+    btn.onclick = () => {
+      const next = THEME_META[theme()].next;
+      document.documentElement.dataset.theme = next;
+      try { localStorage.setItem('folio.theme', next); } catch {}
+      updateThemeButton();
+      if (booted && view === 'notebook') renderNotebook();
+    };
+  }
+  function updateThemeButton() {
+    const btn = $('theme-toggle');
+    if (btn) btn.innerHTML =
+      '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">' +
+      '<circle cx="13.5" cy="6.5" r="2.5"/><circle cx="17.5" cy="10.5" r="2.5"/><circle cx="8.5" cy="7.5" r="2.5"/>' +
+      '<circle cx="6.5" cy="12.5" r="2.5"/><path d="M12 2a10 10 0 1 0 0 20 2.5 2.5 0 0 0 2-4 2.5 2.5 0 0 1 2-4h2a4 4 0 0 0 4-4 10 10 0 0 0-10-8z"/></svg>' +
+      `<span>${THEME_META[theme()].label}</span>`;
+  }
+  setupTheme();
+
   // ---------- init: auth ----------
   const userMenu = $('user-menu');
   const session = await FolioAuth.getSession();
@@ -100,6 +134,7 @@
     await rollover();
     bindUI();
     render();
+    booted = true;
     scheduleMidnightRefresh();
   }
 
@@ -204,11 +239,49 @@
   }
 
   function updateCounts() {
-    for (const [day, id] of [[TODAY, 'today-count'], [TOMORROW, 'tomorrow-count']]) {
+    for (const [day, countId, faceId] of [
+      [TODAY, 'today-count', 'today-face'],
+      [TOMORROW, 'tomorrow-count', 'tomorrow-face']
+    ]) {
       const items = todos.filter((t) => t.day === day);
-      const open = items.filter((t) => !t.done).length;
-      $(id).textContent = items.length ? `${items.length} 项 · ${open} 项未完成` : '';
+      const done = items.filter((t) => t.done).length;
+      $(countId).textContent = items.length ? `${items.length} 项 · ${items.length - done} 项未完成` : '';
+      $(faceId).innerHTML = moodFace(items.length ? done / items.length : -1, items.length);
     }
+  }
+
+  // 稳定地把任意 id 映射到色板下标
+  function hashColor(id) {
+    let h = 0;
+    for (let i = 0; i < id.length; i++) h = (h * 31 + id.charCodeAt(i)) >>> 0;
+    return h % MOOD_COLORS.length;
+  }
+
+  // mooda 主题的「今日心情脸」：进度越高越开心；ratio<0 表示当天还没任务
+  function moodFace(ratio, count) {
+    let fill, mouth, extra = '';
+    if (count === 0) {                       // 空白的一天，睡着了
+      fill = '#cdbfa8';
+      mouth = '<line x1="15" y1="22" x2="21" y2="22"/><line x1="27" y1="22" x2="33" y2="22"/>';
+    } else if (ratio === 0) {                // 一件没做，有点丧
+      fill = '#d99a6b';
+      mouth = '<path d="M16 25 Q24 20 32 25" fill="none"/>';
+    } else if (ratio < 0.67) {               // 做了一点，平静微笑
+      fill = '#e8b04b';
+      mouth = '<path d="M16 22 Q24 26 32 22" fill="none"/>';
+    } else if (ratio < 1) {                  // 快做完，开心
+      fill = '#7fa05a';
+      mouth = '<path d="M16 21 Q24 29 32 21" fill="none"/>';
+    } else {                                 // 全清空，超开心 + 腮红
+      fill = '#e8896b';
+      mouth = '<path d="M15 20 Q24 31 33 20" fill="none"/>';
+      extra = '<circle cx="13" cy="23" r="2.5" fill="#fff" opacity="0.45"/><circle cx="35" cy="23" r="2.5" fill="#fff" opacity="0.45"/>';
+    }
+    return `<svg viewBox="0 0 48 48" width="46" height="46">
+      <circle cx="24" cy="24" r="22" fill="${fill}"/>${extra}
+      <circle cx="17" cy="18" r="2.4" fill="#fff"/><circle cx="31" cy="18" r="2.4" fill="#fff"/>
+      <g stroke="#fff" stroke-width="2.4" stroke-linecap="round">${mouth}</g>
+    </svg>`;
   }
 
   async function moveTodo(t, day) {
@@ -241,17 +314,15 @@
   function renderNotebook() {
     $('today-date').textContent = human(TODAY);
     $('tomorrow-date').textContent = human(TOMORROW);
-    renderPage('today-list', 'today-count', TODAY, true);
-    renderPage('tomorrow-list', 'tomorrow-count', TOMORROW, false);
+    renderPage('today-list', TODAY, true);
+    renderPage('tomorrow-list', TOMORROW, false);
+    updateCounts(); // 计数 + 心情脸
   }
 
-  function renderPage(listId, countId, day, isToday) {
+  function renderPage(listId, day, isToday) {
     const list = $(listId);
     list.innerHTML = '';
     const items = todos.filter((t) => t.day === day).sort((a, b) => a.position - b.position);
-    const open = items.filter((t) => !t.done).length;
-    $(countId).textContent = items.length
-      ? `${items.length} 项 · ${open} 项未完成` : '';
 
     if (!items.length) {
       const empty = el('li', 'page-empty', isToday ? '今天还没有任务。' : '明天还没有安排。');
@@ -264,6 +335,8 @@
   function todoNode(t, isToday) {
     const li = el('li', 'todo-item' + (t.done ? ' done' : '') + (t.rolled_over ? ' rolled-over' : ''));
     li.dataset.id = t.id;
+    // mooda 主题用：按稳定哈希分配一个心情色（笔记本主题忽略）
+    li.style.setProperty('--c', MOOD_COLORS[hashColor(t.id)]);
 
     const check = el('button', 'todo-check');
     check.title = t.done ? '标记未完成' : '标记完成';
