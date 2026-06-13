@@ -58,11 +58,13 @@
   }
   function updateThemeButton() {
     const btn = $('theme-toggle');
-    if (btn) btn.innerHTML =
+    if (!btn) return;
+    btn.innerHTML =
       '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">' +
       '<circle cx="13.5" cy="6.5" r="2.5"/><circle cx="17.5" cy="10.5" r="2.5"/><circle cx="8.5" cy="7.5" r="2.5"/>' +
       '<circle cx="6.5" cy="12.5" r="2.5"/><path d="M12 2a10 10 0 1 0 0 20 2.5 2.5 0 0 0 2-4 2.5 2.5 0 0 1 2-4h2a4 4 0 0 0 4-4 10 10 0 0 0-10-8z"/></svg>' +
-      `<span>${THEME_META[theme()].label}</span>`;
+      '<span>换肤</span>';
+    btn.title = `切换主题（当前：${THEME_META[theme()].label}）`;
   }
   setupTheme();
 
