@@ -12,7 +12,7 @@
   // TODO(you): 部署到自有域名时取消注释并替换
   // "routes": [{ "pattern": "your-domain.com/*", "zone_name": "your-domain.com" }],
   "vars": {
-    "SUPABASE_URL": "YOUR_SUPABASE_URL",        // TODO(you): https://xxx.supabase.co
-    "SUPABASE_ANON_KEY": "YOUR_SUPABASE_ANON_KEY" // TODO(you): Supabase Dashboard → Settings → API
+    "SUPABASE_URL": "https://ejlenbosfqcmrybnrbok.supabase.co",
+    "SUPABASE_ANON_KEY": "sb_publishable_MvCO9HjbkxxANz8zi0GVOg_ySBeQyL-"
   }
 }
