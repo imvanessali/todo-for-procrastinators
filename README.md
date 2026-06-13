@@ -24,3 +24,8 @@ worker.js               Cloudflare Worker（与 server.js 同一契约）
 wrangler.jsonc          部署配置（含待填 placeholder）
 supabase/migrations/    数据库建表 SQL
 ```
+
+## 许可
+
+[PolyForm Noncommercial License 1.0.0](LICENSE) — 允许查看、修改、非商业使用，禁止商业用途。商业授权请联系作者。
+
