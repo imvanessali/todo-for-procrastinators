@@ -8,8 +8,13 @@ const FolioAuth = (() => {
 
   async function getConfig() {
     if (config) return config;
+    // 优先用内联配置（静态/子路径部署）；否则回退到相对路径的 /api/config（本地 dev）
+    if (window.__FOLIO_CONFIG) {
+      config = window.__FOLIO_CONFIG;
+      return config;
+    }
     try {
-      const res = await fetch('/api/config');
+      const res = await fetch('api/config');
       config = await res.json();
     } catch {
       config = {};
@@ -41,7 +46,8 @@ const FolioAuth = (() => {
     const c = await getClient();
     await c.auth.signInWithOAuth({
       provider: 'google',
-      options: { redirectTo: window.location.origin + '/app' }
+      // 登录发生在 app 页，登录后回到当前页（适配子路径部署）
+      options: { redirectTo: window.location.origin + window.location.pathname }
     });
   }
 
