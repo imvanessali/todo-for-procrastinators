@@ -3,16 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Folio – 像笔记本一样管理今天与明天</title>
-  <meta name="description" content="Folio 是一个极简的待办工具：左页今天，右页明天。没做完的自动顺延，做完的轻轻划掉。支持搜索与甘特图视图。">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><rect x='2' y='3' width='9' height='18' rx='2' fill='%2337352f'/><rect x='13' y='3' width='9' height='18' rx='2' fill='%232383e2'/></svg>">
+  <title>Todo for Procrastinators – 给拖延症的待办本子</title>
+  <meta name="description" content="一个像笔记本一样的待办工具：左页今天，右页明天。没做完的自动顺延到明天，做完的轻轻划掉。支持搜索与甘特图视图。">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><rect x='2' y='3' width='9' height='18' rx='2' fill='%233a3122'/><rect x='13' y='3' width='9' height='18' rx='2' fill='%233a6ea5'/></svg>">
   <link rel="stylesheet" href="assets/styles.css">
 </head>
 <body>
   <nav class="landing-nav">
     <a class="logo" href=".">
-      <svg width="22" height="22" viewBox="0 0 24 24"><rect x="2" y="3" width="9" height="18" rx="2" fill="#37352f"/><rect x="13" y="3" width="9" height="18" rx="2" fill="#2383e2"/></svg>
-      Folio
+      <svg width="22" height="22" viewBox="0 0 24 24"><rect x="2" y="3" width="9" height="18" rx="2" fill="#3a3122"/><rect x="13" y="3" width="9" height="18" rx="2" fill="#3a6ea5"/></svg>
+      <span class="logo-text">Todo for Procrastinators</span>
     </a>
     <div class="nav-actions">
       <a class="nav-link" href="app.html">登录</a>
@@ -21,8 +21,9 @@
   </nav>
 
   <header class="hero">
+    <span class="eyebrow">给拖延症的待办本子</span>
     <h1>翻开今天，<br>写下明天。</h1>
-    <p>Folio 像一本摊开的笔记本：左页是今天，右页是明天。没做完的任务自动顺延到明天页首，做完的轻轻划掉。</p>
+    <p>像一本摊开的笔记本：左页是今天，右页是明天。今天没做完的，明天一早自动顺延到页首——拖延也拖得有条理。</p>
     <div class="cta-row">
       <a class="cta-main" href="app.html">免费开始 →</a>
     </div>
@@ -30,43 +31,45 @@
 
   <div class="hero-shot">
     <div class="frame">
-      <svg viewBox="0 0 960 480" xmlns="http://www.w3.org/2000/svg" font-family="ui-sans-serif, -apple-system, sans-serif">
-        <rect width="960" height="480" fill="#ffffff"/>
-        <rect width="960" height="44" fill="#ffffff"/>
-        <line x1="0" y1="44" x2="960" y2="44" stroke="rgba(55,53,47,0.09)"/>
-        <rect x="16" y="12" width="9" height="20" rx="2" fill="#37352f"/>
-        <rect x="27" y="12" width="9" height="20" rx="2" fill="#2383e2"/>
-        <text x="44" y="28" font-size="14" font-weight="600" fill="#37352f">Folio</text>
-        <rect x="100" y="11" width="130" height="24" rx="6" fill="#f7f7f5"/>
-        <rect x="103" y="13" width="60" height="20" rx="4" fill="#ffffff"/>
-        <text x="113" y="27" font-size="11" fill="#37352f">笔记本</text>
-        <text x="175" y="27" font-size="11" fill="rgba(55,53,47,0.5)">甘特图</text>
-        <rect x="690" y="11" width="200" height="24" rx="6" fill="#f7f7f5" stroke="rgba(55,53,47,0.16)"/>
-        <text x="706" y="27" font-size="11" fill="rgba(55,53,47,0.4)">⌕ 搜索任务…</text>
-        <line x1="480" y1="80" x2="480" y2="450" stroke="rgba(55,53,47,0.09)"/>
-        <text x="80" y="105" font-size="10" letter-spacing="2" fill="rgba(55,53,47,0.4)" font-weight="600">TODAY · 今天</text>
-        <text x="80" y="135" font-size="22" font-weight="700" fill="#37352f">6月13日 周六</text>
-        <g font-size="14">
-          <circle cx="90" cy="180" r="8" fill="#448361"/><path d="M86 180l3 3 5-6" stroke="#fff" stroke-width="2" fill="none"/>
-          <text x="110" y="185" fill="rgba(55,53,47,0.4)" text-decoration="line-through">回复设计稿评审意见</text>
-          <circle cx="90" cy="218" r="8" fill="#448361"/><path d="M86 218l3 3 5-6" stroke="#fff" stroke-width="2" fill="none"/>
-          <text x="110" y="223" fill="rgba(55,53,47,0.4)" text-decoration="line-through">晨跑 5 公里</text>
-          <circle cx="90" cy="256" r="8" fill="none" stroke="rgba(55,53,47,0.4)" stroke-width="1.5"/>
-          <text x="110" y="261" fill="#37352f">写第三章初稿</text>
-          <circle cx="90" cy="294" r="8" fill="none" stroke="rgba(55,53,47,0.4)" stroke-width="1.5"/>
-          <text x="110" y="299" fill="#37352f">给妈妈打电话</text>
-          <text x="84" y="338" fill="rgba(55,53,47,0.3)">＋ 添加今天的任务</text>
+      <svg viewBox="0 0 960 480" xmlns="http://www.w3.org/2000/svg" font-family="ui-sans-serif, -apple-system, 'PingFang SC', sans-serif">
+        <rect width="960" height="480" fill="#fffdf4"/>
+        <rect width="960" height="44" fill="#fffdf4"/>
+        <line x1="0" y1="44" x2="960" y2="44" stroke="rgba(58,49,34,0.14)"/>
+        <rect x="16" y="12" width="9" height="20" rx="2" fill="#3a3122"/>
+        <rect x="27" y="12" width="9" height="20" rx="2" fill="#3a6ea5"/>
+        <text x="44" y="28" font-size="13" font-weight="700" fill="#3a3122" font-family="Georgia, serif">Todo for Procrastinators</text>
+        <rect x="690" y="11" width="200" height="24" rx="6" fill="#fbf7e9" stroke="rgba(58,49,34,0.14)"/>
+        <text x="706" y="27" font-size="11" fill="rgba(58,49,34,0.38)">⌕ 搜索任务…</text>
+        <line x1="480" y1="78" x2="480" y2="452" stroke="rgba(58,49,34,0.14)" stroke-dasharray="6 9"/>
+        <line x1="92" y1="96" x2="92" y2="360" stroke="#d68f8f" stroke-opacity="0.55"/>
+        <line x1="532" y1="96" x2="532" y2="320" stroke="#d68f8f" stroke-opacity="0.55"/>
+        <g stroke="rgba(70,95,130,0.16)">
+          <line x1="104" y1="198" x2="448" y2="198"/><line x1="104" y1="238" x2="448" y2="238"/>
+          <line x1="104" y1="278" x2="448" y2="278"/><line x1="104" y1="318" x2="448" y2="318"/>
+          <line x1="544" y1="198" x2="888" y2="198"/><line x1="544" y1="238" x2="888" y2="238"/>
         </g>
-        <text x="530" y="105" font-size="10" letter-spacing="2" fill="rgba(55,53,47,0.4)" font-weight="600">TOMORROW · 明天</text>
-        <text x="530" y="135" font-size="22" font-weight="700" fill="#37352f">6月14日 周日</text>
+        <text x="104" y="108" font-size="10" letter-spacing="2" fill="rgba(58,49,34,0.38)" font-weight="600">TODAY · 今天</text>
+        <text x="104" y="138" font-size="23" font-weight="700" fill="#3a3122" font-family="Georgia, 'Songti SC', serif">6月13日 周六</text>
         <g font-size="14">
-          <circle cx="540" cy="180" r="8" fill="none" stroke="rgba(55,53,47,0.4)" stroke-width="1.5"/>
-          <text x="560" y="185" fill="#37352f">准备周一的演示</text>
-          <rect x="668" y="172" width="32" height="16" rx="4" fill="none" stroke="rgba(55,53,47,0.16)"/>
-          <text x="674" y="184" font-size="10" fill="rgba(55,53,47,0.4)">顺延</text>
-          <circle cx="540" cy="218" r="8" fill="none" stroke="rgba(55,53,47,0.4)" stroke-width="1.5"/>
-          <text x="560" y="223" fill="#37352f">预订牙医复诊</text>
-          <text x="534" y="262" fill="rgba(55,53,47,0.3)">＋ 添加明天的任务</text>
+          <circle cx="116" cy="184" r="9" fill="#6f8c45"/><path d="M111 184l3.5 3.5 6-7" stroke="#fff" stroke-width="2" fill="none"/>
+          <text x="134" y="189" fill="rgba(58,49,34,0.38)" text-decoration="line-through">晨跑 5 公里</text>
+          <circle cx="116" cy="224" r="9" fill="none" stroke="rgba(58,49,34,0.38)" stroke-width="1.5"/>
+          <text x="134" y="229" fill="#3a3122">写季度复盘报告</text>
+          <circle cx="116" cy="264" r="9" fill="none" stroke="rgba(58,49,34,0.38)" stroke-width="1.5"/>
+          <text x="134" y="269" fill="#3a3122">写第三章初稿</text>
+          <circle cx="116" cy="304" r="9" fill="none" stroke="rgba(58,49,34,0.38)" stroke-width="1.5"/>
+          <text x="134" y="309" fill="#3a3122">给妈妈打电话</text>
+          <text x="110" y="349" fill="rgba(58,49,34,0.3)">＋ 添加今天的任务</text>
+        </g>
+        <text x="544" y="108" font-size="10" letter-spacing="2" fill="rgba(58,49,34,0.38)" font-weight="600">TOMORROW · 明天</text>
+        <text x="544" y="138" font-size="23" font-weight="700" fill="#3a3122" font-family="Georgia, 'Songti SC', serif">6月14日 周日</text>
+        <g font-size="14">
+          <circle cx="556" cy="184" r="9" fill="none" stroke="rgba(58,49,34,0.38)" stroke-width="1.5"/>
+          <text x="574" y="189" fill="#3a3122">准备周一的演示</text>
+          <text x="700" y="189" font-size="11" fill="#c06a52">↩ 顺延</text>
+          <circle cx="556" cy="224" r="9" fill="none" stroke="rgba(58,49,34,0.38)" stroke-width="1.5"/>
+          <text x="574" y="229" fill="#3a3122">预订牙医复诊</text>
+          <text x="550" y="269" fill="rgba(58,49,34,0.3)">＋ 添加明天的任务</text>
         </g>
       </svg>
     </div>
@@ -91,7 +94,7 @@
   </section>
 
   <footer class="landing-footer">
-    Folio · 像笔记本一样的待办工具
+    Todo for Procrastinators · 像笔记本一样的待办工具
   </footer>
 </body>
 </html>

@@ -187,8 +187,28 @@
   async function toggleDone(t) {
     t.done = !t.done;
     t.completed_at = t.done ? new Date().toISOString() : null;
-    render();
+    // 就地切换节点，让划线/勾号动画播得出来（整页重渲染会重建节点、动画失效）
+    const li = document.querySelector(`#notebook-view [data-id="${t.id}"]`);
+    if (view === 'notebook' && li) {
+      li.classList.toggle('done', t.done);
+      li.querySelector('.todo-check').title = t.done ? '标记未完成' : '标记完成';
+      if (t.done) {
+        li.classList.add('celebrate');
+        setTimeout(() => li.classList.remove('celebrate'), 700);
+      }
+      updateCounts();
+    } else {
+      render();
+    }
     await store.update(t.id, { done: t.done, completed_at: t.completed_at });
+  }
+
+  function updateCounts() {
+    for (const [day, id] of [[TODAY, 'today-count'], [TOMORROW, 'tomorrow-count']]) {
+      const items = todos.filter((t) => t.day === day);
+      const open = items.filter((t) => !t.done).length;
+      $(id).textContent = items.length ? `${items.length} 项 · ${open} 项未完成` : '';
+    }
   }
 
   async function moveTodo(t, day) {
@@ -251,17 +271,17 @@
     check.onclick = () => toggleDone(t);
     li.appendChild(check);
 
-    const title = el('span', 'todo-title', t.title);
+    const title = el('span', 'todo-title');
+    title.appendChild(el('span', 'todo-text', t.title));
     title.onclick = () => startEdit(li, title, t);
     li.appendChild(title);
 
     const actions = el('div', 'todo-actions');
-    if (!t.done) {
-      const move = el('button', null, isToday ? '→' : '←');
-      move.title = isToday ? '移到明天' : '移到今天';
-      move.onclick = () => moveTodo(t, isToday ? TOMORROW : TODAY);
-      actions.appendChild(move);
-    }
+    // 始终渲染，完成时由 CSS 隐藏（保证就地切换不需重建节点）
+    const move = el('button', 'act-move', isToday ? '→' : '←');
+    move.title = isToday ? '移到明天' : '移到今天';
+    move.onclick = () => moveTodo(t, isToday ? TOMORROW : TODAY);
+    actions.appendChild(move);
     const del = el('button', 'act-delete', '×');
     del.title = '删除';
     del.onclick = () => deleteTodo(t);
