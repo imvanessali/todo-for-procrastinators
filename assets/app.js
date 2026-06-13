@@ -40,8 +40,8 @@
     notebook: { label: '笔记本', next: 'mooda' },
     mooda: { label: '心情', next: 'notebook' }
   };
-  // mooda 主题里每个任务循环用到的心情色
-  const MOOD_COLORS = ['#e8896b', '#e8b04b', '#7fa05a', '#6b93a8', '#d98fa0', '#cd6a4f'];
+  // mooda 主题里每个任务循环用到的心情色（白底上的鲜艳色）
+  const MOOD_COLORS = ['#ff6b6b', '#ff922b', '#ffd43b', '#51cf66', '#4dabf7', '#cc5de8'];
 
   function theme() { return document.documentElement.dataset.theme || 'notebook'; }
   function setupTheme() {
@@ -59,11 +59,7 @@
   function updateThemeButton() {
     const btn = $('theme-toggle');
     if (!btn) return;
-    btn.innerHTML =
-      '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">' +
-      '<circle cx="13.5" cy="6.5" r="2.5"/><circle cx="17.5" cy="10.5" r="2.5"/><circle cx="8.5" cy="7.5" r="2.5"/>' +
-      '<circle cx="6.5" cy="12.5" r="2.5"/><path d="M12 2a10 10 0 1 0 0 20 2.5 2.5 0 0 0 2-4 2.5 2.5 0 0 1 2-4h2a4 4 0 0 0 4-4 10 10 0 0 0-10-8z"/></svg>' +
-      '<span>换肤</span>';
+    btn.innerHTML = '<span class="tt-emoji">🎨</span><span>换肤</span>';
     btn.title = `切换主题（当前：${THEME_META[theme()].label}）`;
   }
   setupTheme();
@@ -263,21 +259,21 @@
   function moodFace(ratio, count) {
     let fill, mouth, extra = '';
     if (count === 0) {                       // 空白的一天，睡着了
-      fill = '#cdbfa8';
+      fill = '#ced4da';
       mouth = '<line x1="15" y1="22" x2="21" y2="22"/><line x1="27" y1="22" x2="33" y2="22"/>';
-    } else if (ratio === 0) {                // 一件没做，有点丧
-      fill = '#d99a6b';
+    } else if (ratio === 0) {                // 一件没做，平静（淡蓝）
+      fill = '#74c0fc';
       mouth = '<path d="M16 25 Q24 20 32 25" fill="none"/>';
-    } else if (ratio < 0.67) {               // 做了一点，平静微笑
-      fill = '#e8b04b';
+    } else if (ratio < 0.67) {               // 做了一点，黄色微笑
+      fill = '#ffd43b';
       mouth = '<path d="M16 22 Q24 26 32 22" fill="none"/>';
-    } else if (ratio < 1) {                  // 快做完，开心
-      fill = '#7fa05a';
+    } else if (ratio < 1) {                  // 快做完，绿色开心
+      fill = '#51cf66';
       mouth = '<path d="M16 21 Q24 29 32 21" fill="none"/>';
-    } else {                                 // 全清空，超开心 + 腮红
-      fill = '#e8896b';
+    } else {                                 // 全清空，超开心 + 腮红（鲜亮珊瑚）
+      fill = '#ff6b6b';
       mouth = '<path d="M15 20 Q24 31 33 20" fill="none"/>';
-      extra = '<circle cx="13" cy="23" r="2.5" fill="#fff" opacity="0.45"/><circle cx="35" cy="23" r="2.5" fill="#fff" opacity="0.45"/>';
+      extra = '<circle cx="13" cy="23.5" r="2.6" fill="#fff" opacity="0.5"/><circle cx="35" cy="23.5" r="2.6" fill="#fff" opacity="0.5"/>';
     }
     return `<svg viewBox="0 0 48 48" width="46" height="46">
       <circle cx="24" cy="24" r="22" fill="${fill}"/>${extra}
