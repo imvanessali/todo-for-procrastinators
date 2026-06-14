@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Todo for Procrastinators – 给拖延症的待办本子</title>
-  <meta name="description" content="一个像笔记本一样的待办工具：左页今天，右页明天。没做完的自动顺延到明天，做完的轻轻划掉。支持搜索与甘特图视图。">
+  <title>Todo for Procrastinators – 有些事，可以明天再说。</title>
+  <meta name="description" content="为拖延症设计的 Todo 工具。左边今天，右边明天，没完成的自动顺延——拖延很正常，任务不会消失。支持搜索与甘特图。">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><rect x='2' y='3' width='9' height='18' rx='2' fill='%233a3122'/><rect x='13' y='3' width='9' height='18' rx='2' fill='%233a6ea5'/></svg>">
-  <link rel="stylesheet" href="assets/styles.css?v=11">
+  <link rel="stylesheet" href="assets/styles.css?v=12">
 </head>
 <body>
   <nav class="landing-nav">
@@ -21,9 +21,9 @@
   </nav>
 
   <header class="hero">
-    <span class="eyebrow">给拖延症的待办本子</span>
-    <h1>翻开今天，<br>写下明天。</h1>
-    <p>像一本摊开的笔记本：左页是今天，右页是明天。今天没做完的，明天一早自动顺延到页首——拖延也拖得有条理。</p>
+    <span class="eyebrow">为拖延症设计的 Todo</span>
+    <h1>有些事，<br>可以明天再说。</h1>
+    <p>左边是今天，右边是明天。今天没完成的，明天自动补上。你不需要假装自己不拖延——只需要拖得有条理一点。</p>
     <div class="cta-row">
       <a class="cta-main" id="hero-cta" href="app.html">免费开始 →</a>
     </div>
@@ -77,30 +77,30 @@
 
   <section class="features">
     <div class="feature">
-      <div class="icon">📖</div>
-      <h3>左右两页，专注当下</h3>
-      <p>左页只放今天，右页只放明天。不被遥远的待办压垮，一次只翻一页。</p>
+      <div class="icon">📋</div>
+      <h3>今天 / 明天，一目了然</h3>
+      <p>左边只放今天，右边只放明天。不用面对整张清单的压迫感，一次只看两天。</p>
     </div>
     <div class="feature">
       <div class="icon">🌙</div>
-      <h3>未完成，自动顺延</h3>
-      <p>一天结束时，今天没做完的任务自动移到明天页首；做完的划掉、变浅，留下痕迹。</p>
+      <h3>没做完？明天再说</h3>
+      <p>今天结束，没完成的自动移到明天最上面。拖延很正常，任务不会消失。</p>
     </div>
     <div class="feature">
       <div class="icon">📊</div>
       <h3>搜索与甘特图</h3>
-      <p>随时搜索任意任务。甘特图按「创建日 → 完成日」展示每件事真实花了多久。</p>
+      <p>随时搜索任意任务。甘特图帮你看清每件事真正花了多久——包括"明天再说"的那些天。</p>
     </div>
   </section>
 
   <footer class="landing-footer">
-    Todo for Procrastinators · 像笔记本一样的待办工具
+    Todo for Procrastinators · 有些事，可以明天再说。
   </footer>
 
   <!-- 登录态感知：已登录则导航显示账号名 + 进入入口 -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="assets/config.js?v=11"></script>
-  <script src="assets/auth.js?v=11"></script>
+  <script src="assets/config.js?v=12"></script>
+  <script src="assets/auth.js?v=12"></script>
   <script>
     (async () => {
       let session;
@@ -111,10 +111,10 @@
       actions.innerHTML =
         '<span class="nav-user" title="' + email + '">' + email + '</span>' +
         '<a class="nav-link" id="nav-logout" href="#">退出</a>' +
-        '<a class="nav-cta" href="app.html">进入我的本子 →</a>';
+        '<a class="nav-cta" href="app.html">打开我的 Todo →</a>';
       document.getElementById('nav-logout').onclick = (e) => { e.preventDefault(); FolioAuth.signOut(); };
       const heroCta = document.getElementById('hero-cta');
-      if (heroCta) heroCta.textContent = '进入我的本子 →';
+      if (heroCta) heroCta.textContent = '打开我的 Todo →';
     })();
   </script>
 </body>
