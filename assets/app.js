@@ -10,6 +10,13 @@
   };
   const parse = (s) => { const [y, m, d] = s.split('-').map(Number); return new Date(y, m - 1, d); };
   const addDays = (s, n) => { const d = parse(s); d.setDate(d.getDate() + n); return fmt(d); };
+  const addMonths = (s, n) => {
+    const d = parse(s), targetM = d.getMonth() + n;
+    const x = new Date(d.getFullYear(), targetM, d.getDate());
+    // 溢出（如 1/31 + 1 月）则取目标月最后一天
+    if (x.getDate() !== d.getDate()) return fmt(new Date(d.getFullYear(), targetM + 1, 0));
+    return fmt(x);
+  };
   const human = (s) => {
     const d = parse(s);
     return `${d.getMonth() + 1}月${d.getDate()}日 周${'日一二三四五六'[d.getDay()]}`;
@@ -234,6 +241,70 @@
       render();
     }
     await store.update(t.id, { done: t.done, completed_at: t.completed_at });
+    if (t.done && t.repeat) await spawnNext(t);
+  }
+
+  // ---------- 重复任务 ----------
+  const REPEAT_LABELS = { daily: '每天', weekdays: '每工作日', weekly: '每周', monthly: '每月' };
+
+  // 下一个符合规则、且严格晚于 baseDay 的日期
+  function nextOccurrence(rule, baseDay) {
+    if (rule === 'daily') return addDays(baseDay, 1);
+    if (rule === 'weekly') return addDays(baseDay, 7);
+    if (rule === 'monthly') return addMonths(baseDay, 1);
+    if (rule === 'weekdays') {
+      let d = baseDay;
+      do { d = addDays(d, 1); } while ([0, 6].includes(parse(d).getDay()));
+      return d;
+    }
+    return null;
+  }
+
+  async function setRepeat(t, rule) {
+    t.repeat = rule || null;
+    if (t.repeat && !t.series) t.series = t.id; // 整条重复链共用一个 series
+    render();
+    await store.update(t.id, { repeat: t.repeat, series: t.series || null });
+  }
+
+  // 完成重复任务后，在下一个符合条件的日子生成新实例（基准取 max(当天, 今天)，保证不在当天，避免死循环）
+  async function spawnNext(t) {
+    const series = t.series || t.id;
+    // 该重复链已有未完成的未来实例则不再生成，避免反复勾选产生重复
+    if (todos.some((x) => (x.series || x.id) === series && !x.done && x.day > TODAY)) return;
+    const base = t.day > TODAY ? t.day : TODAY;
+    const day = nextOccurrence(t.repeat, base);
+    if (!day) return;
+    const dayItems = todos.filter((x) => x.day === day);
+    const position = dayItems.length ? Math.max(...dayItems.map((x) => x.position)) + 1 : 1;
+    const row = await store.insert({ title: t.title, day, position, repeat: t.repeat, series });
+    todos.push(row);
+    render();
+  }
+
+  function openRepeatMenu(t, anchor) {
+    closeRepeatMenu();
+    const menu = el('div', 'repeat-menu');
+    menu.id = 'repeat-menu';
+    const opts = [['', '不重复'], ['daily', '每天'], ['weekdays', '每工作日'], ['weekly', '每周'], ['monthly', '每月']];
+    for (const [rule, label] of opts) {
+      const b = el('button', (t.repeat || '') === rule ? 'active' : null, label);
+      b.onclick = () => { closeRepeatMenu(); setRepeat(t, rule); };
+      menu.appendChild(b);
+    }
+    document.body.appendChild(menu);
+    const r = anchor.getBoundingClientRect();
+    menu.style.top = `${r.bottom + 4}px`;
+    menu.style.left = `${Math.min(r.left, window.innerWidth - menu.offsetWidth - 8)}px`;
+    setTimeout(() => document.addEventListener('mousedown', onDocClickRepeat), 0);
+  }
+  function closeRepeatMenu() {
+    const m = $('repeat-menu');
+    if (m) m.remove();
+    document.removeEventListener('mousedown', onDocClickRepeat);
+  }
+  function onDocClickRepeat(e) {
+    if (!e.target.closest('#repeat-menu')) closeRepeatMenu();
   }
 
   function updateCounts() {
@@ -351,11 +422,20 @@
 
     const title = el('span', 'todo-title');
     title.appendChild(el('span', 'todo-text', t.title));
+    if (t.repeat) {
+      const badge = el('span', 'repeat-badge', '↻ ' + (REPEAT_LABELS[t.repeat] || '重复'));
+      badge.title = '重复任务';
+      title.appendChild(badge);
+    }
     title.onclick = () => startEdit(li, title, t);
     li.appendChild(title);
 
     const actions = el('div', 'todo-actions');
     // 始终渲染，完成时由 CSS 隐藏（保证就地切换不需重建节点）
+    const rep = el('button', 'act-repeat' + (t.repeat ? ' on' : ''), '↻');
+    rep.title = t.repeat ? `重复：${REPEAT_LABELS[t.repeat]}` : '设为重复';
+    rep.onclick = (e) => { e.stopPropagation(); openRepeatMenu(t, rep); };
+    actions.appendChild(rep);
     const move = el('button', 'act-move', isToday ? '→' : '←');
     move.title = isToday ? '移到明天' : '移到今天';
     move.onclick = () => moveTodo(t, isToday ? TOMORROW : TODAY);
