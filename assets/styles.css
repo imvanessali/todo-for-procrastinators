@@ -1,23 +1,23 @@
 /* Todo for Procrastinators — 复古笔记本风格 */
 :root {
-  --paper: #fffdf4;
-  --paper-2: #fbf7e9;
-  --desk: #ece4d2;
-  --ink: #3a3122;
-  --ink-light: rgba(58, 49, 34, 0.6);
-  --ink-faint: rgba(58, 49, 34, 0.38);
-  --rule: rgba(70, 95, 130, 0.16);
-  --edge: rgba(58, 49, 34, 0.14);
-  --edge-soft: rgba(58, 49, 34, 0.08);
-  --hover: rgba(58, 49, 34, 0.055);
-  --margin-red: #d68f8f;
-  --blue: #3a6ea5;
-  --blue-soft: rgba(58, 110, 165, 0.14);
-  --green: #6f8c45;
-  --green-soft: rgba(111, 140, 69, 0.18);
-  --red: #bf5a48;
+  --paper: #f6f4ef;
+  --paper-2: #ece8e1;
+  --desk: #d8d3c9;
+  --ink: #16284f;
+  --ink-light: rgba(22, 40, 79, 0.62);
+  --ink-faint: rgba(22, 40, 79, 0.4);
+  --rule: rgba(125, 162, 205, 0.42);
+  --edge: rgba(22, 40, 79, 0.16);
+  --edge-soft: rgba(22, 40, 79, 0.08);
+  --hover: rgba(22, 40, 79, 0.05);
+  --margin-red: #d83a2f;
+  --blue: #284a86;
+  --blue-soft: rgba(40, 74, 134, 0.14);
+  --green: #9a9ca0;
+  --green-soft: rgba(154, 156, 160, 0.22);
+  --red: #d83a2f;
   --serif: Georgia, "Songti SC", "STSong", "Times New Roman", serif;
-  --shadow: rgba(58, 49, 34, 0.06) 0 0 0 1px, rgba(58, 49, 34, 0.12) 0 6px 18px;
+  --shadow: rgba(22, 40, 79, 0.06) 0 0 0 1px, rgba(22, 40, 79, 0.12) 0 6px 18px;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
