@@ -6,7 +6,7 @@
   <title>Todo for Procrastinators – 给拖延症的待办本子</title>
   <meta name="description" content="一个像笔记本一样的待办工具：左页今天，右页明天。没做完的自动顺延到明天，做完的轻轻划掉。支持搜索与甘特图视图。">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><rect x='2' y='3' width='9' height='18' rx='2' fill='%233a3122'/><rect x='13' y='3' width='9' height='18' rx='2' fill='%233a6ea5'/></svg>">
-  <link rel="stylesheet" href="assets/styles.css?v=10">
+  <link rel="stylesheet" href="assets/styles.css?v=11">
 </head>
 <body>
   <nav class="landing-nav">
@@ -14,7 +14,7 @@
       <svg width="22" height="22" viewBox="0 0 24 24"><rect x="2" y="3" width="9" height="18" rx="2" fill="#3a3122"/><rect x="13" y="3" width="9" height="18" rx="2" fill="#3a6ea5"/></svg>
       <span class="logo-text">Todo for Procrastinators</span>
     </a>
-    <div class="nav-actions">
+    <div class="nav-actions" id="nav-actions">
       <a class="nav-link" href="app.html">登录</a>
       <a class="nav-cta" href="app.html">开始使用</a>
     </div>
@@ -25,7 +25,7 @@
     <h1>翻开今天，<br>写下明天。</h1>
     <p>像一本摊开的笔记本：左页是今天，右页是明天。今天没做完的，明天一早自动顺延到页首——拖延也拖得有条理。</p>
     <div class="cta-row">
-      <a class="cta-main" href="app.html">免费开始 →</a>
+      <a class="cta-main" id="hero-cta" href="app.html">免费开始 →</a>
     </div>
   </header>
 
@@ -96,5 +96,26 @@
   <footer class="landing-footer">
     Todo for Procrastinators · 像笔记本一样的待办工具
   </footer>
+
+  <!-- 登录态感知：已登录则导航显示账号名 + 进入入口 -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="assets/config.js?v=11"></script>
+  <script src="assets/auth.js?v=11"></script>
+  <script>
+    (async () => {
+      let session;
+      try { session = await FolioAuth.getSession(); } catch { return; }
+      if (!session) return;
+      const email = session.user.email || '已登录';
+      const actions = document.getElementById('nav-actions');
+      actions.innerHTML =
+        '<span class="nav-user" title="' + email + '">' + email + '</span>' +
+        '<a class="nav-link" id="nav-logout" href="#">退出</a>' +
+        '<a class="nav-cta" href="app.html">进入我的本子 →</a>';
+      document.getElementById('nav-logout').onclick = (e) => { e.preventDefault(); FolioAuth.signOut(); };
+      const heroCta = document.getElementById('hero-cta');
+      if (heroCta) heroCta.textContent = '进入我的本子 →';
+    })();
+  </script>
 </body>
 </html>

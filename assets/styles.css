@@ -311,6 +311,7 @@ html[data-theme="notebook"] {
 .nav-link:hover { background: var(--hover); }
 .nav-cta { font-size: 14px; font-weight: 500; color: #fff; background: var(--blue); text-decoration: none; padding: 8px 15px; border-radius: 7px; }
 .nav-cta:hover { background: #335f8e; }
+.nav-user { font-size: 14px; color: var(--ink-light); max-width: 220px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; padding: 6px 4px; }
 
 .hero { max-width: 740px; margin: 0 auto; padding: 88px 24px 52px; text-align: center; }
 .hero .eyebrow {
