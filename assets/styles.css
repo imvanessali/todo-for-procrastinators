@@ -400,6 +400,53 @@ html[data-theme="notebook"] {
 [data-theme="mooda"] .todo-item.done .todo-check { background: var(--c); border-color: var(--c); }
 [data-theme="mooda"] .gantt-bar { background: var(--c, var(--blue)); opacity: 0.9; }
 
+/* ---------- MOODA 首页专属覆盖 ---------- */
+[data-theme="mooda"] .landing-nav {
+  border-bottom: 1.5px solid var(--ink);
+  background: var(--paper);
+}
+[data-theme="mooda"] .hero .eyebrow {
+  font-family: "Gaegu", cursive; font-size: 15px; font-weight: 700;
+  background: linear-gradient(transparent 58%, rgba(85, 175, 213, 0.5) 58%);
+  border: none; border-radius: 0; color: var(--ink);
+}
+[data-theme="mooda"] .hero h1 {
+  font-family: "Gaegu", "Yuanti SC", "PingFang SC", ui-rounded, sans-serif;
+  font-size: 62px;
+}
+[data-theme="mooda"] .hero-shot .frame {
+  background-image: radial-gradient(circle, rgba(46,42,38,0.13) 1.1px, transparent 1.1px);
+  background-size: 17px 17px;
+  border: 1.5px solid var(--ink); border-radius: 14px;
+  box-shadow: 5px 5px 0 rgba(46,42,38,0.12);
+}
+[data-theme="mooda"] .feature {
+  background-color: var(--paper);
+  background-image: radial-gradient(circle, rgba(46,42,38,0.13) 1.1px, transparent 1.1px);
+  background-size: 17px 17px;
+  border: 1.5px solid var(--ink); border-radius: 10px;
+  padding: 24px 22px;
+  box-shadow: 3px 3px 0 rgba(46,42,38,0.12);
+}
+[data-theme="mooda"] .feature .icon {
+  border: 1.5px solid var(--ink); border-radius: 9px;
+}
+[data-theme="mooda"] .feature h3 {
+  font-family: "Gaegu", cursive; font-size: 19px;
+}
+[data-theme="mooda"] .hero .cta-main {
+  border: 1.5px solid var(--ink);
+  border-radius: 9px;
+  box-shadow: 3px 3px 0 rgba(46,42,38,0.18);
+}
+[data-theme="mooda"] .nav-cta {
+  border: 1.5px solid var(--blue);
+  border-radius: 9px;
+}
+[data-theme="mooda"] .landing-footer {
+  border-top: 1.5px solid rgba(46,42,38,0.12);
+}
+
 @media (max-width: 880px) {
   .book { flex-direction: column; min-height: 0; }
   .book::before { display: none; }
