@@ -319,15 +319,15 @@ a { color: inherit; }
 
 /* ---------- MOODA 主题（心情）：手绘心情日记，奶油底 + 圆点 + 黑框 + 鲜艳色 ---------- */
 [data-theme="mooda"] {
-  --paper: #f7f0dd;
-  --paper-2: #efe6cd;
-  --desk: #ece2c9;
-  --ink: #3a3326;
-  --ink-light: rgba(58, 51, 38, 0.62);
-  --ink-faint: rgba(58, 51, 38, 0.42);
-  --edge: rgba(58, 51, 38, 0.18);
-  --edge-soft: rgba(58, 51, 38, 0.09);
-  --hover: rgba(58, 51, 38, 0.05);
+  --paper: #ffffff;
+  --paper-2: #f4f4f5;
+  --desk: #ffffff;
+  --ink: #2e2a26;
+  --ink-light: rgba(46, 42, 38, 0.62);
+  --ink-faint: rgba(46, 42, 38, 0.42);
+  --edge: rgba(46, 42, 38, 0.16);
+  --edge-soft: rgba(46, 42, 38, 0.08);
+  --hover: rgba(46, 42, 38, 0.05);
   --rule: transparent;
   --blue: #55afd5;
   --blue-soft: rgba(85, 175, 213, 0.18);
