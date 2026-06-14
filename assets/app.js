@@ -40,8 +40,8 @@
     notebook: { label: '笔记本', next: 'mooda' },
     mooda: { label: '心情', next: 'notebook' }
   };
-  // mooda 主题里每个任务循环用到的心情色（白底上的鲜艳色）
-  const MOOD_COLORS = ['#ff6b6b', '#ff922b', '#ffd43b', '#51cf66', '#4dabf7', '#cc5de8'];
+  // mooda 主题里每个任务循环用到的心情色
+  const MOOD_COLORS = ['#79e0a6', '#55afd5', '#7a6fd0', '#f4c340', '#e86a6e'];
 
   function theme() { return document.documentElement.dataset.theme || 'notebook'; }
   function setupTheme() {
@@ -262,18 +262,18 @@
     if (count === 0) {                       // 空白的一天，平淡
       fill = '#c8c3b8';
       mouth = '<path d="M25 40 H39"/>';
-    } else if (ratio === 0) {                // 一件没做，淡蓝丧脸
-      fill = '#7aa6d6';
+    } else if (ratio === 0) {                // 一件没做，天蓝丧脸
+      fill = '#55afd5';
       mouth = '<path d="M25 41 Q32 36 39 41"/>';
     } else if (ratio < 0.67) {               // 做了一点，黄色微笑
-      fill = '#f5cf4f';
+      fill = '#f4c340';
       mouth = '<path d="M25 38 Q32 43 39 38"/>';
-    } else if (ratio < 1) {                  // 快做完，绿色开心 + 腮红
-      fill = '#5cb96a';
+    } else if (ratio < 1) {                  // 快做完，薄荷绿开心 + 腮红
+      fill = '#79e0a6';
       mouth = '<path d="M24 37 Q32 45 40 37"/>';
       cheeks = cheekMarks(3.4);
-    } else {                                 // 全清空，橙色大笑 + 腮红
-      fill = '#f4a93c';
+    } else {                                 // 全清空，珊瑚红大笑 + 腮红
+      fill = '#e86a6e';
       mouth = '<path d="M23 36 Q32 47 41 36"/>';
       cheeks = cheekMarks(4);
     }

@@ -329,10 +329,10 @@ a { color: inherit; }
   --edge-soft: rgba(58, 51, 38, 0.09);
   --hover: rgba(58, 51, 38, 0.05);
   --rule: transparent;
-  --blue: #6ca6e0;
-  --blue-soft: rgba(108, 166, 224, 0.18);
-  --green: #5cb96a;
-  --green-soft: rgba(92, 185, 106, 0.18);
+  --blue: #55afd5;
+  --blue-soft: rgba(85, 175, 213, 0.18);
+  --green: #79e0a6;
+  --green-soft: rgba(121, 224, 166, 0.2);
   --serif: "Yuanti SC", "PingFang SC", ui-rounded, sans-serif;
   --shadow: rgba(46, 42, 38, 0.1) 0 8px 24px -12px;
 }
@@ -356,7 +356,7 @@ a { color: inherit; }
 [data-theme="mooda"] .page-label {
   font-family: "Gaegu", cursive; font-size: 15px; font-weight: 700; color: var(--ink);
   letter-spacing: 0; display: inline-block; padding: 0 5px;
-  background: linear-gradient(transparent 58%, rgba(108, 166, 224, 0.5) 58%);
+  background: linear-gradient(transparent 58%, rgba(85, 175, 213, 0.5) 58%);
 }
 [data-theme="mooda"] .page-date { font-family: var(--serif); font-weight: 700; }
 [data-theme="mooda"] .todo-item, [data-theme="mooda"] .todo-add { border-bottom: none; }
