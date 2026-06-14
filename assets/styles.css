@@ -34,6 +34,19 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 input { font: inherit; color: inherit; }
 a { color: inherit; }
 
+/* 笔记本主题：桌面用木纹（纯 CSS 叠加渐变），书页浮在桌上 */
+html[data-theme="notebook"] {
+  background-color: #6f4a2c;
+  background-image:
+    repeating-linear-gradient(0deg, rgba(0,0,0,0.05) 0 1px, transparent 1px 8px),
+    repeating-linear-gradient(0deg, rgba(0,0,0,0.18) 0 2px, transparent 3px 168px),
+    repeating-linear-gradient(90deg, rgba(255,238,214,0.05) 0 2px, transparent 2px 9px),
+    linear-gradient(90deg, rgba(255,240,220,0.07), rgba(0,0,0,0.07) 55%, rgba(255,240,220,0.05)),
+    linear-gradient(180deg, #80592f, #694327);
+  background-attachment: fixed;
+}
+[data-theme="notebook"] body { background: transparent; }
+
 /* ---------- top bar ---------- */
 .topbar {
   display: flex; align-items: center; gap: 12px;

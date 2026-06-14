@@ -49,6 +49,7 @@
   };
   // mooda 主题里每个任务循环用到的心情色
   const MOOD_COLORS = ['#79e0a6', '#55afd5', '#7a6fd0', '#f4c340', '#e86a6e'];
+  const REPEAT_LABELS = { daily: '每天', weekdays: '每工作日', weekly: '每周', monthly: '每月' };
 
   function theme() { return document.documentElement.dataset.theme || 'notebook'; }
   function setupTheme() {
@@ -245,8 +246,6 @@
   }
 
   // ---------- 重复任务 ----------
-  const REPEAT_LABELS = { daily: '每天', weekdays: '每工作日', weekly: '每周', monthly: '每月' };
-
   // 下一个符合规则、且严格晚于 baseDay 的日期
   function nextOccurrence(rule, baseDay) {
     if (rule === 'daily') return addDays(baseDay, 1);
