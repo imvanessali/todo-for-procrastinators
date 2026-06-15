@@ -51,7 +51,7 @@
   const MOOD_COLORS = ['#79e0a6', '#55afd5', '#7a6fd0', '#f4c340', '#e86a6e'];
   const REPEAT_LABELS = { daily: '每天', weekdays: '每工作日', weekly: '每周', monthly: '每月' };
 
-  function theme() { return document.documentElement.dataset.theme || 'notebook'; }
+  function theme() { return document.documentElement.dataset.theme || 'mooda'; }
   function setupTheme() {
     const btn = $('theme-toggle');
     if (!btn) return;
