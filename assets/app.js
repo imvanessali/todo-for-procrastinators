@@ -387,8 +387,6 @@
   }
 
   function renderNotebook() {
-    $('today-date').textContent = human(TODAY);
-    $('tomorrow-date').textContent = human(TOMORROW);
     renderPage('today-list', TODAY, true);
     renderPage('tomorrow-list', TOMORROW, false);
     updateCounts(); // 计数 + 心情脸
@@ -400,7 +398,7 @@
     const items = todos.filter((t) => t.day === day).sort((a, b) => a.position - b.position);
 
     if (!items.length) {
-      const empty = el('li', 'page-empty', isToday ? '今天还没有任务。' : '明天还没有安排。');
+      const empty = el('li', 'page-empty', isToday ? '今天还没有任务。' : '改天再做也没关系。');
       list.appendChild(empty);
       return;
     }
@@ -436,7 +434,7 @@
     rep.onclick = (e) => { e.stopPropagation(); openRepeatMenu(t, rep); };
     actions.appendChild(rep);
     const move = el('button', 'act-move', isToday ? '→' : '←');
-    move.title = isToday ? '移到明天' : '移到今天';
+    move.title = isToday ? '移到改天' : '移到今天';
     move.onclick = () => moveTodo(t, isToday ? TOMORROW : TODAY);
     actions.appendChild(move);
     const del = el('button', 'act-delete', '×');

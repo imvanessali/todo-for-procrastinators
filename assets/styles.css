@@ -143,10 +143,9 @@ html[data-theme="notebook"] {
 
 .page-header { margin-bottom: 18px; }
 .page-label {
-  font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
-  color: var(--ink-faint);
+  font-family: var(--serif); font-size: 22px; font-weight: 700; letter-spacing: 0.01em;
+  color: var(--ink);
 }
-.page-date { font-family: var(--serif); font-size: 25px; font-weight: 700; margin-top: 3px; color: var(--ink); }
 .page-count { font-size: 12.5px; color: var(--ink-faint); margin-top: 5px; }
 
 .todo-list { list-style: none; }
@@ -328,7 +327,29 @@ html[data-theme="notebook"] {
 .hero .cta-main:hover { background: #2a2318; }
 
 .hero-shot { max-width: 980px; margin: 0 auto; padding: 0 24px 80px; }
-.hero-shot .frame { border-radius: 10px; box-shadow: var(--shadow); overflow: hidden; background: var(--paper); border: 1px solid var(--edge); }
+.hero-shot .frame, .carousel-slide .frame { border-radius: 10px; box-shadow: var(--shadow); overflow: hidden; background: var(--paper); border: 1px solid var(--edge); }
+
+/* ---------- hero carousel ---------- */
+.hero-carousel { position: relative; max-width: 980px; margin: 0 auto; padding: 0 24px; }
+.carousel-track { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+.carousel-track::-webkit-scrollbar { display: none; }
+.carousel-slide { flex: 0 0 100%; scroll-snap-align: center; box-sizing: border-box; padding: 4px 10px 12px 4px; }
+.carousel-arrow {
+  position: absolute; top: 50%; transform: translateY(-50%); z-index: 2;
+  width: 40px; height: 40px; border-radius: 50%; padding: 0;
+  display: flex; align-items: center; justify-content: center;
+  border: 1px solid var(--edge); background: var(--paper); color: var(--ink);
+  font-size: 20px; line-height: 40px; cursor: pointer; box-shadow: var(--shadow);
+}
+.carousel-arrow.prev { left: 8px; }
+.carousel-arrow.next { right: 8px; }
+.carousel-arrow:hover { background: var(--hover); }
+.carousel-dots { display: flex; justify-content: center; gap: 9px; margin: 16px auto 80px; }
+.carousel-dots .dot {
+  width: 9px; height: 9px; padding: 0; border-radius: 50%;
+  border: 1.5px solid var(--edge); background: transparent; cursor: pointer;
+}
+.carousel-dots .dot.active { background: var(--ink); border-color: var(--ink); }
 
 .features { max-width: 980px; margin: 0 auto; padding: 0 24px 100px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
 .feature h3 { font-family: var(--serif); font-size: 17px; margin: 12px 0 6px; }
@@ -390,11 +411,10 @@ html[data-theme="notebook"] {
 [data-theme="mooda"] .mood-face { display: block; }
 [data-theme="mooda"] .mood-face svg { width: 54px; height: 54px; }
 [data-theme="mooda"] .page-label {
-  font-family: "Gaegu", cursive; font-size: 15px; font-weight: 700; color: var(--ink);
-  letter-spacing: 0; display: inline-block; padding: 0 5px;
-  background: linear-gradient(transparent 58%, rgba(85, 175, 213, 0.5) 58%);
+  font-family: "Gaegu", cursive; font-size: 24px; font-weight: 700; color: var(--ink);
+  letter-spacing: 0; display: inline-block; padding: 0 6px;
+  background: linear-gradient(transparent 62%, rgba(85, 175, 213, 0.5) 62%);
 }
-[data-theme="mooda"] .page-date { font-family: var(--serif); font-weight: 700; }
 [data-theme="mooda"] .todo-item, [data-theme="mooda"] .todo-add { border-bottom: none; }
 [data-theme="mooda"] .todo-item { border-radius: 11px; }
 [data-theme="mooda"] .todo-check { border-color: var(--c); border-width: 2px; }
@@ -416,12 +436,15 @@ html[data-theme="notebook"] {
   font-family: "Gaegu", "Yuanti SC", "PingFang SC", ui-rounded, sans-serif;
   font-size: 62px;
 }
-[data-theme="mooda"] .hero-shot .frame {
+[data-theme="mooda"] .hero-shot .frame,
+[data-theme="mooda"] .carousel-slide .frame {
   background-image: radial-gradient(circle, rgba(82,86,94,0.13) 1.1px, transparent 1.1px);
   background-size: 17px 17px;
   border: 1.5px solid var(--ink); border-radius: 14px;
   box-shadow: 5px 5px 0 rgba(82,86,94,0.12);
 }
+[data-theme="mooda"] .carousel-arrow { border: 1.5px solid var(--ink); box-shadow: 2px 2px 0 rgba(82,86,94,0.14); }
+[data-theme="mooda"] .carousel-dots .dot { border-color: var(--ink); }
 [data-theme="mooda"] .feature {
   background-color: var(--paper);
   background-image: radial-gradient(circle, rgba(82,86,94,0.13) 1.1px, transparent 1.1px);

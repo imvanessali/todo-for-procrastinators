@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/styles.css?v=14">
+  <link rel="stylesheet" href="assets/styles.css?v=15">
 </head>
 <body>
   <header class="topbar">
@@ -61,7 +61,6 @@
           <span class="mood-face" id="today-face"></span>
           <div class="ph-text">
             <div class="page-label">Today · 今天</div>
-            <div class="page-date" id="today-date"></div>
             <div class="page-count" id="today-count"></div>
           </div>
         </header>
@@ -75,15 +74,14 @@
         <header class="page-header">
           <span class="mood-face" id="tomorrow-face"></span>
           <div class="ph-text">
-            <div class="page-label">Not Today · 明天</div>
-            <div class="page-date" id="tomorrow-date"></div>
+            <div class="page-label">Not Today · 改天</div>
             <div class="page-count" id="tomorrow-count"></div>
           </div>
         </header>
         <ul class="todo-list" id="tomorrow-list"></ul>
         <div class="todo-add">
           <span class="plus">+</span>
-          <input id="tomorrow-add" type="text" placeholder="添加明天的任务，回车确认">
+          <input id="tomorrow-add" type="text" placeholder="添加改天的任务，回车确认">
         </div>
       </section>
     </div>
@@ -101,9 +99,9 @@
   </main>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="assets/config.js?v=14"></script>
-  <script src="assets/auth.js?v=14"></script>
-  <script src="assets/store.js?v=14"></script>
-  <script src="assets/app.js?v=14"></script>
+  <script src="assets/config.js?v=15"></script>
+  <script src="assets/auth.js?v=15"></script>
+  <script src="assets/store.js?v=15"></script>
+  <script src="assets/app.js?v=15"></script>
 </body>
 </html>
