@@ -356,19 +356,19 @@ html[data-theme="notebook"] {
   --paper: #ffffff;
   --paper-2: #f4f4f5;
   --desk: #ffffff;
-  --ink: #2e2a26;
-  --ink-light: rgba(46, 42, 38, 0.62);
-  --ink-faint: rgba(46, 42, 38, 0.42);
-  --edge: rgba(46, 42, 38, 0.16);
-  --edge-soft: rgba(46, 42, 38, 0.08);
-  --hover: rgba(46, 42, 38, 0.05);
+  --ink: #52565e;
+  --ink-light: rgba(82, 86, 94, 0.62);
+  --ink-faint: rgba(82, 86, 94, 0.42);
+  --edge: rgba(82, 86, 94, 0.16);
+  --edge-soft: rgba(82, 86, 94, 0.08);
+  --hover: rgba(82, 86, 94, 0.05);
   --rule: transparent;
   --blue: #55afd5;
   --blue-soft: rgba(85, 175, 213, 0.18);
   --green: #79e0a6;
   --green-soft: rgba(121, 224, 166, 0.2);
   --serif: "Yuanti SC", "PingFang SC", ui-rounded, sans-serif;
-  --shadow: rgba(46, 42, 38, 0.1) 0 8px 24px -12px;
+  --shadow: rgba(82, 86, 94, 0.1) 0 8px 24px -12px;
 }
 [data-theme="mooda"] .topbar { background: var(--desk); }
 [data-theme="mooda"] .book { background: transparent; box-shadow: none; gap: 22px; max-width: 1000px; min-height: 0; }
@@ -377,7 +377,7 @@ html[data-theme="notebook"] {
 [data-theme="mooda"] .page.left,
 [data-theme="mooda"] .page.right {
   background-color: var(--paper);
-  background-image: radial-gradient(circle, rgba(46, 42, 38, 0.13) 1.1px, transparent 1.1px);
+  background-image: radial-gradient(circle, rgba(82, 86, 94, 0.13) 1.1px, transparent 1.1px);
   background-size: 17px 17px;
   border: 1.5px solid var(--ink);
   border-radius: 9px;
@@ -415,18 +415,18 @@ html[data-theme="notebook"] {
   font-size: 62px;
 }
 [data-theme="mooda"] .hero-shot .frame {
-  background-image: radial-gradient(circle, rgba(46,42,38,0.13) 1.1px, transparent 1.1px);
+  background-image: radial-gradient(circle, rgba(82,86,94,0.13) 1.1px, transparent 1.1px);
   background-size: 17px 17px;
   border: 1.5px solid var(--ink); border-radius: 14px;
-  box-shadow: 5px 5px 0 rgba(46,42,38,0.12);
+  box-shadow: 5px 5px 0 rgba(82,86,94,0.12);
 }
 [data-theme="mooda"] .feature {
   background-color: var(--paper);
-  background-image: radial-gradient(circle, rgba(46,42,38,0.13) 1.1px, transparent 1.1px);
+  background-image: radial-gradient(circle, rgba(82,86,94,0.13) 1.1px, transparent 1.1px);
   background-size: 17px 17px;
   border: 1.5px solid var(--ink); border-radius: 10px;
   padding: 24px 22px;
-  box-shadow: 3px 3px 0 rgba(46,42,38,0.12);
+  box-shadow: 3px 3px 0 rgba(82,86,94,0.12);
 }
 [data-theme="mooda"] .feature .icon {
   border: 1.5px solid var(--ink); border-radius: 9px;
@@ -437,14 +437,14 @@ html[data-theme="notebook"] {
 [data-theme="mooda"] .hero .cta-main {
   border: 1.5px solid var(--ink);
   border-radius: 9px;
-  box-shadow: 3px 3px 0 rgba(46,42,38,0.18);
+  box-shadow: 3px 3px 0 rgba(82,86,94,0.18);
 }
 [data-theme="mooda"] .nav-cta {
   border: 1.5px solid var(--blue);
   border-radius: 9px;
 }
 [data-theme="mooda"] .landing-footer {
-  border-top: 1.5px solid rgba(46,42,38,0.12);
+  border-top: 1.5px solid rgba(82,86,94,0.12);
 }
 
 @media (max-width: 880px) {

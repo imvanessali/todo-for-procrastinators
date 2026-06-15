@@ -350,8 +350,8 @@
     const blob = 'M33 5 C46 4 59 15 58 31 C57 47 47 59 31 58 C16 57 5 47 6 30 C7 15 19 6 33 5 Z';
     return `<svg viewBox="0 0 64 64">
       <path d="${blob}" fill="${fill}"/>${cheeks}
-      <g fill="#2e2a26"><circle cx="24" cy="27" r="2.4"/><circle cx="40" cy="27" r="2.4"/></g>
-      <g fill="none" stroke="#2e2a26" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">${mouth}</g>
+      <g fill="#52565e"><circle cx="24" cy="27" r="2.4"/><circle cx="40" cy="27" r="2.4"/></g>
+      <g fill="none" stroke="#52565e" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">${mouth}</g>
     </svg>`;
   }
   function cheekMarks(r) {

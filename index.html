@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Today or Not Today – 有些任务啊，可以明天再做。</title>
   <meta name="description" content="为ADHD设计的极简记事本。今天只需要关注今天的事，但今天没做完也没关系。支持搜索与甘特图。">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><path d='M33 5 C46 4 59 15 58 31 C57 47 47 59 31 58 C16 57 5 47 6 30 C7 15 19 6 33 5 Z' fill='%23f4c340'/><circle cx='24' cy='27' r='2.4' fill='%232e2a26'/><circle cx='40' cy='27' r='2.4' fill='%232e2a26'/><path d='M25 38 Q32 43 39 38' fill='none' stroke='%232e2a26' stroke-width='2.6' stroke-linecap='round'/></svg>">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><path d='M33 5 C46 4 59 15 58 31 C57 47 47 59 31 58 C16 57 5 47 6 30 C7 15 19 6 33 5 Z' fill='%23f4c340'/><circle cx='24' cy='27' r='2.4' fill='%2352565e'/><circle cx='40' cy='27' r='2.4' fill='%2352565e'/><path d='M25 38 Q32 43 39 38' fill='none' stroke='%2352565e' stroke-width='2.6' stroke-linecap='round'/></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&display=swap" rel="stylesheet">
@@ -14,7 +14,7 @@
 <body>
   <nav class="landing-nav">
     <a class="logo" href=".">
-      <svg width="24" height="24" viewBox="0 0 64 64"><path d="M33 5 C46 4 59 15 58 31 C57 47 47 59 31 58 C16 57 5 47 6 30 C7 15 19 6 33 5 Z" fill="#f4c340"/><circle cx="24" cy="27" r="2.4" fill="#2e2a26"/><circle cx="40" cy="27" r="2.4" fill="#2e2a26"/><path d="M25 38 Q32 43 39 38" fill="none" stroke="#2e2a26" stroke-width="2.6" stroke-linecap="round"/></svg>
+      <svg width="24" height="24" viewBox="0 0 64 64"><path d="M33 5 C46 4 59 15 58 31 C57 47 47 59 31 58 C16 57 5 47 6 30 C7 15 19 6 33 5 Z" fill="#f4c340"/><circle cx="24" cy="27" r="2.4" fill="#52565e"/><circle cx="40" cy="27" r="2.4" fill="#52565e"/><path d="M25 38 Q32 43 39 38" fill="none" stroke="#52565e" stroke-width="2.6" stroke-linecap="round"/></svg>
       <span class="logo-text">Today or Not Today</span>
     </a>
     <div class="nav-actions" id="nav-actions">
@@ -34,103 +34,105 @@
 
   <div class="hero-shot">
     <div class="frame">
-      <svg viewBox="0 0 960 490" xmlns="http://www.w3.org/2000/svg" font-family="ui-sans-serif,-apple-system,'PingFang SC',sans-serif">
+      <svg viewBox="0 0 960 514" xmlns="http://www.w3.org/2000/svg" font-family="ui-sans-serif,-apple-system,'PingFang SC',sans-serif">
         <defs>
           <pattern id="pdots" x="0" y="0" width="17" height="17" patternUnits="userSpaceOnUse">
-            <circle cx="1" cy="1" r="1.1" fill="rgba(46,42,38,0.13)"/>
+            <circle cx="1" cy="1" r="1.1" fill="rgba(82,86,94,0.13)"/>
           </pattern>
         </defs>
 
         <!-- Background -->
-        <rect width="960" height="490" fill="#ffffff"/>
+        <rect width="960" height="514" fill="#ffffff"/>
 
         <!-- Nav bar -->
         <rect width="960" height="46" fill="#ffffff"/>
-        <line x1="0" y1="46" x2="960" y2="46" stroke="#2e2a26" stroke-width="1.5"/>
-        <svg x="18" y="9" width="24" height="24" viewBox="0 0 64 64"><path d="M33 5 C46 4 59 15 58 31 C57 47 47 59 31 58 C16 57 5 47 6 30 C7 15 19 6 33 5 Z" fill="#f4c340"/><circle cx="24" cy="27" r="2.4" fill="#2e2a26"/><circle cx="40" cy="27" r="2.4" fill="#2e2a26"/><path d="M25 38 Q32 43 39 38" fill="none" stroke="#2e2a26" stroke-width="2.6" stroke-linecap="round"/></svg>
-        <text x="48" y="28" font-size="13" font-weight="700" fill="#2e2a26">Today or Not Today</text>
-<rect x="898" y="12" width="44" height="23" rx="7" fill="#55afd5"/>
-        <text x="920" y="27" font-size="11" font-weight="600" fill="white" text-anchor="middle">登录</text>
+        <line x1="0" y1="46" x2="960" y2="46" stroke="#52565e" stroke-width="1.5"/>
+        <svg x="18" y="9" width="24" height="24" viewBox="0 0 64 64"><path d="M33 5 C46 4 59 15 58 31 C57 47 47 59 31 58 C16 57 5 47 6 30 C7 15 19 6 33 5 Z" fill="#f4c340"/><circle cx="24" cy="27" r="2.4" fill="#52565e"/><circle cx="40" cy="27" r="2.4" fill="#52565e"/><path d="M25 38 Q32 43 39 38" fill="none" stroke="#52565e" stroke-width="2.6" stroke-linecap="round"/></svg>
+        <text x="48" y="28" font-size="13" font-weight="700" fill="#52565e">Today or Not Today</text>
+<circle cx="918" cy="23" r="8" fill="none" stroke="#55afd5" stroke-width="2.2"/>
+        <line x1="924" y1="29" x2="930" y2="35" stroke="#55afd5" stroke-width="2.2" stroke-linecap="round"/>
 
+        <g transform="translate(0,24)">
         <!-- ===== Left card (Today) ===== -->
-        <rect x="27" y="61" width="438" height="408" rx="12" fill="rgba(46,42,38,0.09)"/>
+        <rect x="27" y="61" width="438" height="408" rx="12" fill="rgba(82,86,94,0.09)"/>
         <rect x="22" y="56" width="438" height="408" rx="12" fill="white"/>
         <rect x="22" y="56" width="438" height="408" rx="12" fill="url(#pdots)"/>
-        <rect x="22" y="56" width="438" height="408" rx="12" fill="none" stroke="#2e2a26" stroke-width="1.5"/>
+        <rect x="22" y="56" width="438" height="408" rx="12" fill="none" stroke="#52565e" stroke-width="1.5"/>
 
         <!-- Today blob: yellow, slight smile (1/5 done) -->
         <svg x="38" y="75" width="48" height="48" viewBox="0 0 64 64">
           <path d="M33 5 C46 4 59 15 58 31 C57 47 47 59 31 58 C16 57 5 47 6 30 C7 15 19 6 33 5 Z" fill="#f4c340"/>
-          <g fill="#2e2a26"><circle cx="24" cy="27" r="2.4"/><circle cx="40" cy="27" r="2.4"/></g>
-          <g fill="none" stroke="#2e2a26" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M25 38 Q32 43 39 38"/></g>
+          <g fill="#52565e"><circle cx="24" cy="27" r="2.4"/><circle cx="40" cy="27" r="2.4"/></g>
+          <g fill="none" stroke="#52565e" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M25 38 Q32 43 39 38"/></g>
         </svg>
 
         <!-- Today label (highlighter) + date -->
         <rect x="98" y="87" width="92" height="13" rx="1" fill="rgba(85,175,213,0.5)"/>
-        <text x="98" y="98" font-size="11.5" font-weight="700" fill="#2e2a26" font-family="Gaegu,sans-serif">Today · 今天</text>
-        <text x="98" y="124" font-size="20" font-weight="700" fill="#2e2a26">6月14日 周日</text>
+        <text x="98" y="98" font-size="11.5" font-weight="700" fill="#52565e" font-family="Gaegu,sans-serif">Today · 今天</text>
+        <text x="98" y="124" font-size="20" font-weight="700" fill="#52565e">6月14日 周日</text>
 
-        <line x1="36" y1="140" x2="444" y2="140" stroke="rgba(46,42,38,0.07)" stroke-width="1"/>
+        <line x1="36" y1="140" x2="444" y2="140" stroke="rgba(82,86,94,0.07)" stroke-width="1"/>
 
         <!-- Today items -->
         <circle cx="54" cy="162" r="10" fill="#79e0a6"/>
         <path d="M48 162l4 4 7-8" stroke="white" stroke-width="1.8" fill="none" stroke-linecap="round"/>
-        <text x="74" y="167" font-size="13.5" fill="rgba(46,42,38,0.42)" text-decoration="line-through">晨跑 5 公里</text>
+        <text x="74" y="167" font-size="13.5" fill="rgba(82,86,94,0.42)" text-decoration="line-through">晨跑 5 公里</text>
 
         <circle cx="54" cy="204" r="10" fill="none" stroke="#7a6fd0" stroke-width="2"/>
-        <text x="74" y="209" font-size="13.5" fill="#2e2a26">写季度复盘报告</text>
+        <text x="74" y="209" font-size="13.5" fill="#52565e">写季度复盘报告</text>
 
         <circle cx="54" cy="246" r="10" fill="none" stroke="#f4c340" stroke-width="2"/>
-        <text x="74" y="251" font-size="13.5" fill="#2e2a26">写第三章初稿</text>
+        <text x="74" y="251" font-size="13.5" fill="#52565e">写第三章初稿</text>
 
         <circle cx="54" cy="288" r="10" fill="none" stroke="#e86a6e" stroke-width="2"/>
-        <text x="74" y="293" font-size="13.5" fill="#2e2a26">给妈妈打电话</text>
+        <text x="74" y="293" font-size="13.5" fill="#52565e">给妈妈打电话</text>
         <rect x="182" y="281" width="34" height="16" rx="4" fill="rgba(85,175,213,0.18)"/>
         <text x="199" y="293" font-size="10" fill="#55afd5" text-anchor="middle">每周</text>
 
         <circle cx="54" cy="330" r="10" fill="none" stroke="#55afd5" stroke-width="2"/>
-        <text x="74" y="335" font-size="13.5" fill="#2e2a26">买菜</text>
+        <text x="74" y="335" font-size="13.5" fill="#52565e">买菜</text>
 
-        <text x="40" y="380" font-size="13" fill="rgba(46,42,38,0.28)">＋  添加今天的任务</text>
+        <text x="40" y="380" font-size="13" fill="rgba(82,86,94,0.28)">＋  添加今天的任务</text>
 
         <!-- ===== Right card (Tomorrow) ===== -->
-        <rect x="505" y="61" width="438" height="408" rx="12" fill="rgba(46,42,38,0.09)"/>
+        <rect x="505" y="61" width="438" height="408" rx="12" fill="rgba(82,86,94,0.09)"/>
         <rect x="500" y="56" width="438" height="408" rx="12" fill="white"/>
         <rect x="500" y="56" width="438" height="408" rx="12" fill="url(#pdots)"/>
-        <rect x="500" y="56" width="438" height="408" rx="12" fill="none" stroke="#2e2a26" stroke-width="1.5"/>
+        <rect x="500" y="56" width="438" height="408" rx="12" fill="none" stroke="#52565e" stroke-width="1.5"/>
 
         <!-- Tomorrow blob: sky blue, sad (0 done) -->
         <svg x="516" y="75" width="48" height="48" viewBox="0 0 64 64">
           <path d="M33 5 C46 4 59 15 58 31 C57 47 47 59 31 58 C16 57 5 47 6 30 C7 15 19 6 33 5 Z" fill="#55afd5"/>
-          <g fill="#2e2a26"><circle cx="24" cy="27" r="2.4"/><circle cx="40" cy="27" r="2.4"/></g>
-          <g fill="none" stroke="#2e2a26" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M25 41 Q32 36 39 41"/></g>
+          <g fill="#52565e"><circle cx="24" cy="27" r="2.4"/><circle cx="40" cy="27" r="2.4"/></g>
+          <g fill="none" stroke="#52565e" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M25 41 Q32 36 39 41"/></g>
         </svg>
 
         <!-- Tomorrow label + date -->
         <rect x="576" y="87" width="106" height="13" rx="1" fill="rgba(85,175,213,0.5)"/>
-        <text x="576" y="98" font-size="11.5" font-weight="700" fill="#2e2a26" font-family="Gaegu,sans-serif">Tomorrow · 明天</text>
-        <text x="576" y="124" font-size="20" font-weight="700" fill="#2e2a26">6月15日 周一</text>
+        <text x="576" y="98" font-size="11.5" font-weight="700" fill="#52565e" font-family="Gaegu,sans-serif">Tomorrow · 明天</text>
+        <text x="576" y="124" font-size="20" font-weight="700" fill="#52565e">6月15日 周一</text>
 
-        <line x1="514" y1="140" x2="922" y2="140" stroke="rgba(46,42,38,0.07)" stroke-width="1"/>
+        <line x1="514" y1="140" x2="922" y2="140" stroke="rgba(82,86,94,0.07)" stroke-width="1"/>
 
         <!-- Tomorrow items -->
         <circle cx="532" cy="162" r="10" fill="none" stroke="#e86a6e" stroke-width="2"/>
-        <text x="552" y="167" font-size="13.5" fill="#2e2a26">准备周一的演示</text>
+        <text x="552" y="167" font-size="13.5" fill="#52565e">准备周一的演示</text>
         <rect x="756" y="155" width="50" height="16" rx="4" fill="rgba(232,106,110,0.12)"/>
         <text x="781" y="167" font-size="10" fill="#e86a6e" text-anchor="middle">↩ 顺延</text>
 
         <circle cx="532" cy="204" r="10" fill="none" stroke="#79e0a6" stroke-width="2"/>
-        <text x="552" y="209" font-size="13.5" fill="#2e2a26">预订牙医复诊</text>
+        <text x="552" y="209" font-size="13.5" fill="#52565e">预订牙医复诊</text>
 
         <circle cx="532" cy="246" r="10" fill="none" stroke="#7a6fd0" stroke-width="2"/>
-        <text x="552" y="251" font-size="13.5" fill="#2e2a26">整理工作笔记</text>
+        <text x="552" y="251" font-size="13.5" fill="#52565e">整理工作笔记</text>
         <rect x="666" y="239" width="34" height="16" rx="4" fill="rgba(85,175,213,0.18)"/>
         <text x="683" y="251" font-size="10" fill="#55afd5" text-anchor="middle">每天</text>
 
         <circle cx="532" cy="288" r="10" fill="none" stroke="#f4c340" stroke-width="2"/>
-        <text x="552" y="293" font-size="13.5" fill="#2e2a26">回复邮件</text>
+        <text x="552" y="293" font-size="13.5" fill="#52565e">回复邮件</text>
 
-        <text x="518" y="350" font-size="13" fill="rgba(46,42,38,0.28)">＋  添加明天的任务</text>
+        <text x="518" y="350" font-size="13" fill="rgba(82,86,94,0.28)">＋  添加明天的任务</text>
+        </g>
       </svg>
     </div>
   </div>
