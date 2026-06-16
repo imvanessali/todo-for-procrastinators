@@ -407,8 +407,9 @@ html[data-theme="notebook"] {
 [data-theme="mooda"] .mood-face svg { width: 54px; height: 54px; }
 [data-theme="mooda"] .page-label {
   font-family: "Gaegu", "Yuanti SC", "PingFang SC", cursive; font-size: 30px; font-weight: 700; color: var(--ink);
-  letter-spacing: 0; display: inline-block; padding: 0 6px;
-  background: linear-gradient(transparent 50%, rgba(85, 175, 213, 0.5) 50%);
+  letter-spacing: 0; display: inline-block; padding: 0 8px;
+  background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 24' preserveAspectRatio='none'><path d='M1.6 7.5 C22 3.8 53 6.2 78 4.8 C89 4.2 96 5.6 98.6 7.2 C99.6 12 99 16.4 97.8 20 C71 22 37 20.6 16.5 20.2 C9.4 20 4 19 1.6 17.4 C0.6 14 0.8 10.4 1.6 7.5 Z' fill='%23f4c340' opacity='0.6'/></svg>");
+  background-repeat: no-repeat; background-position: 0 74%; background-size: 100% 54%;
 }
 [data-theme="mooda"] .todo-item, [data-theme="mooda"] .todo-add { border-bottom: none; }
 [data-theme="mooda"] .todo-item { border-radius: 11px; }
@@ -424,8 +425,9 @@ html[data-theme="notebook"] {
 }
 [data-theme="mooda"] .hero .eyebrow {
   font-family: "Gaegu", "Yuanti SC", "PingFang SC", cursive; font-size: 15px; font-weight: 700;
-  background: linear-gradient(transparent 58%, rgba(85, 175, 213, 0.5) 58%);
-  border: none; border-radius: 0; color: var(--ink);
+  background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 24' preserveAspectRatio='none'><path d='M1.6 7.5 C22 3.8 53 6.2 78 4.8 C89 4.2 96 5.6 98.6 7.2 C99.6 12 99 16.4 97.8 20 C71 22 37 20.6 16.5 20.2 C9.4 20 4 19 1.6 17.4 C0.6 14 0.8 10.4 1.6 7.5 Z' fill='%23f4c340' opacity='0.6'/></svg>");
+  background-repeat: no-repeat; background-position: 0 62%; background-size: 100% 58%;
+  border: none; border-radius: 0; color: var(--ink); padding: 0 6px;
 }
 [data-theme="mooda"] .hero h1 {
   font-family: "Gaegu", "Yuanti SC", "PingFang SC", ui-rounded, sans-serif;
