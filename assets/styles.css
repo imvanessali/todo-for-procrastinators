@@ -390,8 +390,11 @@ html[data-theme="notebook"] {
   --blue-soft: rgba(85, 175, 213, 0.18);
   --green: #79e0a6;
   --green-soft: rgba(121, 224, 166, 0.2);
-  --serif: "Yuanti SC", "PingFang SC", ui-rounded, sans-serif;
+  --serif: "ZCOOL KuaiLe", "Yuanti SC", "PingFang SC", ui-rounded, sans-serif;
   --shadow: rgba(82, 86, 94, 0.1) 0 8px 24px -12px;
+}
+[data-theme="mooda"] body {
+  font-family: "Gaegu", "ZCOOL KuaiLe", ui-sans-serif, -apple-system, "PingFang SC", sans-serif;
 }
 [data-theme="mooda"] .topbar { background: var(--desk); }
 [data-theme="mooda"] .book { background: transparent; box-shadow: none; gap: 22px; max-width: 1000px; min-height: 0; }
@@ -411,7 +414,7 @@ html[data-theme="notebook"] {
 [data-theme="mooda"] .mood-face { display: block; }
 [data-theme="mooda"] .mood-face svg { width: 54px; height: 54px; }
 [data-theme="mooda"] .page-label {
-  font-family: "Gaegu", cursive; font-size: 30px; font-weight: 700; color: var(--ink);
+  font-family: "Gaegu", "ZCOOL KuaiLe", cursive; font-size: 30px; font-weight: 700; color: var(--ink);
   letter-spacing: 0; display: inline-block; padding: 0 6px;
   background: linear-gradient(transparent 50%, rgba(85, 175, 213, 0.5) 50%);
 }
@@ -428,12 +431,12 @@ html[data-theme="notebook"] {
   background: var(--paper);
 }
 [data-theme="mooda"] .hero .eyebrow {
-  font-family: "Gaegu", cursive; font-size: 15px; font-weight: 700;
+  font-family: "Gaegu", "ZCOOL KuaiLe", cursive; font-size: 15px; font-weight: 700;
   background: linear-gradient(transparent 58%, rgba(85, 175, 213, 0.5) 58%);
   border: none; border-radius: 0; color: var(--ink);
 }
 [data-theme="mooda"] .hero h1 {
-  font-family: "Gaegu", "Yuanti SC", "PingFang SC", ui-rounded, sans-serif;
+  font-family: "Gaegu", "ZCOOL KuaiLe", "Yuanti SC", "PingFang SC", ui-rounded, sans-serif;
   font-size: 62px;
 }
 [data-theme="mooda"] .hero-shot .frame,
@@ -456,7 +459,7 @@ html[data-theme="notebook"] {
   border: 1.5px solid var(--ink); border-radius: 9px;
 }
 [data-theme="mooda"] .feature h3 {
-  font-family: "Gaegu", cursive; font-size: 19px;
+  font-family: "Gaegu", "ZCOOL KuaiLe", cursive; font-size: 19px;
 }
 [data-theme="mooda"] .hero .cta-main {
   border: 1.5px solid var(--ink);
