@@ -484,8 +484,40 @@ html[data-theme="notebook"] {
   .page.left { box-shadow: none; border-bottom: 1px solid var(--edge); }
   .page.right { box-shadow: none; }
   .features { grid-template-columns: 1fr; }
-  .hero h1 { font-size: 38px; }
+  .hero h1, [data-theme="mooda"] .hero h1 { font-size: 42px; }
   .search-wrap { width: 150px; }
   .search-results { width: 290px; right: 0; left: auto; }
   .logo .logo-text { display: none; }
+}
+
+/* ---------- 手机端 ---------- */
+@media (max-width: 600px) {
+  /* 首页导航 */
+  .landing-nav { height: 56px; padding: 0 16px; }
+  .landing-nav .nav-actions { gap: 6px; }
+  .nav-link { padding: 7px 9px; font-size: 13px; }
+  .nav-cta { padding: 7px 12px; font-size: 13px; }
+
+  /* 首页 hero */
+  .hero { padding: 40px 20px 28px; }
+  .hero h1, [data-theme="mooda"] .hero h1 { font-size: 30px; }
+  .hero p { font-size: 15px; margin: 14px auto 24px; line-height: 1.6; }
+  .hero .cta-main { padding: 11px 22px; }
+
+  /* 首页轮播：手机隐藏箭头，靠滑动 + 圆点 + 自动播放 */
+  .hero-carousel { padding: 0 14px; }
+  .carousel-arrow { display: none; }
+  .carousel-slide { padding: 4px 4px 10px; }
+  .carousel-dots { margin: 14px auto 48px; }
+
+  /* app 顶栏 */
+  .topbar { gap: 7px; padding: 0 10px; }
+  .view-toggle { margin-left: 2px; }
+  .view-toggle button { padding: 3px 8px; font-size: 12px; white-space: nowrap; }
+  .theme-toggle { font-size: 0; gap: 0; padding: 6px 9px; }
+  .theme-toggle .tt-emoji { font-size: 16px; }
+  .search-wrap { width: 92px; }
+
+  /* 登录卡片 */
+  .login-card { width: 100%; max-width: 360px; margin: 0 auto; padding: 28px 22px; }
 }
