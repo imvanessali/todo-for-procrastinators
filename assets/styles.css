@@ -330,7 +330,17 @@ html[data-theme="notebook"] {
 .hero-shot .frame, .carousel-slide .frame { border-radius: 10px; box-shadow: var(--shadow); overflow: hidden; background: var(--paper); border: 1px solid var(--edge); }
 
 /* ---------- hero carousel ---------- */
-.hero-carousel { position: relative; max-width: 980px; margin: 0 auto; padding: 0 24px; }
+.hero-carousel { position: relative; max-width: 980px; margin: 0 auto; padding: 0 52px; }
+.carousel-arrow {
+  position: absolute; top: 50%; transform: translateY(-50%); z-index: 2;
+  width: 36px; height: 36px; border-radius: 50%; padding: 0;
+  display: flex; align-items: center; justify-content: center;
+  border: none; background: transparent; color: rgba(82,86,94,0.3);
+  font-size: 26px; line-height: 1; cursor: pointer; transition: color .15s;
+}
+.carousel-arrow:hover { color: rgba(82,86,94,0.6); }
+.carousel-arrow.prev { left: 6px; }
+.carousel-arrow.next { right: 6px; }
 .carousel-track { display: flex; overflow-x: auto; scroll-snap-type: x proximity; scroll-behavior: smooth; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
 .carousel-track::-webkit-scrollbar { display: none; }
 .carousel-slide { flex: 0 0 100%; scroll-snap-align: start; box-sizing: border-box; padding: 4px 6px 12px 6px; }

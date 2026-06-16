@@ -329,12 +329,12 @@
   function moodFace(ratio, count) {
     // MOODA 风：手绘 blob 脸 + 黑色墨水五官；开心时加腮红
     let fill, mouth, cheeks = '';
-    if (count === 0) {                       // 空白的一天，平淡
-      fill = '#c8c3b8';
-      mouth = '<path d="M25 40 H39"/>';
-    } else if (ratio === 0) {                // 一件没做，天蓝丧脸
+    if (count === 0) {                       // 空白的一天，浅色轻笑
+      fill = '#cdd3da';
+      mouth = '<path d="M26 39 Q32 42 38 39"/>';
+    } else if (ratio === 0) {                // 还没开始，天蓝微笑
       fill = '#55afd5';
-      mouth = '<path d="M25 41 Q32 36 39 41"/>';
+      mouth = '<path d="M25 38 Q32 43 39 38"/>';
     } else if (ratio < 0.67) {               // 做了一点，黄色微笑
       fill = '#f4c340';
       mouth = '<path d="M25 38 Q32 43 39 38"/>';

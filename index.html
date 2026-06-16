@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/styles.css?v=17">
+  <link rel="stylesheet" href="assets/styles.css?v=18">
 </head>
 <body>
   <nav class="landing-nav">
@@ -69,8 +69,8 @@
         </svg>
 
         <!-- Today label (highlighter) + date -->
-        <rect x="96" y="94" width="152" height="11" fill="rgba(85,175,213,0.55)"/>
-        <text x="98" y="101" font-size="20" font-weight="700" fill="#52565e" font-family="Gaegu,sans-serif">Today · 今天</text>
+        <rect x="96" y="96" width="182" height="14" fill="rgba(85,175,213,0.55)"/>
+        <text x="98" y="106" font-size="30" font-weight="700" fill="#52565e" font-family="Gaegu,sans-serif">Today · 今天</text>
         <g transform="translate(0,18)">
         <line x1="36" y1="115" x2="444" y2="115" stroke="rgba(82,86,94,0.07)" stroke-width="1"/>
 
@@ -110,8 +110,8 @@
         </svg>
 
         <!-- Not Today label -->
-        <rect x="574" y="94" width="200" height="11" fill="rgba(85,175,213,0.55)"/>
-        <text x="576" y="101" font-size="20" font-weight="700" fill="#52565e" font-family="Gaegu,sans-serif">Not Today · 改天</text>
+        <rect x="574" y="96" width="248" height="14" fill="rgba(85,175,213,0.55)"/>
+        <text x="576" y="106" font-size="30" font-weight="700" fill="#52565e" font-family="Gaegu,sans-serif">Not Today · 改天</text>
 
         <g transform="translate(0,18)">
         <line x1="514" y1="115" x2="922" y2="115" stroke="rgba(82,86,94,0.07)" stroke-width="1"/>
@@ -241,6 +241,8 @@
     </div>
     </div>
     </div>
+    <button class="carousel-arrow prev" id="carousel-prev" type="button" aria-label="上一张">‹</button>
+    <button class="carousel-arrow next" id="carousel-next" type="button" aria-label="下一张">›</button>
   </div>
   <div class="carousel-dots" id="carousel-dots">
     <button class="dot active" type="button" data-i="0" aria-label="Todo 笔记本"></button>
@@ -253,8 +255,8 @@
 
   <!-- 登录态感知：已登录则导航显示账号名 + 进入入口 -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="assets/config.js?v=17"></script>
-  <script src="assets/auth.js?v=17"></script>
+  <script src="assets/config.js?v=18"></script>
+  <script src="assets/auth.js?v=18"></script>
   <script>
     (async () => {
       let session;
@@ -291,6 +293,8 @@
       const stop = () => clearInterval(timer);
       const restart = () => { stop(); start(); };
       dots.forEach((d) => d.addEventListener('click', () => { goTo(+d.dataset.i); restart(); }));
+      document.getElementById('carousel-prev').addEventListener('click', () => { goTo((current() - 1 + slides.length) % slides.length); restart(); });
+      document.getElementById('carousel-next').addEventListener('click', () => { goTo((current() + 1) % slides.length); restart(); });
       track.addEventListener('scroll', () => {
         dots.forEach((d, k) => d.classList.toggle('active', k === current()));
       }, { passive: true });
