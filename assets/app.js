@@ -419,13 +419,13 @@
 
     const title = el('span', 'todo-title');
     title.appendChild(el('span', 'todo-text', t.title));
-    if (t.repeat) {
-      const badge = el('span', 'repeat-badge', '↻ ' + (REPEAT_LABELS[t.repeat] || '重复'));
-      badge.title = '重复任务';
-      title.appendChild(badge);
-    }
     title.onclick = () => startEdit(li, title, t);
     li.appendChild(title);
+    if (t.repeat) {
+      const badge = el('span', 'repeat-badge', REPEAT_LABELS[t.repeat] || '重复');
+      badge.title = '重复任务';
+      li.appendChild(badge);
+    }
 
     const actions = el('div', 'todo-actions');
     // 始终渲染，完成时由 CSS 隐藏（保证就地切换不需重建节点）
