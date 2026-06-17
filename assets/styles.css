@@ -107,13 +107,13 @@ html[data-theme="notebook"] {
 .user-menu .btn-plain:hover { background: var(--hover); }
 /* 邮箱首字母头像 + 弹出菜单 */
 .avatar {
-  width: 34px; height: 34px; flex: none; border: none; background: none; padding: 0;
+  width: 24px; height: 24px; flex: none; border: none; background: none; padding: 0;
   cursor: pointer; position: relative; display: block;
 }
-.avatar-blob { width: 100%; height: 100%; display: block; }
+.avatar-blob { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
 .avatar-initial {
-  position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
-  color: #52565e; font-weight: 700; font-size: 14px; text-transform: uppercase;
+  position: absolute; inset: 0; z-index: 1; display: flex; align-items: center; justify-content: center;
+  color: #52565e; font-weight: 700; font-size: 11px; line-height: 1; text-transform: uppercase;
 }
 .user-pop {
   position: absolute; right: 0; top: calc(100% + 8px); z-index: 100;
