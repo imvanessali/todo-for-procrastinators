@@ -290,7 +290,7 @@ html[data-theme="notebook"] {
   width: 22px; height: 22px; line-height: 22px; margin: 0 auto;
 }
 .gantt-label {
-  font-size: 13px; padding: 9px 13px;
+  font-size: 13px; padding: 0 13px; min-height: 34px;
   position: sticky; left: 0; background: var(--paper); z-index: 2;
   border-right: 1px solid var(--edge);
   display: flex; align-items: center; gap: 6px;
@@ -316,13 +316,12 @@ html[data-theme="notebook"] {
   background: var(--blue); opacity: 0.85; min-width: 8px;
 }
 .gantt-bar.done { background: var(--green); opacity: 0.5; }
-/* 定位高亮：整行（任务名 + 整月行）铺一层黄色，闪两下 */
-.gantt-label.flash-row, .gantt-bar-row.flash-row { position: relative; }
+/* 定位高亮：整行（任务名 + 整月行）铺一层蓝色，与笔记页一致；label 用自身 sticky 作定位上下文，避免高亮时位移 */
 .gantt-label.flash-row::after, .gantt-bar-row.flash-row::after {
   content: ''; position: absolute; inset: 0; z-index: 4; pointer-events: none;
-  background: rgba(244, 195, 64, 0.5); animation: rowflash 1.6s ease-in-out;
+  background: var(--blue-soft); animation: rowflash 1.6s ease-out;
 }
-@keyframes rowflash { 0%, 100% { opacity: 0; } 25%, 65% { opacity: 1; } }
+@keyframes rowflash { 0%, 50% { opacity: 1; } 100% { opacity: 0; } }
 .gantt-empty { padding: 44px; text-align: center; color: var(--ink-faint); font-size: 14px; font-style: italic; }
 
 /* ---------- 日记 ---------- */
