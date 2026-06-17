@@ -243,7 +243,7 @@ html[data-theme="notebook"] {
   color: var(--ink-faint); border-bottom: 1px solid var(--rule);
 }
 .todo-add .plus { width: 18px; flex: none; text-align: center; font-size: 17px; }
-.todo-add input { flex: 1; border: none; outline: none; background: transparent; font-size: 15px; }
+.todo-add input { flex: 1; border: none; outline: none; background: transparent; font-size: 15px; color: var(--ink); }
 .todo-add input::placeholder { color: var(--ink-faint); }
 
 .page-empty { color: var(--ink-faint); font-size: 14px; padding: 12px 0; font-style: italic; }
