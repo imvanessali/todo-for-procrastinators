@@ -631,8 +631,16 @@
     if (!node) return;
     // rAF 确保切换视图后布局已就绪；inline 横向滚动到甘特图任务条
     requestAnimationFrame(() => node.scrollIntoView({ block: 'center', inline: 'center', behavior: 'smooth' }));
-    node.classList.add('flash');
-    setTimeout(() => node.classList.remove('flash'), 1600);
+    const row = node.closest('.gantt-bar-row');
+    if (row) {
+      // 甘特图：整行（任务名 + 整月行）黄色高亮
+      const targets = [row, row.previousElementSibling].filter(Boolean);
+      targets.forEach((n) => n.classList.add('flash-row'));
+      setTimeout(() => targets.forEach((n) => n.classList.remove('flash-row')), 1600);
+    } else {
+      node.classList.add('flash');
+      setTimeout(() => node.classList.remove('flash'), 1600);
+    }
   }
 
   // ---------- render: gantt ----------

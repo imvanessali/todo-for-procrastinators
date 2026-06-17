@@ -316,12 +316,13 @@ html[data-theme="notebook"] {
   background: var(--blue); opacity: 0.85; min-width: 8px;
 }
 .gantt-bar.done { background: var(--green); opacity: 0.5; }
-.gantt-bar.flash { animation: barflash 1.5s ease-in-out; z-index: 5; transform-origin: center; }
-@keyframes barflash {
-  0%, 100% { transform: scaleY(1); filter: none; box-shadow: none; }
-  15%, 55% { transform: scaleY(1.55); filter: brightness(1.12) saturate(1.35); box-shadow: 0 0 0 3px var(--blue-soft), 0 3px 10px rgba(40,40,46,0.22); }
-  35%, 75% { transform: scaleY(1.55); filter: brightness(1.04); box-shadow: 0 0 0 2px var(--blue), 0 3px 10px rgba(40,40,46,0.18); }
+/* 定位高亮：整行（任务名 + 整月行）铺一层黄色，闪两下 */
+.gantt-label.flash-row, .gantt-bar-row.flash-row { position: relative; }
+.gantt-label.flash-row::after, .gantt-bar-row.flash-row::after {
+  content: ''; position: absolute; inset: 0; z-index: 4; pointer-events: none;
+  background: rgba(244, 195, 64, 0.5); animation: rowflash 1.6s ease-in-out;
 }
+@keyframes rowflash { 0%, 100% { opacity: 0; } 25%, 65% { opacity: 1; } }
 .gantt-empty { padding: 44px; text-align: center; color: var(--ink-faint); font-size: 14px; font-style: italic; }
 
 /* ---------- 日记 ---------- */
