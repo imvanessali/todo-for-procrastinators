@@ -499,7 +499,7 @@
 
     const title = el('span', 'todo-title');
     title.appendChild(el('span', 'todo-text', t.title));
-    title.onclick = () => startEdit(li, title, t);
+    title.ondblclick = () => startEdit(li, title, t);
     li.appendChild(title);
     if (t.repeat) {
       const badge = el('span', 'repeat-badge', repeatLabel(t.repeat));
