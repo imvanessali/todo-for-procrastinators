@@ -43,6 +43,14 @@ function createSupabaseStore(client) {
         const { error } = await client.from('journals').delete().eq('day', day);
         if (error) throw error;
       }
+    },
+    // 实时同步：订阅 todos/journals 变更（Supabase Realtime，websocket 推送，非轮询）
+    // 需在库中启用：alter publication supabase_realtime add table todos, journals;
+    subscribe(onChange) {
+      return client.channel('folio-db')
+        .on('postgres_changes', { event: '*', schema: 'public', table: 'todos' }, onChange)
+        .on('postgres_changes', { event: '*', schema: 'public', table: 'journals' }, onChange)
+        .subscribe();
     }
   };
 }
@@ -85,6 +93,12 @@ function createLocalStore() {
       if (text) j[day] = { content: text, updated_at: new Date().toISOString() };
       else delete j[day];
       localStorage.setItem('folio.journals', JSON.stringify(j));
+    },
+    // 同一浏览器多标签页同步
+    subscribe(onChange) {
+      window.addEventListener('storage', (e) => {
+        if (e.key === 'folio.todos' || e.key === 'folio.journals') onChange(e);
+      });
     }
   };
 }

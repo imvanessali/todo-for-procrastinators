@@ -159,6 +159,25 @@
     render();
     booted = true;
     scheduleMidnightRefresh();
+    // 实时同步：其他设备/标签页有改动时自动拉取（debounce 合并，编辑中不打断）
+    if (store.subscribe) { try { store.subscribe(scheduleSync); } catch (e) {} }
+  }
+
+  // ---------- 实时同步 ----------
+  let syncTimer = null;
+  async function syncNow() {
+    let next;
+    try { next = await store.list(); } catch (e) { return; }
+    todos = next;
+    try { journals = await store.listJournals(); } catch (e) {}
+    // 正在编辑或正在写日记时不重渲染，避免打断（数据已更新，下次渲染即生效）
+    const busy = document.querySelector('.todo-edit') ||
+      !$('journal-modal').classList.contains('hidden');
+    if (!busy) render();
+  }
+  function scheduleSync() {
+    clearTimeout(syncTimer);
+    syncTimer = setTimeout(syncNow, 250);
   }
 
   // 跨天顺延：过去的未完成任务 → 移到今天页顶部，保持原相对顺序
