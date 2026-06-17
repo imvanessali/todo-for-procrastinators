@@ -603,7 +603,7 @@
       label.appendChild(el('span', 'gl-text', t.title));
       const del = el('button', 'gl-del', '×');
       del.title = '删除任务';
-      del.onclick = () => deleteTodo(t);
+      del.onclick = () => { if (confirm(`确定删除任务「${t.title}」吗？`)) deleteTodo(t); };
       label.appendChild(del);
       grid.appendChild(label);
 
