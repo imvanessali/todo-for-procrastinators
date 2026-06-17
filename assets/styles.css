@@ -210,12 +210,9 @@ html[data-theme="notebook"] {
   font-size: 15px; line-height: 1.4; padding: 0;
 }
 
-.todo-actions {
-  display: none; gap: 2px; position: absolute; right: 4px; top: 50%;
-  transform: translateY(-50%); padding-left: 30px;
-  background: linear-gradient(90deg, transparent, var(--paper) 38%);
-}
-.todo-item:hover .todo-actions { display: flex; }
+/* 始终占位显示：文案区宽度固定，点文案永远是编辑，点图标才是操作（移动端无 hover 也可用，不会误触） */
+.todo-actions { display: flex; gap: 2px; flex: none; opacity: 0.55; transition: opacity 0.15s; }
+.todo-item:hover .todo-actions { opacity: 1; }
 .todo-item.done .act-move { display: none; }
 .todo-actions button {
   width: 24px; height: 24px; border-radius: 5px; color: var(--ink-faint);

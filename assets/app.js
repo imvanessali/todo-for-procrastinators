@@ -408,8 +408,13 @@
     menu.appendChild(apply);
     document.body.appendChild(menu);
     const r = anchor.getBoundingClientRect();
-    menu.style.top = `${r.bottom + 4}px`;
-    menu.style.left = `${Math.min(r.left, window.innerWidth - menu.offsetWidth - 8)}px`;
+    const menuH = menu.offsetHeight, menuW = menu.offsetWidth;
+    // 默认在按钮下方展开；若会超出视口底部（手机上常见），则改为向上展开
+    let top = r.bottom + 4;
+    if (top + menuH > window.innerHeight - 8) top = Math.max(8, r.top - menuH - 4);
+    const left = Math.max(8, Math.min(r.left, window.innerWidth - menuW - 8));
+    menu.style.top = `${top}px`;
+    menu.style.left = `${left}px`;
     setTimeout(() => document.addEventListener('mousedown', onDocClickRepeat), 0);
   }
   function closeRepeatMenu() {
