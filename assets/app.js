@@ -273,8 +273,7 @@
   // ---------- 日记 ----------
   function openJournal(day) {
     journalDay = day;
-    const label = day === TODAY ? `今天 · ${human(day)}` : human(day);
-    $('journal-title').textContent = `${label} 的日记`;
+    $('journal-title').textContent = day === TODAY ? '随手写点' : `${human(day)} · 随手写点`;
     $('journal-text').value = journals[day]?.content || '';
     $('journal-status').textContent = '';
     $('journal-modal').classList.remove('hidden');
