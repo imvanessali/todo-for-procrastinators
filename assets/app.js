@@ -52,6 +52,16 @@
   // mooda 主题里每个任务循环用到的心情色
   const MOOD_COLORS = ['#79e0a6', '#55afd5', '#7a6fd0', '#f4c340', '#e86a6e'];
   const REPEAT_LABELS = { daily: '每天', weekdays: '每工作日', weekly: '每周', monthly: '每月' };
+  const DOW_NAMES = ['日', '一', '二', '三', '四', '五', '六'];
+  // repeat 取值：'daily'|'weekdays'|'weekly'|'monthly'，或 'dow:1,4'（按周几，数字为 getDay）
+  function repeatLabel(rule) {
+    if (!rule) return '';
+    if (rule.startsWith('dow:')) {
+      const days = rule.slice(4).split(',').filter(Boolean).map(Number).sort((a, b) => a - b);
+      return days.length ? '周' + days.map((d) => DOW_NAMES[d]).join('·') : '重复';
+    }
+    return REPEAT_LABELS[rule] || '重复';
+  }
 
   function theme() { return document.documentElement.dataset.theme || 'mooda'; }
   function setupTheme() {
@@ -295,6 +305,13 @@
       do { d = addDays(d, 1); } while ([0, 6].includes(parse(d).getDay()));
       return d;
     }
+    if (rule && rule.startsWith('dow:')) {
+      const set = new Set(rule.slice(4).split(',').filter(Boolean).map(Number));
+      if (!set.size) return null;
+      let d = baseDay;
+      for (let i = 0; i < 7; i++) { d = addDays(d, 1); if (set.has(parse(d).getDay())) return d; }
+      return null;
+    }
     return null;
   }
 
@@ -324,12 +341,32 @@
     closeRepeatMenu();
     const menu = el('div', 'repeat-menu');
     menu.id = 'repeat-menu';
+    const cur = t.repeat || '';
     const opts = [['', '不重复'], ['daily', '每天'], ['weekdays', '每工作日'], ['weekly', '每周'], ['monthly', '每月']];
     for (const [rule, label] of opts) {
-      const b = el('button', (t.repeat || '') === rule ? 'active' : null, label);
+      const b = el('button', cur === rule ? 'active' : null, label);
       b.onclick = () => { closeRepeatMenu(); setRepeat(t, rule); };
       menu.appendChild(b);
     }
+    // 自定义：按周几重复（可多选，如 周一+周四）
+    menu.appendChild(el('div', 'repeat-sep', '按周几重复'));
+    const selected = new Set(cur.startsWith('dow:') ? cur.slice(4).split(',').filter(Boolean).map(Number) : []);
+    const dowWrap = el('div', 'repeat-dow');
+    for (let d = 0; d < 7; d++) {
+      const chip = el('button', 'dow-chip' + (selected.has(d) ? ' on' : ''), DOW_NAMES[d]);
+      chip.onclick = () => {
+        if (selected.has(d)) selected.delete(d); else selected.add(d);
+        chip.classList.toggle('on');
+      };
+      dowWrap.appendChild(chip);
+    }
+    menu.appendChild(dowWrap);
+    const apply = el('button', 'repeat-apply', '应用所选周几');
+    apply.onclick = () => {
+      closeRepeatMenu();
+      setRepeat(t, selected.size ? 'dow:' + [...selected].sort((a, b) => a - b).join(',') : '');
+    };
+    menu.appendChild(apply);
     document.body.appendChild(menu);
     const r = anchor.getBoundingClientRect();
     menu.style.top = `${r.bottom + 4}px`;
@@ -461,7 +498,7 @@
     title.onclick = () => startEdit(li, title, t);
     li.appendChild(title);
     if (t.repeat) {
-      const badge = el('span', 'repeat-badge', REPEAT_LABELS[t.repeat] || '重复');
+      const badge = el('span', 'repeat-badge', repeatLabel(t.repeat));
       badge.title = '重复任务';
       li.appendChild(badge);
     }
@@ -469,7 +506,7 @@
     const actions = el('div', 'todo-actions');
     // 始终渲染，完成时由 CSS 隐藏（保证就地切换不需重建节点）
     const rep = el('button', 'act-repeat' + (t.repeat ? ' on' : ''), '↻');
-    rep.title = t.repeat ? `重复：${REPEAT_LABELS[t.repeat]}` : '设为重复';
+    rep.title = t.repeat ? `重复：${repeatLabel(t.repeat)}` : '设为重复';
     rep.onclick = (e) => { e.stopPropagation(); openRepeatMenu(t, rep); };
     actions.appendChild(rep);
     const move = el('button', 'act-move', isToday ? '→' : '←');
