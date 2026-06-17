@@ -200,20 +200,20 @@
     syncTimer = setTimeout(syncNow, 250);
   }
 
-  // 跨天顺延：过去的未完成任务 → 移到今天页顶部，保持原相对顺序
+  // 跨天顺延：过去未完成的任务 → 移到「改天 / Not Today」页顶部（已完成的留在原日期，只在甘特图体现）
   async function rollover() {
     const stale = todos
       .filter((t) => !t.done && t.day < TODAY)
       .sort((a, b) => a.day.localeCompare(b.day) || a.position - b.position);
     if (!stale.length) return;
-    const todayItems = todos.filter((t) => t.day === TODAY);
-    const minPos = todayItems.length ? Math.min(...todayItems.map((t) => t.position)) : 1;
+    const tmrwItems = todos.filter((t) => t.day === TOMORROW);
+    const minPos = tmrwItems.length ? Math.min(...tmrwItems.map((t) => t.position)) : 1;
     for (let i = 0; i < stale.length; i++) {
       const pos = minPos - stale.length + i;
-      stale[i].day = TODAY;
+      stale[i].day = TOMORROW;
       stale[i].position = pos;
-      stale[i].rolled_over = true; // 仅本地标记，用于展示
-      await store.update(stale[i].id, { day: TODAY, position: pos });
+      stale[i].rolled_over = true; // 本地标记
+      await store.update(stale[i].id, { day: TOMORROW, position: pos });
     }
   }
 
