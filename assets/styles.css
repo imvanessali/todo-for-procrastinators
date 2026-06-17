@@ -107,9 +107,13 @@ html[data-theme="notebook"] {
 .user-menu .btn-plain:hover { background: var(--hover); }
 /* 邮箱首字母头像 + 弹出菜单 */
 .avatar {
-  width: 32px; height: 32px; flex: none; border: none; cursor: pointer;
-  border-radius: 50%; background: #f4c340; color: #52565e; font-weight: 700; font-size: 15px;
-  display: flex; align-items: center; justify-content: center; text-transform: uppercase;
+  width: 34px; height: 34px; flex: none; border: none; background: none; padding: 0;
+  cursor: pointer; position: relative; display: block;
+}
+.avatar-blob { width: 100%; height: 100%; display: block; }
+.avatar-initial {
+  position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+  color: #52565e; font-weight: 700; font-size: 14px; text-transform: uppercase;
 }
 .user-pop {
   position: absolute; right: 0; top: calc(100% + 8px); z-index: 100;
@@ -123,7 +127,6 @@ html[data-theme="notebook"] {
   background: var(--paper-2); color: var(--ink); font-size: 13px; border: 1px solid var(--edge);
 }
 .user-pop-logout:hover { background: var(--hover); }
-[data-theme="mooda"] .avatar { border: 1.5px solid var(--ink); }
 [data-theme="mooda"] .user-pop { border: 1.5px solid var(--ink); border-radius: 12px; }
 .badge-local {
   font-size: 12px; color: var(--ink-light); background: var(--paper-2);
@@ -180,15 +183,15 @@ html[data-theme="notebook"] {
 @keyframes flash { 0%, 50% { background: var(--blue-soft); } 100% { background: transparent; } }
 
 .todo-check {
-  width: 18px; height: 18px; flex: none;
-  border: 1.5px solid var(--ink-faint); border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  transition: background 0.18s, border-color 0.18s;
+  width: 22px; height: 22px; flex: none; padding: 0; border: none; background: none;
+  display: flex; align-items: center; justify-content: center; cursor: pointer;
 }
-.todo-check:hover { border-color: var(--blue); }
-.todo-item.done .todo-check { background: var(--green); border-color: var(--green); }
-.todo-check svg { opacity: 0; transition: opacity 0.18s; }
-.todo-item.done .todo-check svg { opacity: 1; }
+.todo-check .check-blob { width: 100%; height: 100%; display: block; }
+.todo-check .cb-shape { fill: none; stroke: var(--c, var(--ink-faint)); stroke-width: 2.2; transition: fill 0.18s; }
+.todo-check:hover .cb-shape { stroke: var(--c, var(--blue)); }
+.todo-check .cb-tick { opacity: 0; transition: opacity 0.18s; }
+.todo-item.done .todo-check .cb-shape { fill: var(--c, var(--green)); stroke: var(--c, var(--green)); }
+.todo-item.done .todo-check .cb-tick { opacity: 1; }
 .todo-item.celebrate .todo-check { animation: checkpop 0.42s cubic-bezier(0.34, 1.56, 0.64, 1); }
 @keyframes checkpop { 0% { transform: scale(0.55); } 55% { transform: scale(1.28); } 100% { transform: scale(1); } }
 .todo-item.celebrate { animation: celebrate-row 0.7s ease; border-radius: 11px; }
@@ -321,11 +324,11 @@ html[data-theme="notebook"] {
 
 /* ---------- 日记 ---------- */
 .journal-btn {
-  margin-left: auto; flex: none; display: flex; align-items: center; gap: 5px;
-  padding: 6px 11px; border: 1px solid var(--edge); border-radius: 8px;
-  background: var(--paper-2); color: var(--ink-light); font-size: 13px; cursor: pointer;
+  margin-left: auto; flex: none; display: flex; align-items: center; gap: 6px;
+  padding: 7px 14px; border: none; border-radius: 999px;
+  background: rgba(244, 195, 64, 0.22); color: #9a7b1f; font-size: 13px; cursor: pointer;
 }
-.journal-btn:hover { background: var(--paper); color: var(--ink); }
+.journal-btn:hover { background: rgba(244, 195, 64, 0.4); }
 .journal-btn svg { display: block; }
 .journal-modal {
   position: fixed; inset: 0; z-index: 200; padding: 24px;
@@ -504,7 +507,7 @@ html[data-theme="notebook"] {
   background-repeat: no-repeat; background-position: 0 74%; background-size: 100% 54%;
 }
 [data-theme="mooda"] .journal-btn {
-  border: 1.5px solid var(--ink); border-radius: 9px;
+  border: none; border-radius: 999px;
   font-family: "Gaegu", "Yuanti SC", "PingFang SC", cursive; font-size: 14px;
 }
 [data-theme="mooda"] .journal-card {
@@ -515,9 +518,7 @@ html[data-theme="notebook"] {
 }
 [data-theme="mooda"] .todo-item, [data-theme="mooda"] .todo-add { border-bottom: none; }
 [data-theme="mooda"] .todo-item { border-radius: 11px; }
-[data-theme="mooda"] .todo-check { border-color: var(--c); border-width: 2px; }
-[data-theme="mooda"] .todo-check:hover { filter: brightness(0.93); }
-[data-theme="mooda"] .todo-item.done .todo-check { background: var(--c); border-color: var(--c); }
+/* 勾选框已改 blob，由通用 .todo-check 规则用 --c 着色，无需主题覆盖 */
 [data-theme="mooda"] .gantt-bar { background: var(--c, var(--blue)); opacity: 0.9; }
 
 /* ---------- MOODA 首页专属覆盖 ---------- */

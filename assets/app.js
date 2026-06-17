@@ -51,6 +51,8 @@
   };
   // mooda 主题里每个任务循环用到的心情色
   const MOOD_COLORS = ['#79e0a6', '#55afd5', '#7a6fd0', '#f4c340', '#e86a6e'];
+  // 手绘 blob 形状（24×24），用于勾选框 / 头像
+  const BLOB24 = 'M12.4 1.9 C17.3 1.5 22.1 5.6 21.8 11.6 C21.4 17.6 17.6 22.1 11.6 21.8 C6 21.4 1.9 17.6 2.2 11.2 C2.6 5.6 7.1 2.2 12.4 1.9 Z';
   // 操作图标（实心，fill 继承 currentColor）
   const ICON_REFRESH = '<svg viewBox="0 0 513.806 513.806" fill="currentColor" width="13" height="13"><path d="M66.074,228.731C81.577,123.379,179.549,50.542,284.901,66.045c35.944,5.289,69.662,20.626,97.27,44.244l-24.853,24.853c-8.33,8.332-8.328,21.84,0.005,30.17c3.999,3.998,9.423,6.245,15.078,6.246h97.835c11.782,0,21.333-9.551,21.333-21.333V52.39c-0.003-11.782-9.556-21.331-21.338-21.329c-5.655,0.001-11.079,2.248-15.078,6.246L427.418,65.04C321.658-29.235,159.497-19.925,65.222,85.835c-33.399,37.467-55.073,83.909-62.337,133.573c-2.864,17.607,9.087,34.202,26.693,37.066c1.586,0.258,3.188,0.397,4.795,0.417C50.481,256.717,64.002,244.706,66.074,228.731z"/><path d="M479.429,256.891c-16.108,0.174-29.629,12.185-31.701,28.16C432.225,390.403,334.253,463.24,228.901,447.738c-35.944-5.289-69.662-20.626-97.27-44.244l24.853-24.853c8.33-8.332,8.328-21.84-0.005-30.17c-3.999-3.998-9.423-6.245-15.078-6.246H43.568c-11.782,0-21.333,9.551-21.333,21.333v97.835c0.003,11.782,9.556,21.331,21.338,21.329c5.655-0.001,11.079-2.248,15.078-6.246l27.733-27.733c105.735,94.285,267.884,85.004,362.17-20.732c33.417-37.475,55.101-83.933,62.363-133.615c2.876-17.605-9.064-34.208-26.668-37.084C482.655,257.051,481.044,256.91,479.429,256.891z"/></svg>';
   const ICON_ARROW = '<svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14"><path d="M23.73,11.356l-5.154-5.087c-.581-.574-1.575-.167-1.575,.644v3.587H1.5c-.828,0-1.5,.671-1.5,1.5s.672,1.5,1.5,1.5h15.5v3.587c0,.811,.994,1.218,1.575,.644l5.154-5.087c.36-.356,.36-.932,0-1.288Z"/></svg>';
@@ -110,8 +112,10 @@
   // 邮箱首字母头像 + 弹出菜单（邮箱 + 退出）
   function buildUserMenu(email) {
     const initial = ((email || '').trim()[0] || '?').toUpperCase();
-    const avatar = el('button', 'avatar', initial);
+    const avatar = el('button', 'avatar');
     avatar.title = email;
+    avatar.innerHTML = '<svg class="avatar-blob" viewBox="0 0 24 24"><path d="' + BLOB24 + '" fill="#f4c340"/></svg><span class="avatar-initial"></span>';
+    avatar.querySelector('.avatar-initial').textContent = initial;
     const pop = el('div', 'user-pop hidden');
     pop.appendChild(el('div', 'user-pop-email', email));
     const out = el('button', 'user-pop-logout', '退出');
@@ -533,7 +537,7 @@
 
     const check = el('button', 'todo-check');
     check.title = t.done ? '标记未完成' : '标记完成';
-    check.innerHTML = '<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="4"><polyline points="4 13 9 18 20 6"/></svg>';
+    check.innerHTML = '<svg class="check-blob" viewBox="0 0 24 24"><path class="cb-shape" d="' + BLOB24 + '"/><path class="cb-tick" d="M7 12.4l3 3 6.4-7" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
     check.onclick = () => toggleDone(t);
     li.appendChild(check);
 

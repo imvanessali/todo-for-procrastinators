@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/styles.css?v=39">
+  <link rel="stylesheet" href="assets/styles.css?v=40">
 </head>
 <body>
   <nav class="landing-nav">
@@ -253,8 +253,8 @@
 
   <!-- 登录态感知：已登录则导航显示账号名 + 进入入口 -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="assets/config.js?v=39"></script>
-  <script src="assets/auth.js?v=39"></script>
+  <script src="assets/config.js?v=40"></script>
+  <script src="assets/auth.js?v=40"></script>
   <script>
     (async () => {
       let session;
@@ -267,13 +267,16 @@
       actions.innerHTML =
         '<a class="nav-cta" href="app.html">开始记录 ' + ARROW + '</a>' +
         '<div class="user-menu" id="nav-user-menu">' +
-          '<button class="avatar" id="nav-avatar"></button>' +
+          '<button class="avatar" id="nav-avatar">' +
+            '<svg class="avatar-blob" viewBox="0 0 24 24"><path d="M12.4 1.9 C17.3 1.5 22.1 5.6 21.8 11.6 C21.4 17.6 17.6 22.1 11.6 21.8 C6 21.4 1.9 17.6 2.2 11.2 C2.6 5.6 7.1 2.2 12.4 1.9 Z" fill="#f4c340"/></svg>' +
+            '<span class="avatar-initial"></span>' +
+          '</button>' +
           '<div class="user-pop hidden" id="nav-pop">' +
             '<div class="user-pop-email"></div>' +
             '<button class="user-pop-logout" id="nav-logout">退出</button>' +
           '</div>' +
         '</div>';
-      document.getElementById('nav-avatar').textContent = initial;
+      document.querySelector('#nav-avatar .avatar-initial').textContent = initial;
       actions.querySelector('.user-pop-email').textContent = email;
       const navAvatar = document.getElementById('nav-avatar');
       const navPop = document.getElementById('nav-pop');
