@@ -388,7 +388,8 @@ html[data-theme="notebook"] {
 .hero h1 { font-family: var(--serif); font-size: 54px; line-height: 1.12; letter-spacing: -0.01em; font-weight: 700; }
 .hero p { font-size: 19px; color: var(--ink-light); margin: 22px auto 32px; max-width: 560px; line-height: 1.65; }
 .hero .cta-row { display: flex; gap: 12px; justify-content: center; }
-.hero .cta-main { font-size: 15px; font-weight: 500; color: var(--paper); background: var(--ink); text-decoration: none; padding: 12px 24px; border-radius: 8px; }
+.hero .cta-main { font-size: 15px; font-weight: 500; color: var(--paper); background: var(--ink); text-decoration: none; padding: 12px 24px; border-radius: 8px; display: inline-flex; align-items: center; gap: 7px; }
+.hero .cta-main .cta-arrow { display: block; }
 .hero .cta-main:hover { background: #2a2318; }
 
 .hero-shot { max-width: 980px; margin: 0 auto; padding: 0 24px 80px; }
@@ -573,6 +574,8 @@ html[data-theme="notebook"] {
   /* 首页导航 */
   .landing-nav { height: 56px; padding: 0 16px; }
   .landing-nav .nav-actions { gap: 6px; }
+  .landing-nav .nav-user { display: none; } /* 移动端隐藏长邮箱，避免挤压换行 */
+  .nav-link, .nav-cta { white-space: nowrap; flex: none; }
   .nav-link { padding: 7px 9px; font-size: 13px; }
   .nav-cta { padding: 7px 12px; font-size: 13px; }
 

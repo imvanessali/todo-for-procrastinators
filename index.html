@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/styles.css?v=36">
+  <link rel="stylesheet" href="assets/styles.css?v=37">
 </head>
 <body>
   <nav class="landing-nav">
@@ -28,7 +28,7 @@
     <h1>有些任务啊，<br>可以明天再做。</h1>
     <p>今天只需要关注今天的事，但今天没做完也没关系。</p>
     <div class="cta-row">
-      <a class="cta-main" id="hero-cta" href="app.html">免费开始 →</a>
+      <a class="cta-main" id="hero-cta" href="app.html">开始记录 <svg class="cta-arrow" viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M23.73,11.356l-5.154-5.087c-.581-.574-1.575-.167-1.575,.644v3.587H1.5c-.828,0-1.5,.671-1.5,1.5s.672,1.5,1.5,1.5h15.5v3.587c0,.811,.994,1.218,1.575,.644l5.154-5.087c.36-.356,.36-.932,0-1.288Z"/></svg></a>
     </div>
   </header>
 
@@ -248,13 +248,13 @@
   </div>
 
   <footer class="landing-footer">
-    Today or Not Today · 有些任务啊，可以明天再做。
+    Today, or not today, that is a question. — Vanessa Li
   </footer>
 
   <!-- 登录态感知：已登录则导航显示账号名 + 进入入口 -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="assets/config.js?v=36"></script>
-  <script src="assets/auth.js?v=36"></script>
+  <script src="assets/config.js?v=37"></script>
+  <script src="assets/auth.js?v=37"></script>
   <script>
     (async () => {
       let session;
@@ -265,10 +265,8 @@
       actions.innerHTML =
         '<span class="nav-user" title="' + email + '">' + email + '</span>' +
         '<a class="nav-link" id="nav-logout" href="#">退出</a>' +
-        '<a class="nav-cta" href="app.html">打开我的 Todo →</a>';
+        '<a class="nav-cta" href="app.html">开始记录 →</a>';
       document.getElementById('nav-logout').onclick = (e) => { e.preventDefault(); FolioAuth.signOut(); };
-      const heroCta = document.getElementById('hero-cta');
-      if (heroCta) heroCta.textContent = '打开我的 Todo →';
     })();
   </script>
   <script>
