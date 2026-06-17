@@ -112,10 +112,8 @@
   // 邮箱首字母头像 + 弹出菜单（邮箱 + 退出）
   function buildUserMenu(email) {
     const initial = ((email || '').trim()[0] || '?').toUpperCase();
-    const avatar = el('button', 'avatar');
+    const avatar = el('button', 'avatar', initial);
     avatar.title = email;
-    avatar.innerHTML = '<svg class="avatar-blob" viewBox="0 0 24 24"><path d="' + BLOB24 + '" fill="#f4c340"/></svg><span class="avatar-initial"></span>';
-    avatar.querySelector('.avatar-initial').textContent = initial;
     const pop = el('div', 'user-pop hidden');
     pop.appendChild(el('div', 'user-pop-email', email));
     const out = el('button', 'user-pop-logout', '退出');
