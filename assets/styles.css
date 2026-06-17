@@ -583,4 +583,12 @@ html[data-theme="notebook"] {
 
   /* 登录卡片 */
   .login-card { width: 100%; max-width: 360px; margin: 0 auto; padding: 28px 22px; }
+  .user-menu span { display: none; } /* 隐藏邮箱/本地徽章文字，留退出按钮 */
+
+  /* 笔记本头部：收小标题/心情脸/日记按钮，避免标题换行错位 */
+  .page-header { gap: 9px; }
+  [data-theme="mooda"] .page-label { font-size: 21px; }
+  [data-theme="mooda"] .mood-face svg { width: 40px; height: 40px; }
+  .journal-btn { padding: 7px 9px; }
+  .journal-btn span { display: none; }
 }
