@@ -51,6 +51,10 @@
   };
   // mooda 主题里每个任务循环用到的心情色
   const MOOD_COLORS = ['#79e0a6', '#55afd5', '#7a6fd0', '#f4c340', '#e86a6e'];
+  // 操作图标（实心，fill 继承 currentColor）
+  const ICON_REFRESH = '<svg viewBox="0 0 513.806 513.806" fill="currentColor" width="13" height="13"><path d="M66.074,228.731C81.577,123.379,179.549,50.542,284.901,66.045c35.944,5.289,69.662,20.626,97.27,44.244l-24.853,24.853c-8.33,8.332-8.328,21.84,0.005,30.17c3.999,3.998,9.423,6.245,15.078,6.246h97.835c11.782,0,21.333-9.551,21.333-21.333V52.39c-0.003-11.782-9.556-21.331-21.338-21.329c-5.655,0.001-11.079,2.248-15.078,6.246L427.418,65.04C321.658-29.235,159.497-19.925,65.222,85.835c-33.399,37.467-55.073,83.909-62.337,133.573c-2.864,17.607,9.087,34.202,26.693,37.066c1.586,0.258,3.188,0.397,4.795,0.417C50.481,256.717,64.002,244.706,66.074,228.731z"/><path d="M479.429,256.891c-16.108,0.174-29.629,12.185-31.701,28.16C432.225,390.403,334.253,463.24,228.901,447.738c-35.944-5.289-69.662-20.626-97.27-44.244l24.853-24.853c8.33-8.332,8.328-21.84-0.005-30.17c-3.999-3.998-9.423-6.245-15.078-6.246H43.568c-11.782,0-21.333,9.551-21.333,21.333v97.835c0.003,11.782,9.556,21.331,21.338,21.329c5.655-0.001,11.079-2.248,15.078-6.246l27.733-27.733c105.735,94.285,267.884,85.004,362.17-20.732c33.417-37.475,55.101-83.933,62.363-133.615c2.876-17.605-9.064-34.208-26.668-37.084C482.655,257.051,481.044,256.91,479.429,256.891z"/></svg>';
+  const ICON_ARROW = '<svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14"><path d="M23.73,11.356l-5.154-5.087c-.581-.574-1.575-.167-1.575,.644v3.587H1.5c-.828,0-1.5,.671-1.5,1.5s.672,1.5,1.5,1.5h15.5v3.587c0,.811,.994,1.218,1.575,.644l5.154-5.087c.36-.356,.36-.932,0-1.288Z"/></svg>';
+  const ICON_TRASH = '<svg viewBox="0 0 512 512" fill="currentColor" width="13" height="13"><path d="M490.667,96c0-17.673-14.327-32-32-32h-80.555C364.632,25.757,328.549,0.13,288,0h-64c-40.549,0.13-76.632,25.757-90.112,64H53.333c-17.673,0-32,14.327-32,32c0,17.673,14.327,32,32,32H64v266.667C64,459.468,116.532,512,181.333,512h149.333C395.468,512,448,459.468,448,394.667V128h10.667C476.34,128,490.667,113.673,490.667,96z M384,394.667C384,424.122,360.122,448,330.667,448H181.333C151.878,448,128,424.122,128,394.667V128h256V394.667z"/><path d="M202.667,384c17.673,0,32-14.327,32-32V224c0-17.673-14.327-32-32-32s-32,14.327-32,32v128C170.667,369.673,184.994,384,202.667,384z"/><path d="M309.333,384c17.673,0,32-14.327,32-32V224c0-17.673-14.327-32-32-32s-32,14.327-32,32v128C277.333,369.673,291.66,384,309.333,384z"/></svg>';
   const REPEAT_LABELS = { daily: '每天', weekdays: '每工作日', weekly: '每周', monthly: '每月' };
   const DOW_NAMES = ['日', '一', '二', '三', '四', '五', '六'];
   // repeat 取值：'daily'|'weekdays'|'weekly'|'monthly'，或 'dow:1,4'（按周几，数字为 getDay）
@@ -505,15 +509,18 @@
 
     const actions = el('div', 'todo-actions');
     // 始终渲染，完成时由 CSS 隐藏（保证就地切换不需重建节点）
-    const rep = el('button', 'act-repeat' + (t.repeat ? ' on' : ''), '↻');
+    const rep = el('button', 'act-repeat' + (t.repeat ? ' on' : ''));
+    rep.innerHTML = ICON_REFRESH;
     rep.title = t.repeat ? `重复：${repeatLabel(t.repeat)}` : '设为重复';
     rep.onclick = (e) => { e.stopPropagation(); openRepeatMenu(t, rep); };
     actions.appendChild(rep);
-    const move = el('button', 'act-move', isToday ? '→' : '←');
+    const move = el('button', 'act-move' + (isToday ? '' : ' flip'));
+    move.innerHTML = ICON_ARROW;
     move.title = isToday ? '移到改天' : '移到今天';
     move.onclick = () => moveTodo(t, isToday ? TOMORROW : TODAY);
     actions.appendChild(move);
-    const del = el('button', 'act-delete', '×');
+    const del = el('button', 'act-delete');
+    del.innerHTML = ICON_TRASH;
     del.title = '删除';
     del.onclick = () => deleteTodo(t);
     actions.appendChild(del);
@@ -638,7 +645,8 @@
       const label = el('div', 'gantt-cell gantt-label' + (t.done ? ' done' : ''));
       label.title = `${t.title}\n${spanLabel(t)}`;
       label.appendChild(el('span', 'gl-text', t.title));
-      const del = el('button', 'gl-del', '×');
+      const del = el('button', 'gl-del');
+      del.innerHTML = ICON_TRASH;
       del.title = '删除任务';
       del.onclick = () => { if (confirm(`确定删除任务「${t.title}」吗？`)) deleteTodo(t); };
       label.appendChild(del);

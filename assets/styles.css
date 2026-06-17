@@ -195,6 +195,9 @@ html[data-theme="notebook"] {
 .todo-actions button:hover { background: rgba(58,49,34,0.1); color: var(--ink); }
 .todo-actions .act-delete:hover { color: var(--red); }
 .todo-actions .act-repeat.on { color: var(--blue); }
+.todo-actions button svg { display: block; }
+.todo-actions .act-move.flip svg { transform: scaleX(-1); }
+.gl-del svg { display: block; width: 12px; height: 12px; }
 
 /* 重复任务：标题旁的小标记 + 始终可见的重复按钮 */
 .repeat-badge {
