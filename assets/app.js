@@ -171,7 +171,9 @@
     try { journals = await store.listJournals(); } catch (e) { journals = {}; }
     await rollover();
     bindUI();
-    render();
+    // 恢复上次所在视图（在甘特图刷新仍停留甘特图）
+    const savedView = (() => { try { return localStorage.getItem('folio.view'); } catch (e) { return null; } })();
+    switchView(savedView === 'gantt' ? 'gantt' : 'notebook');
     booted = true;
     scheduleMidnightRefresh();
     // 实时同步：其他设备/标签页有改动时自动拉取（debounce 合并，编辑中不打断）
@@ -302,6 +304,7 @@
       b.classList.toggle('active', b.dataset.view === v));
     $('notebook-view').classList.toggle('hidden', v !== 'notebook');
     $('gantt-view').classList.toggle('hidden', v !== 'gantt');
+    try { localStorage.setItem('folio.view', v); } catch (e) {}
     render();
   }
 
@@ -730,8 +733,4 @@
     box.appendChild(grid);
   }
 
-  // ---------- show app ----------
-  if (store) {
-    $('notebook-view').classList.remove('hidden');
-  }
 })();
