@@ -648,7 +648,7 @@
 
   // ---------- render: gantt ----------
   // 任务条：创建日期 → 完成日期；未完成则延伸到今天（或所属日，取较晚者）
-  const isoToLocalDay = (iso) => fmt(new Date(iso)); // ISO 时间戳 → 本地日期
+  function isoToLocalDay(iso) { return fmt(new Date(iso)); } // ISO 时间戳 → 本地日期（函数声明：提升，boot 时即可用）
   function startDate(t) {
     return t.created_at ? isoToLocalDay(t.created_at) : t.day;
   }
