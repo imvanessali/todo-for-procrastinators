@@ -24,6 +24,25 @@ function createSupabaseStore(client) {
     async remove(id) {
       const { error } = await client.from('todos').delete().eq('id', id);
       if (error) throw error;
+    },
+    // 日记：按天一篇
+    async listJournals() {
+      const { data, error } = await client.from('journals').select('day, content, updated_at');
+      if (error) throw error;
+      const map = {};
+      for (const r of data) map[r.day] = { content: r.content, updated_at: r.updated_at };
+      return map;
+    },
+    async saveJournal(day, content) {
+      const text = (content || '').trim();
+      if (text) {
+        const { error } = await client.from('journals')
+          .upsert({ day, content: text, updated_at: new Date().toISOString() }, { onConflict: 'user_id,day' });
+        if (error) throw error;
+      } else {
+        const { error } = await client.from('journals').delete().eq('day', day);
+        if (error) throw error;
+      }
     }
   };
 }
@@ -55,6 +74,17 @@ function createLocalStore() {
     },
     async remove(id) {
       write(read().filter(t => t.id !== id));
+    },
+    // 日记：按天一篇，存为 { 'YYYY-MM-DD': { content, updated_at } }
+    async listJournals() {
+      return JSON.parse(localStorage.getItem('folio.journals') || '{}');
+    },
+    async saveJournal(day, content) {
+      const j = JSON.parse(localStorage.getItem('folio.journals') || '{}');
+      const text = (content || '').trim();
+      if (text) j[day] = { content: text, updated_at: new Date().toISOString() };
+      else delete j[day];
+      localStorage.setItem('folio.journals', JSON.stringify(j));
     }
   };
 }

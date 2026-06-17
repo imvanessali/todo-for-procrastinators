@@ -28,6 +28,8 @@
   // ---------- state ----------
   let store = null;
   let todos = [];
+  let journals = {};        // { 'YYYY-MM-DD': { content, updated_at } }
+  let journalDay = null;    // 当前编辑的日记日期
   let view = 'notebook';
   let ganttAnchor = parse(TODAY); // 当前甘特图月份的任意一天
 
@@ -137,6 +139,7 @@
   // ---------- boot ----------
   async function boot() {
     todos = await store.list();
+    try { journals = await store.listJournals(); } catch (e) { journals = {}; }
     await rollover();
     bindUI();
     render();
@@ -205,6 +208,42 @@
     $('gantt-prev').onclick = () => { ganttAnchor.setMonth(ganttAnchor.getMonth() - 1); renderGantt(); };
     $('gantt-next').onclick = () => { ganttAnchor.setMonth(ganttAnchor.getMonth() + 1); renderGantt(); };
     $('gantt-today').onclick = () => { ganttAnchor = parse(TODAY); renderGantt(); };
+
+    // 日记
+    $('journal-btn').onclick = () => openJournal(TODAY);
+    $('journal-close').onclick = closeJournal;
+    $('journal-save').onclick = saveJournalNow;
+    $('journal-modal').addEventListener('click', (e) => { if (e.target.id === 'journal-modal') closeJournal(); });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !$('journal-modal').classList.contains('hidden')) closeJournal();
+    });
+  }
+
+  // ---------- 日记 ----------
+  function openJournal(day) {
+    journalDay = day;
+    const label = day === TODAY ? `今天 · ${human(day)}` : human(day);
+    $('journal-title').textContent = `${label} 的日记`;
+    $('journal-text').value = journals[day]?.content || '';
+    $('journal-status').textContent = '';
+    $('journal-modal').classList.remove('hidden');
+    $('journal-text').focus();
+  }
+  function closeJournal() { $('journal-modal').classList.add('hidden'); }
+  async function saveJournalNow() {
+    const content = $('journal-text').value;
+    const text = content.trim();
+    try {
+      await store.saveJournal(journalDay, content);
+    } catch (e) {
+      $('journal-status').textContent = '保存失败：' + (e?.message || '请稍后再试');
+      return;
+    }
+    if (text) journals[journalDay] = { content: text, updated_at: new Date().toISOString() };
+    else delete journals[journalDay];
+    $('journal-status').textContent = '已保存';
+    if (view === 'gantt') renderGantt();
+    setTimeout(closeJournal, 450);
   }
 
   function switchView(v) {
@@ -545,15 +584,27 @@
     grid.appendChild(el('div', 'gantt-cell gantt-head gantt-label'));
     for (let d = 1; d <= daysInMonth; d++) {
       const date = new Date(y, m, d);
-      const head = el('div', 'gantt-cell gantt-head' + (fmt(date) === TODAY ? ' today-col' : ''));
+      const dayStr = fmt(date);
+      const head = el('div', 'gantt-cell gantt-head' + (dayStr === TODAY ? ' today-col' : ''));
       head.innerHTML = `<span class="dow">${'日一二三四五六'[date.getDay()]}</span><span class="dom">${d}</span>`;
+      if (journals[dayStr]) {
+        const jb = el('button', 'gh-journal', '📝');
+        jb.title = '查看这天的日记';
+        jb.onclick = () => openJournal(dayStr);
+        head.appendChild(jb);
+      }
       grid.appendChild(head);
     }
 
     // rows
     for (const t of tasks) {
-      const label = el('div', 'gantt-cell gantt-label' + (t.done ? ' done' : ''), t.title);
+      const label = el('div', 'gantt-cell gantt-label' + (t.done ? ' done' : ''));
       label.title = `${t.title}\n${spanLabel(t)}`;
+      label.appendChild(el('span', 'gl-text', t.title));
+      const del = el('button', 'gl-del', '×');
+      del.title = '删除任务';
+      del.onclick = () => deleteTodo(t);
+      label.appendChild(del);
       grid.appendChild(label);
 
       const row = el('div', 'gantt-bar-row');

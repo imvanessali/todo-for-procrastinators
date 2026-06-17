@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/styles.css?v=25">
+  <link rel="stylesheet" href="assets/styles.css?v=26">
 </head>
 <body>
   <header class="topbar">
@@ -63,6 +63,10 @@
             <div class="page-label">Today · 今天</div>
             <div class="page-count" id="today-count"></div>
           </div>
+          <button class="journal-btn" id="journal-btn" title="写今天的日记">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3h11l3 3v15H5z"/><path d="M8 9h8M8 13h8M8 17h5"/></svg>
+            <span>日记</span>
+          </button>
         </header>
         <ul class="todo-list" id="today-list"></ul>
         <div class="todo-add">
@@ -98,10 +102,25 @@
     <div class="gantt" id="gantt-container"></div>
   </main>
 
+  <!-- 日记 -->
+  <div class="journal-modal hidden" id="journal-modal">
+    <div class="journal-card">
+      <div class="journal-head">
+        <span class="journal-title" id="journal-title">日记</span>
+        <button class="journal-close" id="journal-close" title="关闭">×</button>
+      </div>
+      <textarea class="journal-text" id="journal-text" placeholder="写点今天的事吧——做了什么、没做什么，都行。"></textarea>
+      <div class="journal-foot">
+        <span class="journal-status" id="journal-status"></span>
+        <button class="btn btn-primary" id="journal-save" type="button">保存</button>
+      </div>
+    </div>
+  </div>
+
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="assets/config.js?v=25"></script>
-  <script src="assets/auth.js?v=25"></script>
-  <script src="assets/store.js?v=25"></script>
-  <script src="assets/app.js?v=25"></script>
+  <script src="assets/config.js?v=26"></script>
+  <script src="assets/auth.js?v=26"></script>
+  <script src="assets/store.js?v=26"></script>
+  <script src="assets/app.js?v=26"></script>
 </body>
 </html>
