@@ -617,19 +617,21 @@
   function jumpTo(t) {
     $('search-results').innerHTML = '';
     $('search-input').value = '';
-    if (t.day === TODAY || t.day === TOMORROW) {
-      switchView('notebook');
-      flash(document.querySelector(`#notebook-view [data-id="${t.id}"]`));
-    } else {
+    // 在甘特图页搜索 → 定位到甘特图上的任务条；否则今天/改天的任务回笔记本
+    if (view === 'gantt' || !(t.day === TODAY || t.day === TOMORROW)) {
       ganttAnchor = parse(startDate(t));
       switchView('gantt');
       flash(document.querySelector(`#gantt-view [data-id="${t.id}"]`));
+    } else {
+      switchView('notebook');
+      flash(document.querySelector(`#notebook-view [data-id="${t.id}"]`));
     }
   }
 
   function flash(node) {
     if (!node) return;
-    node.scrollIntoView({ block: 'center', behavior: 'smooth' });
+    // rAF 确保切换视图后布局已就绪；inline 横向滚动到甘特图任务条
+    requestAnimationFrame(() => node.scrollIntoView({ block: 'center', inline: 'center', behavior: 'smooth' }));
     node.classList.add('flash');
     setTimeout(() => node.classList.remove('flash'), 1600);
   }
