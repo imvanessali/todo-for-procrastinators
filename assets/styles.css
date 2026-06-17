@@ -102,9 +102,29 @@ html[data-theme="notebook"] {
 .search-result .sr-date { color: var(--ink-faint); font-size: 12px; flex: none; }
 .search-empty { padding: 12px; font-size: 13px; color: var(--ink-faint); text-align: center; }
 
-.user-menu { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--ink-light); }
+.user-menu { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--ink-light); position: relative; }
 .user-menu .btn-plain { padding: 4px 9px; border-radius: 6px; }
 .user-menu .btn-plain:hover { background: var(--hover); }
+/* 邮箱首字母头像 + 弹出菜单 */
+.avatar {
+  width: 32px; height: 32px; flex: none; border: none; cursor: pointer;
+  border-radius: 50%; background: #f4c340; color: #52565e; font-weight: 700; font-size: 15px;
+  display: flex; align-items: center; justify-content: center; text-transform: uppercase;
+}
+.user-pop {
+  position: absolute; right: 0; top: calc(100% + 8px); z-index: 100;
+  background: var(--paper); border: 1px solid var(--edge); border-radius: 10px;
+  box-shadow: var(--shadow); padding: 12px; min-width: 210px;
+}
+.user-pop.hidden { display: none; }
+.user-pop-email { font-size: 13px; color: var(--ink-light); margin-bottom: 10px; word-break: break-all; }
+.user-pop-logout {
+  width: 100%; padding: 8px; border-radius: 7px; cursor: pointer;
+  background: var(--paper-2); color: var(--ink); font-size: 13px; border: 1px solid var(--edge);
+}
+.user-pop-logout:hover { background: var(--hover); }
+[data-theme="mooda"] .avatar { border: 1.5px solid var(--ink); }
+[data-theme="mooda"] .user-pop { border: 1.5px solid var(--ink); border-radius: 12px; }
 .badge-local {
   font-size: 12px; color: var(--ink-light); background: var(--paper-2);
   border: 1px solid var(--edge-soft); padding: 2px 9px; border-radius: 11px;
@@ -375,7 +395,8 @@ html[data-theme="notebook"] {
 .landing-nav .nav-actions { margin-left: auto; display: flex; gap: 8px; align-items: center; }
 .nav-link { font-size: 14px; color: var(--ink-light); text-decoration: none; padding: 8px 13px; border-radius: 6px; }
 .nav-link:hover { background: var(--hover); }
-.nav-cta { font-size: 14px; font-weight: 500; color: #fff; background: var(--blue); text-decoration: none; padding: 8px 15px; border-radius: 7px; }
+.nav-cta { font-size: 14px; font-weight: 500; color: #fff; background: var(--blue); text-decoration: none; padding: 8px 15px; border-radius: 7px; display: inline-flex; align-items: center; gap: 6px; }
+.nav-cta .cta-arrow { display: block; }
 .nav-cta:hover { background: #335f8e; }
 .nav-user { font-size: 14px; color: var(--ink-light); max-width: 220px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; padding: 6px 4px; }
 

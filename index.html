@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/styles.css?v=37">
+  <link rel="stylesheet" href="assets/styles.css?v=38">
 </head>
 <body>
   <nav class="landing-nav">
@@ -253,20 +253,33 @@
 
   <!-- 登录态感知：已登录则导航显示账号名 + 进入入口 -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="assets/config.js?v=37"></script>
-  <script src="assets/auth.js?v=37"></script>
+  <script src="assets/config.js?v=38"></script>
+  <script src="assets/auth.js?v=38"></script>
   <script>
     (async () => {
       let session;
       try { session = await FolioAuth.getSession(); } catch { return; }
       if (!session) return;
       const email = session.user.email || '已登录';
+      const initial = ((email || '').trim()[0] || '?').toUpperCase();
       const actions = document.getElementById('nav-actions');
+      const ARROW = '<svg class="cta-arrow" viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M23.73,11.356l-5.154-5.087c-.581-.574-1.575-.167-1.575,.644v3.587H1.5c-.828,0-1.5,.671-1.5,1.5s.672,1.5,1.5,1.5h15.5v3.587c0,.811,.994,1.218,1.575,.644l5.154-5.087c.36-.356,.36-.932,0-1.288Z"/></svg>';
       actions.innerHTML =
-        '<span class="nav-user" title="' + email + '">' + email + '</span>' +
-        '<a class="nav-link" id="nav-logout" href="#">退出</a>' +
-        '<a class="nav-cta" href="app.html">开始记录 →</a>';
+        '<a class="nav-cta" href="app.html">开始记录 ' + ARROW + '</a>' +
+        '<div class="user-menu" id="nav-user-menu">' +
+          '<button class="avatar" id="nav-avatar"></button>' +
+          '<div class="user-pop hidden" id="nav-pop">' +
+            '<div class="user-pop-email"></div>' +
+            '<button class="user-pop-logout" id="nav-logout">退出</button>' +
+          '</div>' +
+        '</div>';
+      document.getElementById('nav-avatar').textContent = initial;
+      actions.querySelector('.user-pop-email').textContent = email;
+      const navAvatar = document.getElementById('nav-avatar');
+      const navPop = document.getElementById('nav-pop');
+      navAvatar.onclick = (e) => { e.stopPropagation(); navPop.classList.toggle('hidden'); };
       document.getElementById('nav-logout').onclick = (e) => { e.preventDefault(); FolioAuth.signOut(); };
+      document.addEventListener('click', (e) => { if (!document.getElementById('nav-user-menu').contains(e.target)) navPop.classList.add('hidden'); });
     })();
   </script>
   <script>

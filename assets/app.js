@@ -101,13 +101,26 @@
   } else if (session) {
     store = createSupabaseStore(client);
     const email = session.user.email || '已登录';
-    userMenu.appendChild(el('span', null, email));
-    const out = el('button', 'btn-plain', '退出');
-    out.onclick = () => FolioAuth.signOut();
-    userMenu.appendChild(out);
+    buildUserMenu(email);
     await boot();
   } else {
     showLogin();
+  }
+
+  // 邮箱首字母头像 + 弹出菜单（邮箱 + 退出）
+  function buildUserMenu(email) {
+    const initial = ((email || '').trim()[0] || '?').toUpperCase();
+    const avatar = el('button', 'avatar', initial);
+    avatar.title = email;
+    const pop = el('div', 'user-pop hidden');
+    pop.appendChild(el('div', 'user-pop-email', email));
+    const out = el('button', 'user-pop-logout', '退出');
+    out.onclick = () => FolioAuth.signOut();
+    pop.appendChild(out);
+    avatar.onclick = (e) => { e.stopPropagation(); pop.classList.toggle('hidden'); };
+    document.addEventListener('click', (e) => { if (!userMenu.contains(e.target)) pop.classList.add('hidden'); });
+    userMenu.appendChild(avatar);
+    userMenu.appendChild(pop);
   }
 
   function showLogin() {
