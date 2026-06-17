@@ -531,6 +531,7 @@
   function startEdit(li, titleSpan, t) {
     const input = el('input', 'todo-edit');
     input.value = t.title;
+    li.classList.add('editing');
     li.replaceChild(input, titleSpan);
     input.focus();
     input.setSelectionRange(input.value.length, input.value.length);

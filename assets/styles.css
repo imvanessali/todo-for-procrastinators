@@ -205,6 +205,9 @@ html[data-theme="notebook"] {
   background: var(--blue-soft); border-radius: 5px; padding: 1px 6px;
 }
 .todo-item.done .repeat-badge { color: var(--ink-faint); background: var(--edge-soft); }
+/* 编辑态：隐藏操作按钮与标签，输入框独占整行，避免溢出 */
+.todo-item.editing .todo-actions,
+.todo-item.editing .repeat-badge { display: none; }
 
 .repeat-menu {
   position: fixed; z-index: 200; background: var(--paper);
@@ -573,13 +576,16 @@ html[data-theme="notebook"] {
   .carousel-slide { padding: 4px 4px 10px; }
   .carousel-dots { margin: 14px auto 48px; }
 
-  /* app 顶栏 */
+  /* app 顶栏：各控件统一高度 32，避免参差/换行 */
   .topbar { gap: 7px; padding: 0 10px; }
-  .view-toggle { margin-left: 2px; }
-  .view-toggle button { padding: 3px 8px; font-size: 12px; white-space: nowrap; }
-  .theme-toggle { font-size: 0; gap: 0; padding: 6px 9px; }
+  .view-toggle { margin-left: 2px; height: 32px; box-sizing: border-box; align-items: center; }
+  .view-toggle button { padding: 0 8px; font-size: 12px; white-space: nowrap; height: 26px; }
+  .theme-toggle { height: 32px; box-sizing: border-box; font-size: 0; gap: 0; padding: 0 9px; }
   .theme-toggle .tt-emoji { font-size: 16px; }
   .search-wrap { width: 92px; }
+  .search-wrap input { height: 32px; box-sizing: border-box; }
+  .user-menu { flex: none; }
+  .user-menu .btn-plain { height: 32px; display: flex; align-items: center; white-space: nowrap; flex: none; }
 
   /* 登录卡片 */
   .login-card { width: 100%; max-width: 360px; margin: 0 auto; padding: 28px 22px; }
