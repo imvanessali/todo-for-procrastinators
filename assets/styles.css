@@ -347,7 +347,7 @@ html[data-theme="notebook"] {
 }
 .login-card h1 { font-size: 25px; margin-bottom: 6px; }
 .login-brand { display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 8px; }
-.login-brand-name { font-size: 22px; font-weight: 700; color: var(--ink); }
+.login-brand-name { font-size: 22px; font-weight: 700; color: #353941; }
 .login-card .sub { color: var(--ink-light); font-size: 14px; margin-bottom: 26px; text-align: center; }
 .btn {
   display: flex; align-items: center; justify-content: center; gap: 8px;
@@ -515,6 +515,7 @@ html[data-theme="notebook"] {
 [data-theme="mooda"] .hero h1 {
   font-family: "Gaegu", "Yuanti SC", "PingFang SC", ui-rounded, sans-serif;
   font-size: 62px;
+  color: #353941;
 }
 [data-theme="mooda"] .hero-shot .frame,
 [data-theme="mooda"] .carousel-slide .frame {

@@ -46,7 +46,12 @@ function createSupabaseStore(client) {
     },
     // 实时同步：订阅 todos/journals 变更（Supabase Realtime，websocket 推送，非轮询）
     // 需在库中启用：alter publication supabase_realtime add table todos, journals;
-    subscribe(onChange) {
+    async subscribe(onChange) {
+      // 关键：把登录用户的 JWT 交给 Realtime，否则 RLS 会过滤掉你自己的数据（收不到推送）
+      try {
+        const { data } = await client.auth.getSession();
+        if (data && data.session) client.realtime.setAuth(data.session.access_token);
+      } catch (e) {}
       return client.channel('folio-db')
         .on('postgres_changes', { event: '*', schema: 'public', table: 'todos' }, onChange)
         .on('postgres_changes', { event: '*', schema: 'public', table: 'journals' }, onChange)

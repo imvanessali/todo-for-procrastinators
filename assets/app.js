@@ -161,6 +161,9 @@
     scheduleMidnightRefresh();
     // 实时同步：其他设备/标签页有改动时自动拉取（debounce 合并，编辑中不打断）
     if (store.subscribe) { try { store.subscribe(scheduleSync); } catch (e) {} }
+    // 保底：标签页重新可见 / 窗口聚焦时同步一次（即使 Realtime 不可用，切回页面也会刷新）
+    document.addEventListener('visibilitychange', () => { if (!document.hidden) scheduleSync(); });
+    window.addEventListener('focus', scheduleSync);
   }
 
   // ---------- 实时同步 ----------
