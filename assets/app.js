@@ -27,6 +27,7 @@
 
   // ---------- state ----------
   let store = null;
+  let sortables = {};
   let todos = [];
   let journals = {};        // { 'YYYY-MM-DD': { content, updated_at } }
   let journalDay = null;    // 当前编辑的日记日期
@@ -546,6 +547,42 @@
       return;
     }
     for (const t of items) list.appendChild(todoNode(t, isToday));
+    initSortable(listId);
+  }
+
+  // 拖动排序（鼠标 + 触摸），跨列拖动会改归属的「今天 / 改天」
+  function initSortable(listId) {
+    if (!window.Sortable) return;
+    if (sortables[listId]) sortables[listId].destroy();
+    sortables[listId] = window.Sortable.create($(listId), {
+      group: 'tasks',
+      handle: '.drag-handle',
+      animation: 150,
+      filter: '.page-empty',
+      onEnd: async (evt) => { await persistOrder(evt); setTimeout(render, 0); }
+    });
+  }
+
+  async function persistOrder(evt) {
+    const listEls = evt.from === evt.to ? [evt.to] : [evt.from, evt.to];
+    const movedId = evt.item && evt.item.dataset.id;
+    const updates = [];
+    for (const listEl of listEls) {
+      const day = listEl.id === 'today-list' ? TODAY : TOMORROW;
+      [...listEl.querySelectorAll('.todo-item')].forEach((li, i) => {
+        const t = todos.find((x) => x.id === li.dataset.id);
+        if (!t) return;
+        const pos = i + 1;
+        const crossed = li.dataset.id === movedId && evt.from !== evt.to;
+        const newDay = crossed ? day : t.day;
+        if (t.position !== pos || t.day !== newDay) {
+          t.position = pos;
+          t.day = newDay;
+          updates.push(store.update(t.id, { position: pos, day: t.day }));
+        }
+      });
+    }
+    await Promise.all(updates);
   }
 
   function todoNode(t, isToday) {
@@ -553,6 +590,11 @@
     li.dataset.id = t.id;
     // mooda 主题用：按稳定哈希分配一个心情色（笔记本主题忽略）
     li.style.setProperty('--c', MOOD_COLORS[hashColor(t.id)]);
+
+    const handle = el('span', 'drag-handle');
+    handle.title = '拖动排序';
+    handle.innerHTML = '<svg width="12" height="14" viewBox="0 0 24 24" fill="currentColor"><circle cx="9" cy="5" r="1.7"/><circle cx="15" cy="5" r="1.7"/><circle cx="9" cy="12" r="1.7"/><circle cx="15" cy="12" r="1.7"/><circle cx="9" cy="19" r="1.7"/><circle cx="15" cy="19" r="1.7"/></svg>';
+    li.appendChild(handle);
 
     const check = el('button', 'todo-check');
     check.title = t.done ? '标记未完成' : '标记完成';

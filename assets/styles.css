@@ -177,7 +177,16 @@ html[data-theme="notebook"] {
   position: relative;
 }
 .todo-item:hover { background: var(--hover); }
-.todo-item.flash { animation: flash 1.6s ease-out; }
+.drag-handle {
+  flex: none; display: flex; align-items: center; justify-content: center;
+  width: 16px; margin-left: -2px; color: var(--ink-faint);
+  cursor: grab; opacity: 0; transition: opacity 0.15s; touch-action: none;
+}
+.todo-item:hover .drag-handle { opacity: 0.6; }
+.drag-handle:active { cursor: grabbing; }
+.sortable-ghost { opacity: 0.4; }
+.sortable-chosen { background: var(--hover); }
+@media (max-width: 600px) { .drag-handle { opacity: 0.5; } }
 @keyframes flash { 0%, 50% { background: var(--blue-soft); } 100% { background: transparent; } }
 
 .todo-check {
