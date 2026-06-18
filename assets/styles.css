@@ -327,10 +327,10 @@ html[data-theme="notebook"] {
 /* ---------- 日记 ---------- */
 .journal-btn {
   margin-left: auto; flex: none; display: flex; align-items: center; gap: 6px;
-  padding: 7px 14px; border: none; border-radius: 999px;
-  background: rgba(244, 195, 64, 0.22); color: #9a7b1f; font-size: 13px; cursor: pointer;
+  padding: 6px; border: none; border-radius: 8px;
+  background: none; color: var(--ink-light); font-size: 13px; cursor: pointer;
 }
-.journal-btn:hover { background: rgba(244, 195, 64, 0.4); }
+.journal-btn:hover { background: var(--hover); color: var(--ink); }
 .journal-btn svg { display: block; }
 .journal-modal {
   position: fixed; inset: 0; z-index: 200; padding: 24px;
@@ -356,6 +356,7 @@ html[data-theme="notebook"] {
   background: var(--paper-2); outline: none;
 }
 .journal-text:focus { background: var(--paper); border-color: var(--blue); box-shadow: var(--blue-soft) 0 0 0 2px; }
+.journal-text::placeholder { color: var(--ink-faint); }
 .journal-foot { display: flex; align-items: center; justify-content: flex-end; gap: 12px; }
 .journal-status { margin-right: auto; font-size: 13px; color: var(--ink-faint); }
 
