@@ -51,7 +51,7 @@
     mooda: { label: '心情', next: 'notebook' }
   };
   // mooda 主题里每个任务循环用到的心情色
-  const MOOD_COLORS = ['#79e0a6', '#55afd5', '#7a6fd0', '#f4c340', '#e86a6e'];
+  const MOOD_COLORS = ['#79e0a6', '#7a6fd0', '#f4c340', '#e86a6e'];
   // 手绘 blob 形状（24×24），用于勾选框 / 头像
   const BLOB24 = 'M12.4 1.9 C17.3 1.5 22.1 5.6 21.8 11.6 C21.4 17.6 17.6 22.1 11.6 21.8 C6 21.4 1.9 17.6 2.2 11.2 C2.6 5.6 7.1 2.2 12.4 1.9 Z';
   // 操作图标（实心，fill 继承 currentColor）
