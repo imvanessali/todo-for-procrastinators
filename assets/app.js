@@ -238,13 +238,14 @@
       if (btn) switchView(btn.dataset.view);
     });
 
-    // 添加任务
-    for (const [inputId, day] of [['today-add', () => TODAY], ['tomorrow-add', () => TOMORROW]]) {
-      $(inputId).addEventListener('keydown', async (e) => {
-        if (e.key !== 'Enter' || e.isComposing) return;
-        const title = e.target.value.trim();
+    // 添加任务（用 form submit，手机软键盘的「完成/前往」键也能提交）
+    for (const [formId, inputId, day] of [['today-add-form', 'today-add', () => TODAY], ['tomorrow-add-form', 'tomorrow-add', () => TOMORROW]]) {
+      $(formId).addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const input = $(inputId);
+        const title = input.value.trim();
         if (!title) return;
-        e.target.value = '';
+        input.value = '';
         await addTodo(title, day());
       });
     }
@@ -359,10 +360,21 @@
   }
 
   async function setRepeat(t, rule) {
+    const wasToday = t.day === TODAY;
     t.repeat = rule || null;
     if (t.repeat && !t.series) t.series = t.id; // 整条重复链共用一个 series
+    let moved = false;
+    // 在「今天」设置循环 → 挪到下次发生日（平时待在右边的「改天」页）
+    if (t.repeat && wasToday) {
+      t.day = nextOccurrence(t.repeat, TODAY) || TOMORROW;
+      const fut = todos.filter((x) => x.id !== t.id && (x.day === TOMORROW || (x.repeat && x.day > TODAY)));
+      t.position = fut.length ? Math.min(...fut.map((x) => x.position)) - 1 : 1;
+      moved = true;
+    }
     render();
-    await store.update(t.id, { repeat: t.repeat, series: t.series || null });
+    await store.update(t.id, { repeat: t.repeat, series: t.series || null, day: t.day, position: t.position });
+    // 动效：移到右边后高亮一下，告知已去「改天」
+    if (moved) requestAnimationFrame(() => flash(document.querySelector(`#tomorrow-list [data-id="${t.id}"]`)));
   }
 
   // 完成重复任务后，在下一个符合条件的日子生成新实例（基准取 max(当天, 今天)，保证不在当天，避免死循环）
@@ -431,11 +443,11 @@
   }
 
   function updateCounts() {
-    for (const [day, countId, faceId] of [
-      [TODAY, 'today-count', 'today-face'],
-      [TOMORROW, 'tomorrow-count', 'tomorrow-face']
+    for (const [isToday, countId, faceId] of [
+      [true, 'today-count', 'today-face'],
+      [false, 'tomorrow-count', 'tomorrow-face']
     ]) {
-      const items = todos.filter((t) => t.day === day);
+      const items = pageItems(isToday);
       const done = items.filter((t) => t.done).length;
       $(countId).textContent = items.length ? `${items.length} 项 · ${items.length - done} 项未完成` : '';
       $(faceId).innerHTML = moodFace(items.length ? done / items.length : -1, items.length);
@@ -516,10 +528,17 @@
     updateCounts(); // 计数 + 心情脸
   }
 
+  // 左页=今天的任务；右页=改天的任务 + 平时待命的循环任务（下次发生日还没到）
+  function pageItems(isToday) {
+    return isToday
+      ? todos.filter((t) => t.day === TODAY)
+      : todos.filter((t) => t.day === TOMORROW || (t.repeat && t.day > TODAY));
+  }
+
   function renderPage(listId, day, isToday) {
     const list = $(listId);
     list.innerHTML = '';
-    const items = todos.filter((t) => t.day === day).sort((a, b) => a.position - b.position);
+    const items = pageItems(isToday).sort((a, b) => a.position - b.position);
 
     if (!items.length) {
       const empty = el('li', 'page-empty', isToday ? '今天还没有任务。' : '改天再做也没关系。');

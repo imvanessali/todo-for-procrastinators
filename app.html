@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/styles.css?v=50">
+  <link rel="stylesheet" href="assets/styles.css?v=51">
 </head>
 <body>
   <header class="topbar">
@@ -68,10 +68,10 @@
           </button>
         </header>
         <ul class="todo-list" id="today-list"></ul>
-        <div class="todo-add">
+        <form class="todo-add" id="today-add-form">
           <span class="plus">+</span>
-          <input id="today-add" type="text" placeholder="添加今天的任务，回车确认">
-        </div>
+          <input id="today-add" type="text" enterkeyhint="done" placeholder="添加今天的任务">
+        </form>
       </section>
       <section class="page right">
         <header class="page-header">
@@ -82,10 +82,10 @@
           </div>
         </header>
         <ul class="todo-list" id="tomorrow-list"></ul>
-        <div class="todo-add">
+        <form class="todo-add" id="tomorrow-add-form">
           <span class="plus">+</span>
-          <input id="tomorrow-add" type="text" placeholder="添加改天的任务，回车确认">
-        </div>
+          <input id="tomorrow-add" type="text" enterkeyhint="done" placeholder="添加改天的任务">
+        </form>
       </section>
     </div>
   </main>
@@ -117,9 +117,9 @@
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="assets/config.js?v=50"></script>
-  <script src="assets/auth.js?v=50"></script>
-  <script src="assets/store.js?v=50"></script>
-  <script src="assets/app.js?v=50"></script>
+  <script src="assets/config.js?v=51"></script>
+  <script src="assets/auth.js?v=51"></script>
+  <script src="assets/store.js?v=51"></script>
+  <script src="assets/app.js?v=51"></script>
 </body>
 </html>
