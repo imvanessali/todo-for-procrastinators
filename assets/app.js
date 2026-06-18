@@ -204,17 +204,17 @@
   // 跨天顺延：过去未完成的任务 → 移到「改天 / Not Today」页顶部（已完成的留在原日期，只在甘特图体现）
   async function rollover() {
     const stale = todos
-      .filter((t) => !t.done && t.day < TODAY)
+      .filter((t) => !t.done && t.day && t.day < TODAY)
       .sort((a, b) => a.day.localeCompare(b.day) || a.position - b.position);
     if (!stale.length) return;
-    const tmrwItems = todos.filter((t) => t.day === TOMORROW);
-    const minPos = tmrwItems.length ? Math.min(...tmrwItems.map((t) => t.position)) : 1;
+    const laterItems = todos.filter((t) => t.day == null);
+    const minPos = laterItems.length ? Math.min(...laterItems.map((t) => t.position)) : 1;
     for (let i = 0; i < stale.length; i++) {
       const pos = minPos - stale.length + i;
-      stale[i].day = TOMORROW;
+      stale[i].day = null;
       stale[i].position = pos;
       stale[i].rolled_over = true; // 本地标记
-      await store.update(stale[i].id, { day: TOMORROW, position: pos });
+      await store.update(stale[i].id, { day: null, position: pos });
     }
   }
 
@@ -240,7 +240,7 @@
     });
 
     // 添加任务（用 form submit，手机软键盘的「完成/前往」键也能提交）
-    for (const [formId, inputId, day] of [['today-add-form', 'today-add', () => TODAY], ['tomorrow-add-form', 'tomorrow-add', () => TOMORROW]]) {
+    for (const [formId, inputId, day] of [['today-add-form', 'today-add', () => TODAY], ['tomorrow-add-form', 'tomorrow-add', () => null]]) {
       $(formId).addEventListener('submit', async (e) => {
         e.preventDefault();
         const input = $(inputId);
@@ -368,7 +368,7 @@
     // 在「今天」设置循环 → 挪到下次发生日（平时待在右边的「改天」页）
     if (t.repeat && wasToday) {
       t.day = nextOccurrence(t.repeat, TODAY) || TOMORROW;
-      const fut = todos.filter((x) => x.id !== t.id && (x.day === TOMORROW || (x.repeat && x.day > TODAY)));
+      const fut = todos.filter((x) => x.id !== t.id && (x.day == null || x.day > TODAY));
       t.position = fut.length ? Math.min(...fut.map((x) => x.position)) - 1 : 1;
       moved = true;
     }
@@ -529,11 +529,12 @@
     updateCounts(); // 计数 + 心情脸
   }
 
-  // 左页=今天的任务；右页=改天的任务 + 平时待命的循环任务（下次发生日还没到）
+  // 左页=今天的任务（含今天到期的循环任务）；
+  // 右页=「改天」待办池（day 为空，无固定日期）+ 平时待命的循环任务（下次发生日还没到）
   function pageItems(isToday) {
     return isToday
       ? todos.filter((t) => t.day === TODAY)
-      : todos.filter((t) => t.day === TOMORROW || (t.repeat && t.day > TODAY));
+      : todos.filter((t) => t.day == null || t.day > TODAY);
   }
 
   function renderPage(listId, day, isToday) {
@@ -568,7 +569,7 @@
     const movedId = evt.item && evt.item.dataset.id;
     const updates = [];
     for (const listEl of listEls) {
-      const day = listEl.id === 'today-list' ? TODAY : TOMORROW;
+      const day = listEl.id === 'today-list' ? TODAY : null;
       [...listEl.querySelectorAll('.todo-item')].forEach((li, i) => {
         const t = todos.find((x) => x.id === li.dataset.id);
         if (!t) return;
@@ -622,7 +623,7 @@
     const move = el('button', 'act-move' + (isToday ? '' : ' flip'));
     move.innerHTML = ICON_ARROW;
     move.title = isToday ? '移到改天' : '移到今天';
-    move.onclick = () => moveTodo(t, isToday ? TOMORROW : TODAY);
+    move.onclick = () => moveTodo(t, isToday ? null : TODAY);
     actions.appendChild(move);
     const del = el('button', 'act-delete');
     del.innerHTML = ICON_TRASH;
@@ -681,7 +682,7 @@
     $('search-results').innerHTML = '';
     $('search-input').value = '';
     // 在甘特图页搜索 → 定位到甘特图上的任务条；否则今天/改天的任务回笔记本
-    if (view === 'gantt' || !(t.day === TODAY || t.day === TOMORROW)) {
+    if (view === 'gantt' || !(t.day === TODAY || t.day == null)) {
       ganttAnchor = parse(startDate(t));
       switchView('gantt');
       flash(document.querySelector(`#gantt-view [data-id="${t.id}"]`));
