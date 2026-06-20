@@ -213,7 +213,6 @@
       const pos = minPos - stale.length + i;
       stale[i].day = null;
       stale[i].position = pos;
-      stale[i].rolled_over = true; // 本地标记
       await store.update(stale[i].id, { day: null, position: pos });
     }
   }
@@ -499,7 +498,9 @@
   async function moveTodo(t, day) {
     const dayItems = todos.filter((x) => x.day === day);
     t.day = day;
-    t.position = dayItems.length ? Math.max(...dayItems.map((x) => x.position)) + 1 : 1;
+    t.position = day === null
+      ? (dayItems.length ? Math.min(...dayItems.map((x) => x.position)) - 1 : 1)
+      : (dayItems.length ? Math.max(...dayItems.map((x) => x.position)) + 1 : 1);
     render();
     await store.update(t.id, { day: t.day, position: t.position });
   }
@@ -587,7 +588,7 @@
   }
 
   function todoNode(t, isToday) {
-    const li = el('li', 'todo-item' + (t.done ? ' done' : '') + (t.rolled_over ? ' rolled-over' : ''));
+    const li = el('li', 'todo-item' + (t.done ? ' done' : ''));
     li.dataset.id = t.id;
     // mooda 主题用：按稳定哈希分配一个心情色（笔记本主题忽略）
     li.style.setProperty('--c', MOOD_COLORS[hashColor(t.id)]);
