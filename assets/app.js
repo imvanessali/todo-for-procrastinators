@@ -627,7 +627,14 @@
   function renderPage(listId, day, isToday) {
     const list = $(listId);
     list.innerHTML = '';
-    const items = pageItems(isToday).sort((a, b) => a.position - b.position);
+    const items = pageItems(isToday).sort((a, b) => {
+      // 改天页：循环任务统一置底（普通待办在上）
+      if (!isToday) {
+        const ra = a.repeat ? 1 : 0, rb = b.repeat ? 1 : 0;
+        if (ra !== rb) return ra - rb;
+      }
+      return a.position - b.position;
+    });
 
     if (!items.length) {
       const empty = el('li', 'page-empty', isToday ? '今天还没有任务。' : '改天再做也没关系。');
