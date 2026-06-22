@@ -284,6 +284,8 @@ html[data-theme="notebook"] {
   background: var(--paper); font-size: 13px; color: var(--ink-light);
 }
 .gantt-toolbar button:hover { background: var(--hover); }
+.gantt-sort-group { display: flex; gap: 4px; margin-left: auto; }
+.gantt-sort-group button.active { background: var(--hover); color: var(--ink); font-weight: 600; }
 
 .gantt { background: var(--paper); border: 1px solid var(--edge); border-radius: 8px; overflow-x: auto; box-shadow: var(--shadow); }
 .gantt-grid { display: grid; min-width: 100%; width: max-content; }

@@ -33,6 +33,7 @@
   let journalDay = null;    // 当前编辑的日记日期
   let view = 'notebook';
   let ganttAnchor = parse(TODAY); // 当前甘特图月份的任意一天
+  let ganttSort = 'created'; // 'created' | 'duration'
 
   const $ = (id) => document.getElementById(id);
   const el = (tag, cls, text) => {
@@ -262,6 +263,16 @@
     $('gantt-prev').onclick = () => { ganttAnchor.setMonth(ganttAnchor.getMonth() - 1); renderGantt(); };
     $('gantt-next').onclick = () => { ganttAnchor.setMonth(ganttAnchor.getMonth() + 1); renderGantt(); };
     $('gantt-today').onclick = () => { ganttAnchor = parse(TODAY); renderGantt(); };
+
+    // 甘特图排序
+    $('gantt-sort-group').addEventListener('click', (e) => {
+      const btn = e.target.closest('button[data-gsort]');
+      if (!btn || btn.dataset.gsort === ganttSort) return;
+      ganttSort = btn.dataset.gsort;
+      document.querySelectorAll('#gantt-sort-group button').forEach((b) =>
+        b.classList.toggle('active', b.dataset.gsort === ganttSort));
+      renderGantt();
+    });
 
     // 日记
     $('journal-btn').onclick = () => openJournal(TODAY);
@@ -729,7 +740,17 @@
 
     const tasks = todos
       .filter((t) => startDate(t) <= monthEnd && endDate(t) >= monthStart)
-      .sort((a, b) => startDate(a).localeCompare(startDate(b)) || a.position - b.position);
+      .sort((a, b) => {
+        if (ganttSort === 'duration') {
+          const durA = parse(endDate(a)) - parse(startDate(a));
+          const durB = parse(endDate(b)) - parse(startDate(b));
+          return durB - durA || startDate(a).localeCompare(startDate(b));
+        }
+        // created: 早→新
+        const ca = a.created_at || startDate(a);
+        const cb = b.created_at || startDate(b);
+        return ca.localeCompare(cb) || a.position - b.position;
+      });
 
     const box = $('gantt-container');
     box.innerHTML = '';
