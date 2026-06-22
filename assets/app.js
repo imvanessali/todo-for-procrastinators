@@ -234,8 +234,17 @@
     syncTimer = setTimeout(syncNow, 250);
   }
 
-  // 跨天顺延：过去未完成的任务 → 移到「改天 / Not Today」页顶部（已完成的留在原日期，只在甘特图体现）
+  // 跨天处理：① 已完成的无日期任务 → 跨天后写回完成日期归档，从改天页清走（只留甘特图）；
+  //          ② 未完成的逾期任务 → 循环任务顺延、普通任务移到「改天」页顶部
   async function rollover() {
+    // ① 归档已完成的无日期任务（当天保留划线在改天页，次日才清走，与今天页任务生命周期一致）
+    const archive = todos.filter((t) =>
+      t.done && t.day == null && t.completed_at && isoToLocalDay(t.completed_at) < TODAY);
+    for (const t of archive) {
+      t.day = isoToLocalDay(t.completed_at);
+      await store.update(t.id, { day: t.day });
+    }
+    // ② 逾期未完成
     const stale = todos
       .filter((t) => !t.done && t.day && t.day < TODAY)
       .sort((a, b) => a.day.localeCompare(b.day) || a.position - b.position);
@@ -421,12 +430,12 @@
   }
 
   async function setRepeat(t, rule) {
-    const wasToday = t.day === TODAY;
     t.repeat = rule || null;
     if (t.repeat && !t.series) t.series = t.id; // 整条重复链共用一个 series
     let moved = false;
-    // 在「今天」设置循环 → 挪到下次发生日（平时待在右边的「改天」页）
-    if (t.repeat && wasToday) {
+    // 设循环后若任务没有有效的未来发生日（在今天页、或在改天页但无日期/已逾期），
+    // 挪到下一个发生日，待在「改天」页等待；已排了未来日期（day > TODAY）则尊重用户、不动
+    if (t.repeat && (t.day == null || t.day <= TODAY)) {
       t.day = nextOccurrence(t.repeat, TODAY) || TOMORROW;
       const fut = todos.filter((x) => x.id !== t.id && (x.day == null || x.day > TODAY));
       t.position = fut.length ? Math.min(...fut.map((x) => x.position)) - 1 : 1;
