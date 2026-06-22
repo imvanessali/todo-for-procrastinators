@@ -488,8 +488,8 @@ html[data-theme="notebook"] {
   --edge-soft: rgba(82, 86, 94, 0.08);
   --hover: rgba(82, 86, 94, 0.05);
   --rule: transparent;
-  --blue: #55afd5;
-  --blue-soft: rgba(85, 175, 213, 0.18);
+  --blue: #44c7f4;
+  --blue-soft: rgba(68, 199, 244, 0.18);
   --green: #79e0a6;
   --green-soft: rgba(121, 224, 166, 0.2);
   --serif: "Yuanti SC", "Noto Sans SC", "PingFang SC", ui-rounded, sans-serif;
