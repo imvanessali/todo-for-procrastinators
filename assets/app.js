@@ -101,6 +101,10 @@
     // 未配置 Supabase → 本地试用模式
     store = createLocalStore();
     userMenu.appendChild(el('span', 'badge-local', '本地模式 · 数据保存在此浏览器'));
+    const expLocal = el('button', 'user-pop-export', '导出 CSV');
+    expLocal.style.marginLeft = '8px';
+    expLocal.onclick = exportCsv;
+    userMenu.appendChild(expLocal);
     await boot();
   } else if (session) {
     store = createSupabaseStore(client);
@@ -118,6 +122,9 @@
     avatar.title = email;
     const pop = el('div', 'user-pop hidden');
     pop.appendChild(el('div', 'user-pop-email', email));
+    const exp = el('button', 'user-pop-export', '导出 CSV');
+    exp.onclick = exportCsv;
+    pop.appendChild(exp);
     const out = el('button', 'user-pop-logout', '退出');
     out.onclick = () => FolioAuth.signOut();
     pop.appendChild(out);
@@ -125,6 +132,31 @@
     document.addEventListener('click', (e) => { if (!userMenu.contains(e.target)) pop.classList.add('hidden'); });
     userMenu.appendChild(avatar);
     userMenu.appendChild(pop);
+  }
+
+  // ---------- 导出 CSV（任务 + 日记，合并为一个文件） ----------
+  function exportCsv() {
+    const esc = (v) => '"' + (v == null ? '' : String(v)).replace(/"/g, '""') + '"';
+    const rows = [['类型', '内容', '日期', '状态', '重复', '创建时间', '完成/更新时间']];
+    const sorted = [...todos].sort((a, b) =>
+      (a.day || '9999-99-99').localeCompare(b.day || '9999-99-99') || a.position - b.position);
+    for (const t of sorted) {
+      rows.push(['任务', t.title, t.day || '改天', t.done ? '已完成' : '未完成',
+        t.repeat ? repeatLabel(t.repeat) : '', t.created_at || '', t.completed_at || '']);
+    }
+    for (const day of Object.keys(journals).sort()) {
+      rows.push(['日记', journals[day].content, day, '', '', '', journals[day].updated_at || '']);
+    }
+    const csv = '﻿' + rows.map((r) => r.map(esc).join(',')).join('\r\n');
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const a = el('a');
+    a.href = url;
+    a.download = `today-or-not-today-${TODAY}.csv`;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
   }
 
   function showLogin() {
@@ -211,10 +243,17 @@
     const laterItems = todos.filter((t) => t.day == null);
     const minPos = laterItems.length ? Math.min(...laterItems.map((t) => t.position)) : 1;
     for (let i = 0; i < stale.length; i++) {
+      const t = stale[i];
+      // 循环任务：顺延到下一个发生日，保持节奏（不退化成无日期待办、不在改天页堆积）
+      if (t.repeat) {
+        const next = rollForward(t.repeat, t.day);
+        if (next) { t.day = next; await store.update(t.id, { day: next }); continue; }
+      }
+      // 普通任务：清掉日期，移到「改天」页顶部
       const pos = minPos - stale.length + i;
-      stale[i].day = null;
-      stale[i].position = pos;
-      await store.update(stale[i].id, { day: null, position: pos });
+      t.day = null;
+      t.position = pos;
+      await store.update(t.id, { day: null, position: pos });
     }
   }
 
@@ -368,6 +407,17 @@
       return null;
     }
     return null;
+  }
+
+  // 从 fromDay 起，推进到第一个「不早于今天」的发生日（循环任务漏做后顺延用，保持节奏）
+  function rollForward(rule, fromDay) {
+    let d = fromDay;
+    for (let i = 0; i < 400 && d < TODAY; i++) {
+      const next = nextOccurrence(rule, d);
+      if (!next) return null;
+      d = next;
+    }
+    return d < TODAY ? null : d;
   }
 
   async function setRepeat(t, rule) {

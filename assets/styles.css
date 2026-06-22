@@ -120,11 +120,12 @@ html[data-theme="notebook"] {
 }
 .user-pop.hidden { display: none; }
 .user-pop-email { font-size: 13px; color: var(--ink-light); margin-bottom: 10px; word-break: break-all; }
-.user-pop-logout {
+.user-pop-logout, .user-pop-export {
   width: 100%; padding: 8px; border-radius: 7px; cursor: pointer;
   background: var(--paper-2); color: var(--ink); font-size: 13px; border: 1px solid var(--edge);
 }
-.user-pop-logout:hover { background: var(--hover); }
+.user-pop-logout:hover, .user-pop-export:hover { background: var(--hover); }
+.user-pop-export { margin-bottom: 8px; }
 [data-theme="mooda"] .user-pop { border: 1.5px solid var(--ink); border-radius: 12px; }
 .badge-local {
   font-size: 12px; color: var(--ink-light); background: var(--paper-2);
