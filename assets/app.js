@@ -52,7 +52,7 @@
     mooda: { label: '心情', next: 'notebook' }
   };
   // mooda 主题里每个任务循环用到的心情色
-  const MOOD_COLORS = ['#79e0a6', '#7a6fd0', '#f4c340', '#fc636b'];
+  const MOOD_COLORS = ['#79e0a6', '#7a6fd0', '#f4c340', '#ff7243'];
   // 手绘 blob 形状（24×24），用于勾选框 / 头像
   const BLOB24 = 'M12.4 1.9 C17.3 1.5 22.1 5.6 21.8 11.6 C21.4 17.6 17.6 22.1 11.6 21.8 C6 21.4 1.9 17.6 2.2 11.2 C2.6 5.6 7.1 2.2 12.4 1.9 Z';
   // 操作图标（实心，fill 继承 currentColor）
@@ -559,7 +559,7 @@
       fill = '#79e0a6';
       mouth = '<path d="M24 37 Q32 45 40 37"/>';
     } else {                                 // 全清空，珊瑚红大笑
-      fill = '#fc636b';
+      fill = '#ff7243';
       mouth = '<path d="M23 36 Q32 47 41 36"/>';
     }
     const blob = 'M33 5 C46 4 59 15 58 31 C57 47 47 59 31 58 C16 57 5 47 6 30 C7 15 19 6 33 5 Z';
