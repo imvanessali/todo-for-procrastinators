@@ -394,7 +394,18 @@
       render();
     }
     await store.update(t.id, { done: t.done, completed_at: t.completed_at });
-    if (t.done && t.repeat) await spawnNext(t);
+    if (t.done && t.repeat) {
+      const wasFuture = t.day > TODAY; // 在发生日之前提前完成
+      await spawnNext(t); // 用原计划日算下一轮（必须在拉到今天之前）
+      // 提前完成：把这一轮拉到今天结算（进今天页划线、次日归档），改天页只留待命的下一轮
+      if (wasFuture) {
+        const todayItems = todos.filter((x) => x.day === TODAY && x.id !== t.id);
+        t.day = TODAY;
+        t.position = todayItems.length ? Math.max(...todayItems.map((x) => x.position)) + 1 : 1;
+        await store.update(t.id, { day: t.day, position: t.position });
+        setTimeout(render, 720); // 等庆祝动画播完再把它移到今天页
+      }
+    }
   }
 
   // ---------- 重复任务 ----------
