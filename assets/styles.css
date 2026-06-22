@@ -326,7 +326,7 @@ html[data-theme="notebook"] {
   position: absolute; top: 7px; height: 20px; border-radius: 4px;
   background: var(--blue); opacity: 0.85; min-width: 8px;
 }
-.gantt-bar.done { background: var(--green); opacity: 0.5; }
+.gantt-bar.done { background: #b8bec8; opacity: 0.55; }
 /* 定位高亮：整行（任务名 + 整月行）铺一层蓝色，与笔记页一致；label 用自身 sticky 作定位上下文，避免高亮时位移 */
 .gantt-label.flash-row::after, .gantt-bar-row.flash-row::after {
   content: ''; position: absolute; inset: 0; z-index: 4; pointer-events: none;
