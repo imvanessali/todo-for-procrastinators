@@ -227,7 +227,6 @@ html[data-theme="notebook"] {
 .todo-item.done .act-move { display: none; }
 .act-archive { display: none; }
 .todo-item.done .act-archive { display: flex; }
-.todo-actions .act-archive:hover { color: var(--blue); }
 .todo-actions button {
   width: 24px; height: 24px; border-radius: 5px; color: var(--ink-faint);
   display: flex; align-items: center; justify-content: center; font-size: 14px;
