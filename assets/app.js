@@ -544,36 +544,30 @@
 
   // mooda 主题的「今日心情脸」：进度越高越开心；ratio<0 表示当天还没任务
   function moodFace(ratio, count) {
-    // MOODA 风：手绘 blob 脸 + 黑色墨水五官；开心时加腮红
-    let fill, mouth, cheeks = '';
-    if (count === 0) {                       // 空白的一天，浅色轻笑
+    // MOODA 风：手绘 blob 脸 + 黑色墨水五官（不加腮红）
+    let fill, mouth;
+    if (count === 0) {                       // 空白的一天，浅色、平嘴（不笑）
       fill = '#cdd3da';
-      mouth = '<path d="M26 39 Q32 42 38 39"/>';
+      mouth = '<path d="M26 39 L38 39"/>';
     } else if (ratio === 0) {                // 还没开始，天蓝微笑
       fill = '#44c7f4';
       mouth = '<path d="M25 38 Q32 43 39 38"/>';
     } else if (ratio < 0.67) {               // 做了一点，黄色微笑
       fill = '#f4c340';
       mouth = '<path d="M25 38 Q32 43 39 38"/>';
-    } else if (ratio < 1) {                  // 快做完，薄荷绿开心 + 腮红
+    } else if (ratio < 1) {                  // 快做完，薄荷绿开心
       fill = '#79e0a6';
       mouth = '<path d="M24 37 Q32 45 40 37"/>';
-      cheeks = cheekMarks(3.4);
-    } else {                                 // 全清空，珊瑚红大笑 + 腮红
+    } else {                                 // 全清空，珊瑚红大笑
       fill = '#fc636b';
       mouth = '<path d="M23 36 Q32 47 41 36"/>';
-      cheeks = cheekMarks(4);
     }
     const blob = 'M33 5 C46 4 59 15 58 31 C57 47 47 59 31 58 C16 57 5 47 6 30 C7 15 19 6 33 5 Z';
     return `<svg viewBox="0 0 64 64">
-      <path d="${blob}" fill="${fill}"/>${cheeks}
+      <path d="${blob}" fill="${fill}"/>
       <g fill="#52565e"><circle cx="24" cy="27" r="2.4"/><circle cx="40" cy="27" r="2.4"/></g>
       <g fill="none" stroke="#52565e" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">${mouth}</g>
     </svg>`;
-  }
-  function cheekMarks(r) {
-    return `<ellipse cx="17" cy="38" rx="${r}" ry="${r * 0.66}" fill="#ef7d7d" opacity="0.32"/>` +
-           `<ellipse cx="47" cy="38" rx="${r}" ry="${r * 0.66}" fill="#ef7d7d" opacity="0.32"/>`;
   }
 
   async function moveTodo(t, day) {
