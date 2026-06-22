@@ -791,12 +791,19 @@
   }
 
   // ---------- render: gantt ----------
-  // 任务条：创建日期 → 完成日期；未完成则延伸到今天（或所属日，取较晚者）
+  // 普通任务条：创建日期 → 完成日期；未完成则延伸到今天（或所属日，取较晚者）
+  // 循环任务：只在「该做的那天」画一个单格（完成日 / 计划发生日），不画从创建到发生日的长条；
+  //          没完成会被 rollover 顺延到下个周期，旧周期那格自然不留痕
   function isoToLocalDay(iso) { return fmt(new Date(iso)); } // ISO 时间戳 → 本地日期（函数声明：提升，boot 时即可用）
   function startDate(t) {
+    if (t.repeat) {
+      if (t.done && t.completed_at) return isoToLocalDay(t.completed_at);
+      return t.day || (t.created_at ? isoToLocalDay(t.created_at) : TODAY);
+    }
     return t.created_at ? isoToLocalDay(t.created_at) : t.day;
   }
   function endDate(t) {
+    if (t.repeat) return startDate(t); // 循环任务：单格
     if (t.done && t.completed_at) return isoToLocalDay(t.completed_at);
     return t.day > TODAY ? t.day : TODAY;
   }
