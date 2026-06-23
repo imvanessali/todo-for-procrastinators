@@ -430,6 +430,17 @@
     return null;
   }
 
+  // 某天是否落在循环规则上（每天/每工作日/按周几可判断；每周/每月为相对周期，按否处理）
+  function occursOn(rule, day) {
+    if (rule === 'daily') return true;
+    if (rule === 'weekdays') return ![0, 6].includes(parse(day).getDay());
+    if (rule && rule.startsWith('dow:')) {
+      const set = new Set(rule.slice(4).split(',').filter(Boolean).map(Number));
+      return set.has(parse(day).getDay());
+    }
+    return false;
+  }
+
   // 从 fromDay 起，推进到第一个「不早于今天」的发生日（循环任务漏做后顺延用，保持节奏）
   function rollForward(rule, fromDay) {
     let d = fromDay;
@@ -448,10 +459,14 @@
     // 设循环后若任务没有有效的未来发生日（在今天页、或在改天页但无日期/已逾期），
     // 挪到下一个发生日，待在「改天」页等待；已排了未来日期（day > TODAY）则尊重用户、不动
     if (t.repeat && (t.day == null || t.day <= TODAY)) {
-      t.day = nextOccurrence(t.repeat, TODAY) || TOMORROW;
-      const fut = todos.filter((x) => x.id !== t.id && (x.day == null || x.day > TODAY));
-      t.position = fut.length ? Math.min(...fut.map((x) => x.position)) - 1 : 1;
-      moved = true;
+      // 今天就是发生日 → 留在今天页；否则挪到下一个发生日、待在改天页
+      const occ = occursOn(t.repeat, TODAY) ? TODAY : (nextOccurrence(t.repeat, TODAY) || TOMORROW);
+      t.day = occ;
+      if (occ > TODAY) {
+        const fut = todos.filter((x) => x.id !== t.id && (x.day == null || x.day > TODAY));
+        t.position = fut.length ? Math.min(...fut.map((x) => x.position)) - 1 : 1;
+        moved = true;
+      }
     }
     render();
     await store.update(t.id, { repeat: t.repeat, series: t.series || null, day: t.day, position: t.position });
