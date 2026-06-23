@@ -225,7 +225,7 @@ html[data-theme="notebook"] {
 .todo-actions { display: flex; gap: 2px; flex: none; opacity: 0.55; transition: opacity 0.15s; }
 .todo-item:hover .todo-actions { opacity: 1; }
 .todo-item.done .act-move { display: none; }
-.act-archive { display: none; }
+.todo-actions .act-archive { display: none; }
 .todo-item.done .act-archive { display: flex; }
 .todo-actions button {
   width: 24px; height: 24px; border-radius: 5px; color: var(--ink-faint);
