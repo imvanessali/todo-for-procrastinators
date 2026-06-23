@@ -29,8 +29,6 @@
   let store = null;
   let sortables = {};
   let todos = [];
-  let journals = {};        // { 'YYYY-MM-DD': { content, updated_at } }
-  let journalDay = null;    // 当前编辑的日记日期
   let view = 'notebook';
   let ganttAnchor = parse(TODAY); // 当前甘特图月份的任意一天
   let ganttSort = 'created'; // 'created' | 'duration'
@@ -135,18 +133,15 @@
     userMenu.appendChild(pop);
   }
 
-  // ---------- 导出 CSV（任务 + 日记，合并为一个文件） ----------
+  // ---------- 导出 CSV ----------
   function exportCsv() {
     const esc = (v) => '"' + (v == null ? '' : String(v)).replace(/"/g, '""') + '"';
-    const rows = [['类型', '内容', '日期', '状态', '重复', '创建时间', '完成/更新时间']];
+    const rows = [['内容', '日期', '状态', '重复', '创建时间', '完成时间']];
     const sorted = [...todos].sort((a, b) =>
       (a.day || '9999-99-99').localeCompare(b.day || '9999-99-99') || a.position - b.position);
     for (const t of sorted) {
-      rows.push(['任务', t.title, t.day || '改天', t.done ? '已完成' : '未完成',
+      rows.push([t.title, t.day || '改天', t.done ? '已完成' : '未完成',
         t.repeat ? repeatLabel(t.repeat) : '', t.created_at || '', t.completed_at || '']);
-    }
-    for (const day of Object.keys(journals).sort()) {
-      rows.push(['日记', journals[day].content, day, '', '', '', journals[day].updated_at || '']);
     }
     const csv = '﻿' + rows.map((r) => r.map(esc).join(',')).join('\r\n');
     const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
@@ -203,7 +198,6 @@
   // ---------- boot ----------
   async function boot() {
     todos = await store.list();
-    try { journals = await store.listJournals(); } catch (e) { journals = {}; }
     await rollover();
     bindUI();
     // 恢复上次所在视图（在甘特图刷新仍停留甘特图）
@@ -224,10 +218,8 @@
     let next;
     try { next = await store.list(); } catch (e) { return; }
     todos = next;
-    try { journals = await store.listJournals(); } catch (e) {}
-    // 正在编辑或正在写日记时不重渲染，避免打断（数据已更新，下次渲染即生效）
-    const busy = document.querySelector('.todo-edit') ||
-      !$('journal-modal').classList.contains('hidden');
+    // 正在编辑时不重渲染，避免打断（数据已更新，下次渲染即生效）
+    const busy = document.querySelector('.todo-edit');
     if (!busy) render();
   }
   function scheduleSync() {
@@ -322,41 +314,6 @@
         b.classList.toggle('active', b.dataset.gsort === ganttSort));
       renderGantt();
     });
-
-    // 日记
-    $('journal-btn').onclick = () => openJournal(TODAY);
-    $('journal-close').onclick = closeJournal;
-    $('journal-save').onclick = saveJournalNow;
-    $('journal-modal').addEventListener('click', (e) => { if (e.target.id === 'journal-modal') closeJournal(); });
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && !$('journal-modal').classList.contains('hidden')) closeJournal();
-    });
-  }
-
-  // ---------- 日记 ----------
-  function openJournal(day) {
-    journalDay = day;
-    $('journal-title').textContent = day === TODAY ? '随手写点' : `${human(day)} · 随手写点`;
-    $('journal-text').value = journals[day]?.content || '';
-    $('journal-status').textContent = '';
-    $('journal-modal').classList.remove('hidden');
-    $('journal-text').focus();
-  }
-  function closeJournal() { $('journal-modal').classList.add('hidden'); }
-  async function saveJournalNow() {
-    const content = $('journal-text').value;
-    const text = content.trim();
-    try {
-      await store.saveJournal(journalDay, content);
-    } catch (e) {
-      $('journal-status').textContent = '保存失败：' + (e?.message || '请稍后再试');
-      return;
-    }
-    if (text) journals[journalDay] = { content: text, updated_at: new Date().toISOString() };
-    else delete journals[journalDay];
-    $('journal-status').textContent = '已保存';
-    if (view === 'gantt') renderGantt();
-    setTimeout(closeJournal, 450);
   }
 
   function switchView(v) {
@@ -880,12 +837,6 @@
       const dayStr = fmt(date);
       const head = el('div', 'gantt-cell gantt-head' + (dayStr === TODAY ? ' today-col' : ''));
       head.innerHTML = `<span class="dow">${'日一二三四五六'[date.getDay()]}</span><span class="dom">${d}</span>`;
-      if (journals[dayStr]) {
-        const jb = el('button', 'gh-journal', '📝');
-        jb.title = '查看这天的日记';
-        jb.onclick = () => openJournal(dayStr);
-        head.appendChild(jb);
-      }
       grid.appendChild(head);
     }
 

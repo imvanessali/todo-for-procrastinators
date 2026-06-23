@@ -316,11 +316,6 @@ html[data-theme="notebook"] {
 }
 .gantt-label:hover .gl-del { opacity: 1; }
 .gl-del:hover { background: rgba(255,114,67,0.12); color: var(--red); }
-.gantt-head .gh-journal {
-  display: block; margin: 2px auto 0; border: none; background: none;
-  font-size: 11px; line-height: 1; cursor: pointer; padding: 0;
-}
-.gantt-head .gh-journal:hover { transform: scale(1.25); }
 .gantt-label.done { text-decoration: line-through; color: var(--ink-faint); }
 .gantt-cell.weekend { background: var(--paper-2); }
 .gantt-cell.today-col-body { background: var(--blue-soft); }
@@ -337,42 +332,6 @@ html[data-theme="notebook"] {
 }
 @keyframes rowflash { 0%, 50% { opacity: 1; } 100% { opacity: 0; } }
 .gantt-empty { padding: 44px; text-align: center; color: var(--ink-faint); font-size: 14px; font-style: italic; }
-
-/* ---------- 日记 ---------- */
-.journal-btn {
-  margin-left: auto; flex: none; display: flex; align-items: center; gap: 6px;
-  padding: 6px; border: none; border-radius: 8px;
-  background: none; color: var(--ink-light); font-size: 13px; cursor: pointer;
-}
-.journal-btn:hover { background: var(--hover); color: var(--ink); }
-.journal-btn svg { display: block; }
-.journal-modal {
-  position: fixed; inset: 0; z-index: 200; padding: 24px;
-  background: rgba(40, 40, 46, 0.4); display: flex; align-items: center; justify-content: center;
-}
-.journal-modal.hidden { display: none; }
-.journal-card {
-  width: 100%; max-width: 520px; background: var(--paper);
-  border: 1px solid var(--edge); border-radius: 14px; box-shadow: var(--shadow);
-  padding: 22px; display: flex; flex-direction: column; gap: 14px;
-}
-.journal-head { display: flex; align-items: center; justify-content: space-between; }
-.journal-title { font-family: var(--serif); font-size: 18px; font-weight: 700; color: var(--ink); }
-.journal-close {
-  font-size: 22px; color: var(--ink-faint); width: 30px; height: 30px;
-  border: none; background: none; border-radius: 6px; cursor: pointer; line-height: 1;
-}
-.journal-close:hover { background: var(--hover); color: var(--ink); }
-.journal-text {
-  width: 100%; min-height: 240px; resize: vertical;
-  border: 1px solid var(--edge); border-radius: 10px; padding: 14px;
-  font-family: inherit; font-size: 15px; line-height: 1.7; color: var(--ink);
-  background: var(--paper-2); outline: none;
-}
-.journal-text:focus { background: var(--paper); border-color: var(--blue); box-shadow: var(--blue-soft) 0 0 0 2px; }
-.journal-text::placeholder { color: var(--ink-faint); }
-.journal-foot { display: flex; align-items: center; justify-content: flex-end; gap: 12px; }
-.journal-status { margin-right: auto; font-size: 13px; color: var(--ink-faint); }
 
 /* ---------- login ---------- */
 .login-wrap { display: flex; justify-content: center; padding: 70px 24px; }
@@ -523,16 +482,6 @@ html[data-theme="notebook"] {
   background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 24' preserveAspectRatio='none'><path d='M1.6 7.5 C22 3.8 53 6.2 78 4.8 C89 4.2 96 5.6 98.6 7.2 C99.6 12 99 16.4 97.8 20 C71 22 37 20.6 16.5 20.2 C9.4 20 4 19 1.6 17.4 C0.6 14 0.8 10.4 1.6 7.5 Z' fill='%23f4c340' opacity='0.6'/></svg>");
   background-repeat: no-repeat; background-position: 0 74%; background-size: 100% 54%;
 }
-[data-theme="mooda"] .journal-btn {
-  border: none; border-radius: 999px;
-  font-family: "Gaegu", "Yuanti SC", "Noto Sans SC", "PingFang SC", cursive; font-size: 14px;
-}
-[data-theme="mooda"] .journal-card {
-  border: 1.5px solid var(--ink); border-radius: 16px;
-  box-shadow: 5px 5px 0 rgba(82,86,94,0.14);
-  background-image: radial-gradient(circle, rgba(82,86,94,0.13) 1.1px, transparent 1.1px);
-  background-size: 17px 17px;
-}
 [data-theme="mooda"] .todo-item, [data-theme="mooda"] .todo-add { border-bottom: none; }
 [data-theme="mooda"] .todo-item { border-radius: 11px; }
 /* 勾选框已改 blob，由通用 .todo-check 规则用 --c 着色，无需主题覆盖 */
@@ -647,6 +596,4 @@ html[data-theme="notebook"] {
   .page-header { gap: 9px; }
   [data-theme="mooda"] .page-label { font-size: 21px; }
   [data-theme="mooda"] .mood-face svg { width: 40px; height: 40px; }
-  .journal-btn { padding: 7px 9px; }
-  .journal-btn span { display: none; }
 }
