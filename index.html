@@ -265,14 +265,14 @@
       const actions = document.getElementById('nav-actions');
       const ARROW = '<svg class="cta-arrow" viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M23.73,11.356l-5.154-5.087c-.581-.574-1.575-.167-1.575,.644v3.587H1.5c-.828,0-1.5,.671-1.5,1.5s.672,1.5,1.5,1.5h15.5v3.587c0,.811,.994,1.218,1.575,.644l5.154-5.087c.36-.356,.36-.932,0-1.288Z"/></svg>';
       actions.innerHTML =
-        '<a class="nav-cta" href="app.html">开始记录 ' + ARROW + '</a>' +
         '<div class="user-menu" id="nav-user-menu">' +
           '<button class="avatar" id="nav-avatar"></button>' +
           '<div class="user-pop hidden" id="nav-pop">' +
             '<div class="user-pop-email"></div>' +
             '<button class="user-pop-logout" id="nav-logout">退出</button>' +
           '</div>' +
-        '</div>';
+        '</div>' +
+        '<a class="nav-cta" href="app.html">开始记录 ' + ARROW + '</a>';
       document.getElementById('nav-avatar').textContent = initial;
       actions.querySelector('.user-pop-email').textContent = email;
       const navAvatar = document.getElementById('nav-avatar');
