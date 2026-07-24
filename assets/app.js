@@ -44,13 +44,9 @@
   let booted = false;
 
   // ---------- 主题 ----------
-  const THEMES = ['notebook', 'mooda'];
-  const THEME_META = {
-    notebook: { label: '笔记本', next: 'mooda' },
-    mooda: { label: '心情', next: 'notebook' }
-  };
+  // 只有 mooda（心情）一个主题；app.html 里固定 data-theme="mooda"
   // mooda 主题里每个任务循环用到的心情色
-  const MOOD_COLORS = ['#79e0a6', '#7a6fd0', '#f4c340', '#ff7243'];
+  const MOOD_COLORS = ['#7fd8a8', '#9c8fd9', '#f4c340', '#ff8a5c'];
   // 手绘 blob 形状（24×24），用于勾选框 / 头像
   const BLOB24 = 'M12.4 1.9 C17.3 1.5 22.1 5.6 21.8 11.6 C21.4 17.6 17.6 22.1 11.6 21.8 C6 21.4 1.9 17.6 2.2 11.2 C2.6 5.6 7.1 2.2 12.4 1.9 Z';
   // 操作图标（实心，fill 继承 currentColor）
@@ -69,27 +65,6 @@
     }
     return REPEAT_LABELS[rule] || '重复';
   }
-
-  function theme() { return document.documentElement.dataset.theme || 'mooda'; }
-  function setupTheme() {
-    const btn = $('theme-toggle');
-    if (!btn) return;
-    updateThemeButton();
-    btn.onclick = () => {
-      const next = THEME_META[theme()].next;
-      document.documentElement.dataset.theme = next;
-      try { localStorage.setItem('folio.theme', next); } catch {}
-      updateThemeButton();
-      if (booted && view === 'notebook') renderNotebook();
-    };
-  }
-  function updateThemeButton() {
-    const btn = $('theme-toggle');
-    if (!btn) return;
-    btn.innerHTML = '<span class="tt-emoji">🎨</span><span>换肤</span>';
-    btn.title = `切换主题（当前：${THEME_META[theme()].label}）`;
-  }
-  setupTheme();
 
   // ---------- init: auth ----------
   const userMenu = $('user-menu');
@@ -517,30 +492,58 @@
 
   // mooda 主题的「今日心情脸」：进度越高越开心；ratio<0 表示当天还没任务
   function moodFace(ratio, count) {
-    // MOODA 风：手绘 blob 脸 + 黑色墨水五官（不加腮红）
+    // 韩系插画风：手绘 blob 脸 + 墨水五官 + 蜜桃腮红，全完成时笑成弯眼
     let fill, mouth;
-    if (count === 0) {                       // 空白的一天，浅色、平嘴（不笑）
-      fill = '#cdd3da';
+    const dotEyes = '<circle cx="24" cy="27" r="2.4"/><circle cx="40" cy="27" r="2.4"/>';
+    const happyEyes = '<path d="M20 27.5 Q24 23 28 27.5"/><path d="M36 27.5 Q40 23 44 27.5"/>';
+    const blushOn = '<g fill="#ef6f61" opacity="0.45"><ellipse cx="16.5" cy="34.5" rx="4.4" ry="2.5"/><ellipse cx="47.5" cy="34.5" rx="4.4" ry="2.5"/></g>';
+    let eyes = dotEyes, blush = '';
+    if (count === 0) {                       // 空白的一天，暖灰、平嘴（不笑）
+      fill = '#d9d5cc';
       mouth = '<path d="M26 39 L38 39"/>';
     } else if (ratio === 0) {                // 还没开始，天蓝微笑
-      fill = '#44c7f4';
+      fill = '#57b6e4';
       mouth = '<path d="M25 38 Q32 43 39 38"/>';
-    } else if (ratio < 0.67) {               // 做了一点，黄色微笑
+    } else if (ratio < 0.67) {               // 做了一点，黄油微笑 + 淡腮红
       fill = '#f4c340';
       mouth = '<path d="M25 38 Q32 43 39 38"/>';
-    } else if (ratio < 1) {                  // 快做完，薄荷绿开心
-      fill = '#79e0a6';
+      blush = blushOn;
+    } else if (ratio < 1) {                  // 快做完，薄荷开心 + 腮红
+      fill = '#7fd8a8';
       mouth = '<path d="M24 37 Q32 45 40 37"/>';
-    } else {                                 // 全清空，珊瑚红大笑
-      fill = '#ff7243';
+      blush = blushOn;
+    } else {                                 // 全清空，蜜桃大笑 + 弯眼 + 腮红
+      fill = '#ff8a5c';
       mouth = '<path d="M23 36 Q32 47 41 36"/>';
+      eyes = happyEyes;
+      blush = blushOn;
     }
     const blob = 'M33 5 C46 4 59 15 58 31 C57 47 47 59 31 58 C16 57 5 47 6 30 C7 15 19 6 33 5 Z';
+    const eyeGroup = eyes === dotEyes
+      ? `<g fill="#52565e">${eyes}</g>`
+      : `<g fill="none" stroke="#52565e" stroke-width="2.6" stroke-linecap="round">${eyes}</g>`;
     return `<svg viewBox="0 0 64 64">
       <path d="${blob}" fill="${fill}"/>
-      <g fill="#52565e"><circle cx="24" cy="27" r="2.4"/><circle cx="40" cy="27" r="2.4"/></g>
+      ${eyeGroup}
+      ${blush}
       <g fill="none" stroke="#52565e" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">${mouth}</g>
     </svg>`;
+  }
+
+  // 空列表插画：趴平睡觉的 blob（Zzz），文案区在插画下方
+  function emptyIllustration(isToday) {
+    const caption = isToday ? '今天还没有任务，先偷个懒吧。' : '改天再做也没关系。';
+    return `<svg class="empty-illo" viewBox="0 0 96 72">
+      <path d="M18 58 C15 42 30 31 48 32 C66 33 81 44 78 58 C76 63 20 63 18 58 Z" fill="#d9d5cc"/>
+      <g fill="none" stroke="#52565e" stroke-width="2.4" stroke-linecap="round">
+        <path d="M36 48 Q39.5 51 43 48"/><path d="M53 48 Q56.5 51 60 48"/><path d="M44 56 L52 56"/>
+      </g>
+      <g font-family="Gaegu,'Yuanti SC',sans-serif" font-weight="700" fill="rgba(82,86,94,0.4)">
+        <text x="58" y="34" font-size="10" transform="rotate(6 58 34)">z</text>
+        <text x="70" y="25" font-size="13" transform="rotate(8 70 25)">z</text>
+        <text x="80" y="13" font-size="17" transform="rotate(10 80 13)">z</text>
+      </g>
+    </svg><span>${caption}</span>`;
   }
 
   async function moveTodo(t, day) {
@@ -609,7 +612,8 @@
     });
 
     if (!items.length) {
-      const empty = el('li', 'page-empty', isToday ? '今天还没有任务。' : '改天再做也没关系。');
+      const empty = el('li', 'page-empty');
+      empty.innerHTML = emptyIllustration(isToday);
       list.appendChild(empty);
       return;
     }

@@ -10,12 +10,12 @@
   --edge: rgba(22, 40, 79, 0.16);
   --edge-soft: rgba(22, 40, 79, 0.08);
   --hover: rgba(22, 40, 79, 0.05);
-  --margin-red: #ff7243;
-  --blue: #44c7f4;
-  --blue-soft: rgba(68, 199, 244, 0.14);
+  --margin-red: #ff8a5c;
+  --blue: #57b6e4;
+  --blue-soft: rgba(87, 182, 228, 0.14);
   --green: #9a9ca0;
   --green-soft: rgba(154, 156, 160, 0.22);
-  --red: #ff7243;
+  --red: #ff8a5c;
   --serif: Georgia, "Songti SC", "STSong", "Times New Roman", serif;
   --shadow: rgba(22, 40, 79, 0.06) 0 0 0 1px, rgba(22, 40, 79, 0.12) 0 6px 18px;
 }
@@ -33,19 +33,6 @@ html, body {
 button { font: inherit; color: inherit; background: none; border: none; cursor: pointer; }
 input { font: inherit; color: inherit; }
 a { color: inherit; }
-
-/* 笔记本主题：桌面用木纹（纯 CSS 叠加渐变），书页浮在桌上 */
-html[data-theme="notebook"] {
-  background-color: #6f4a2c;
-  background-image:
-    repeating-linear-gradient(0deg, rgba(0,0,0,0.05) 0 1px, transparent 1px 8px),
-    repeating-linear-gradient(0deg, rgba(0,0,0,0.18) 0 2px, transparent 3px 168px),
-    repeating-linear-gradient(90deg, rgba(255,238,214,0.05) 0 2px, transparent 2px 9px),
-    linear-gradient(90deg, rgba(255,240,220,0.07), rgba(0,0,0,0.07) 55%, rgba(255,240,220,0.05)),
-    linear-gradient(180deg, #80592f, #694327);
-  background-attachment: fixed;
-}
-[data-theme="notebook"] body { background: transparent; }
 
 /* ---------- top bar ---------- */
 .topbar {
@@ -276,7 +263,8 @@ html[data-theme="notebook"] {
 .todo-add input { flex: 1; border: none; outline: none; background: transparent; font-size: 15px; color: var(--ink); }
 .todo-add input::placeholder { color: var(--ink-faint); }
 
-.page-empty { color: var(--ink-faint); font-size: 14px; padding: 12px 0; font-style: italic; }
+.page-empty { color: var(--ink-faint); font-size: 14px; padding: 24px 0 14px; text-align: center; }
+.page-empty .empty-illo { width: 88px; display: block; margin: 0 auto 10px; }
 
 /* ---------- gantt ---------- */
 .gantt-wrap { max-width: 1200px; margin: 0 auto; padding: 34px 24px 90px; }
@@ -352,7 +340,7 @@ html[data-theme="notebook"] {
 }
 .btn:hover { background: var(--hover); }
 .btn-primary { background: var(--blue); border-color: var(--blue); color: #fff; }
-.btn-primary:hover { background: #335f8e; }
+.btn-primary:hover { background: #3f9fd2; }
 .btn-primary:disabled { opacity: 0.5; cursor: default; }
 .login-divider { display: flex; align-items: center; gap: 10px; margin: 20px 0; color: var(--ink-faint); font-size: 12px; }
 .login-divider::before, .login-divider::after { content: ""; flex: 1; height: 1px; background: var(--edge-soft); }
@@ -373,7 +361,7 @@ html[data-theme="notebook"] {
 .nav-link:hover { background: var(--hover); }
 .nav-cta { font-size: 14px; font-weight: 500; color: #fff; background: var(--blue); text-decoration: none; padding: 8px 15px; border-radius: 7px; display: inline-flex; align-items: center; gap: 6px; }
 .nav-cta .cta-arrow { display: block; }
-.nav-cta:hover { background: #335f8e; }
+.nav-cta:hover { background: #3f9fd2; }
 .nav-user { font-size: 14px; color: var(--ink-light); max-width: 220px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; padding: 6px 4px; }
 
 .hero { max-width: 740px; margin: 0 auto; padding: 88px 24px 52px; text-align: center; }
@@ -387,7 +375,7 @@ html[data-theme="notebook"] {
 .hero .cta-row { display: flex; gap: 12px; justify-content: center; }
 .hero .cta-main { font-size: 15px; font-weight: 500; color: var(--paper); background: var(--ink); text-decoration: none; padding: 12px 24px; border-radius: 8px; display: inline-flex; align-items: center; gap: 7px; }
 .hero .cta-main .cta-arrow { display: block; }
-.hero .cta-main:hover { background: #2a2318; }
+.hero .cta-main:hover { background: #3a3e45; }
 
 .hero-shot { max-width: 980px; margin: 0 auto; padding: 0 24px 80px; }
 .hero-shot .frame, .carousel-slide .frame { border-radius: 10px; box-shadow: var(--shadow); overflow: hidden; background: var(--paper); border: 1px solid var(--edge); }
@@ -424,20 +412,13 @@ html[data-theme="notebook"] {
 .landing-footer { border-top: 1px solid var(--edge-soft); padding: 30px 24px; text-align: center; font-size: 13px; color: var(--ink-faint); }
 
 /* ---------- theme toggle ---------- */
-.theme-toggle {
-  display: flex; align-items: center; gap: 6px;
-  padding: 5px 11px; border: 1px solid var(--edge); border-radius: 7px;
-  background: var(--paper-2); color: var(--ink-light); font-size: 13px;
-}
-.theme-toggle:hover { background: var(--paper); color: var(--ink); }
-.theme-toggle .tt-emoji { font-size: 14px; line-height: 1; }
 
 .page-header { display: flex; align-items: center; gap: 14px; }
 .ph-text { min-width: 0; }
 .mood-face { display: none; flex: none; }
 .mood-face svg { display: block; }
 
-/* ---------- MOODA 主题（心情）：手绘心情日记，奶油底 + 圆点 + 黑框 + 鲜艳色 ---------- */
+/* ---------- MOODA 主题（心情）：手绘心情日记，奶油底 + 圆点 + 墨线框 + 粉彩色 ---------- */
 [data-theme="mooda"] {
   --paper: #ffffff;
   --paper-2: #f4f4f5;
@@ -449,12 +430,13 @@ html[data-theme="notebook"] {
   --edge-soft: rgba(82, 86, 94, 0.08);
   --hover: rgba(82, 86, 94, 0.05);
   --rule: transparent;
-  --blue: #44c7f4;
-  --blue-soft: rgba(68, 199, 244, 0.18);
-  --green: #79e0a6;
-  --green-soft: rgba(121, 224, 166, 0.2);
+  --blue: #57b6e4;
+  --blue-soft: rgba(87, 182, 228, 0.18);
+  --green: #7fd8a8;
+  --green-soft: rgba(127, 216, 168, 0.22);
   --serif: "Yuanti SC", "Noto Sans SC", "PingFang SC", ui-rounded, sans-serif;
   --shadow: rgba(82, 86, 94, 0.1) 0 8px 24px -12px;
+  --shadow-sticker: 3px 3px 0 var(--ink);
 }
 [data-theme="mooda"] body {
   font-family: "Yuanti SC", "Noto Sans SC", ui-rounded, -apple-system, "PingFang SC", sans-serif;
@@ -490,11 +472,13 @@ html[data-theme="notebook"] {
 
 /* ---------- MOODA 首页专属覆盖 ---------- */
 [data-theme="mooda"] .landing-nav {
-  border-bottom: 1.5px solid var(--ink);
-  background: var(--paper);
+  /* 吸顶 + 页面底色：内容滚到下面不透上来，视觉上仍与页面融为一体 */
+  position: sticky; top: 0; z-index: 50;
+  background: var(--desk);
 }
 [data-theme="mooda"] .hero .eyebrow {
   font-family: "Gaegu", "Yuanti SC", "Noto Sans SC", "PingFang SC", cursive; font-size: 15px; font-weight: 700;
+  background-color: transparent; /* 清掉基础样式的白色胶囊底，只留荧光笔刷 */
   background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 24' preserveAspectRatio='none'><path d='M1.6 7.5 C22 3.8 53 6.2 78 4.8 C89 4.2 96 5.6 98.6 7.2 C99.6 12 99 16.4 97.8 20 C71 22 37 20.6 16.5 20.2 C9.4 20 4 19 1.6 17.4 C0.6 14 0.8 10.4 1.6 7.5 Z' fill='%23f4c340' opacity='0.6'/></svg>");
   background-repeat: no-repeat; background-position: 0 62%; background-size: 100% 58%;
   border: none; border-radius: 0; color: var(--ink); padding: 0 6px;
@@ -509,7 +493,7 @@ html[data-theme="notebook"] {
   background-image: radial-gradient(circle, rgba(82,86,94,0.13) 1.1px, transparent 1.1px);
   background-size: 17px 17px;
   border: 1.5px solid var(--ink); border-radius: 14px;
-  box-shadow: 5px 5px 0 rgba(82,86,94,0.12);
+  box-shadow: 4px 4px 0 var(--ink);
 }
 [data-theme="mooda"] .carousel-dots .dot { border-color: var(--ink); }
 [data-theme="mooda"] .feature {
@@ -518,8 +502,12 @@ html[data-theme="notebook"] {
   background-size: 17px 17px;
   border: 1.5px solid var(--ink); border-radius: 10px;
   padding: 24px 22px;
-  box-shadow: 3px 3px 0 rgba(82,86,94,0.12);
+  box-shadow: var(--shadow-sticker);
 }
+/* 手贴上去的微倾斜感 */
+[data-theme="mooda"] .feature:nth-child(1) { transform: rotate(-0.7deg); }
+[data-theme="mooda"] .feature:nth-child(2) { transform: rotate(0.5deg); }
+[data-theme="mooda"] .feature:nth-child(3) { transform: rotate(-0.4deg); }
 [data-theme="mooda"] .feature .icon {
   border: 1.5px solid var(--ink); border-radius: 9px;
 }
@@ -529,7 +517,13 @@ html[data-theme="notebook"] {
 [data-theme="mooda"] .hero .cta-main {
   border: 1.5px solid var(--ink);
   border-radius: 9px;
-  box-shadow: 3px 3px 0 rgba(82,86,94,0.18);
+  box-shadow: var(--shadow-sticker);
+  transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.15s;
+}
+/* 贴纸按压感 */
+[data-theme="mooda"] .hero .cta-main:hover {
+  transform: translate(1.5px, 1.5px);
+  box-shadow: 1.5px 1.5px 0 var(--ink);
 }
 [data-theme="mooda"] .nav-cta {
   border: 1.5px solid var(--blue);
@@ -581,8 +575,6 @@ html[data-theme="notebook"] {
   .topbar { gap: 7px; padding: 0 10px; }
   .view-toggle { margin-left: 2px; height: 32px; box-sizing: border-box; align-items: center; }
   .view-toggle button { padding: 0 8px; font-size: 12px; white-space: nowrap; height: 26px; }
-  .theme-toggle { height: 32px; box-sizing: border-box; font-size: 0; gap: 0; padding: 0 9px; }
-  .theme-toggle .tt-emoji { font-size: 16px; }
   .search-wrap { width: 92px; }
   .search-wrap input { height: 32px; box-sizing: border-box; }
   .user-menu { flex: none; }
